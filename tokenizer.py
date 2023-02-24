@@ -1,3 +1,5 @@
+import torch
+
 def tokenize(observation):
     '''
     0-5 correspond to each player
@@ -8,7 +10,7 @@ def tokenize(observation):
     29 corresponds to pot size
     30-35 corresponds to the stack size of each player
     '''
-    vec = [0] * 36
+    vec = torch.zeros(36)
 
     if observation['type'] == 'card':
         vec[6] = 1  # observation is type card
