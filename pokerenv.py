@@ -73,6 +73,14 @@ class poker_env():
         '''
         rewards = [torch.zeros(self.n_players)]
 
+        action['pot'] = self.pot
+        action['p1'] = self.stacks[0]
+        action['p2'] = self.stacks[1]
+        action['p3'] = self.stacks[2]
+        action['p4'] = self.stacks[3]
+        action['p5'] = self.stacks[4]
+        action['6'] = self.stacks[5]
+
         observations = [action]  # first observation returned is always the action being taken
         player = action['player']
         type = action['type']  # action type is one of {bet, call, fold}
