@@ -20,7 +20,7 @@ class poker_env():
         self.deck = []
         for suit in ["hearts", "diamonds", "spades", "clubs"]:
             for rank in range(2, 15):
-                self.deck += [suit, rank]
+                self.deck += [[suit, rank]]
 
     def new_hand(self):
         self.community_cards = []
@@ -40,7 +40,7 @@ class poker_env():
         # deal cards, pass to agents
         random.shuffle(self.deck)
         for i in range(self.n_players):
-            self.hands += self.get_next_cards(2)
+            self.hands += [self.get_next_cards(2)]
 
         # big blind is 2, small blind is 1
         small_blind = {'player': self.in_turn, 'type': 'bet', 'value': 1, 'pot': self.pot, 'p1': self.stacks[0],
@@ -60,8 +60,14 @@ class poker_env():
 
     def get_hand(self, player):
         if len(self.hands) == 0:
-            return None
-        return self.hands[player]
+                    return None
+        card_observations = []
+        for card in self.hands[player]:
+            card_observations += [{'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot, 'p1': self.stacks[0],
+                    'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}]
+
+        
+        return card_observations
 
     def take_action(self, action):
         '''
