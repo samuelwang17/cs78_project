@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 
 def tokenize(observation):
     '''
@@ -89,3 +90,26 @@ def tokenize(observation):
         vec[35] = observation['p5']
 
     return vec
+
+class Tokenizer(nn.Module):
+
+    def __init__(self, model_dim) -> None:
+        super().__init__()
+        self.embedding = nn.Sequential(
+            nn.Linear(36, model_dim), # tokenizer has 36 dimensional output
+            nn.ReLU() # allows feature superposition in embedding
+        )
+
+    def tokenize_list(self, observations):
+        # convert list of observations to 2d tensor
+        # each observation is a tensor
+        seq = []
+        for obs in observations:
+            seq.append(tokenize(obs))
+        
+        obs_tensor = torch.stack(seq) #sequence, model_dim
+        return obs_tensor
+    
+    def forward(self, observations):
+        obs_tensor = self.tokenize_list(observations)
+        return self.embedding(obs_tensor) # sequence, model_dim
