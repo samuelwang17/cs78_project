@@ -134,9 +134,12 @@ class poker_env():
                 p]:  # Big blind option handled via took_action
                 square_check = False
 
+        hand_over = False
         if square_check:
             # advance stage, and any other subcalls that come with that
-            advance_stage_rewards, advance_stage_observations = self.advance_stage()
+            advance_stage_rewards, advance_stage_observations, hand_ovr = self.advance_stage()
+            if hand_ovr:
+                hand_over = True
             rewards += advance_stage_rewards
             observations += advance_stage_observations
 
@@ -144,12 +147,13 @@ class poker_env():
             # advance to next player
             self.in_turn = (self.in_turn + 1) % self.n_players
 
-        return rewards, observations
+        return rewards, observations, hand_over
 
     def advance_stage(self):
         # this is called anytime that there is no player who is: 1. in the hand, 2. behind the bet, and 3. has not taken action
         advance_stage_rewards = [torch.zeros(self.n_players)]
         advance_stage_observations = []
+        hand_over = False
 
         # payout if only one player is left
         if sum(self.in_hand) == 1:
@@ -162,6 +166,7 @@ class poker_env():
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
             advance_stage_observations += new_hand_observations
+            hand_over = True
 
         # advance stage if not river
         elif self.stage != 3:
@@ -183,8 +188,9 @@ class poker_env():
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
             advance_stage_observations += new_hand_observations
+            hand_over = True
 
-        return advance_stage_rewards, advance_stage_observations
+        return advance_stage_rewards, advance_stage_observations, hand_over
 
     def card_reveal(self):
 
