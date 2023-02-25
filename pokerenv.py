@@ -187,10 +187,10 @@ class poker_env():
             winners = self.determine_showdown_winners()
             for p in winners:
                 advance_stage_rewards[0][p] += self.pot / len(winners)
-                advance_stage_observations += {'player': p, 'type': 'win', 'value': self.pot / len(winners),
+                advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot / len(winners),
                                                'pot': self.pot, 'p1': self.stacks[0],
                                                'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3],
-                                               'p5': self.stacks[4], 'p6': self.stacks[5]}
+                                               'p5': self.stacks[4], 'p6': self.stacks[5]}]
 
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
@@ -205,13 +205,13 @@ class poker_env():
             # revealing the flop
             card_rewards = [torch.zeros(self.n_players)] * 3  # card reveals have reward zero
             cards = self.get_next_cards(3)
-            self.community_cards.extend(cards)
+            self.community_cards += cards
             card_observations = []
             for card in cards:
-                card_observations += {'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot,
+                card_observations += [{'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot,
                                       'p1': self.stacks[0],
                                       'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3],
-                                      'p5': self.stacks[4], 'p6': self.stacks[5]}
+                                      'p5': self.stacks[4], 'p6': self.stacks[5]}]
         else:
             # one card to be revealed
             card_rewards = torch.zeros(self.n_players)
