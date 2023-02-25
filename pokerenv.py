@@ -85,7 +85,7 @@ class poker_env():
         action['p3'] = self.stacks[2]
         action['p4'] = self.stacks[3]
         action['p5'] = self.stacks[4]
-        action['6'] = self.stacks[5]
+        action['p6'] = self.stacks[5]
 
         observations = [action]  # first observation returned is always the action being taken
         player = action['player']
