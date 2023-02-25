@@ -8,7 +8,7 @@ import torch.multiprocessing as mp
 from shared_adam import SharedAdam
 from transformer import *
 
-'https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py'
+'inspired from https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py'
 
 
 class Player(mp.Process):
@@ -64,7 +64,7 @@ if __name__ == '__main__':
     player_params = [max_sequence, n_players, gamma, n_actions]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, dec_layers, action_dim]
     # create poker environment
-    env = poker_env()
+    env = poker_env(n_players)
     # initialize global model
     global_model = RLformer(* model_params)
     global_model.share_memory()
