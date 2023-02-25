@@ -69,18 +69,18 @@ class actor_critic():
             dec_layers = dec_layers,
             action_dim = n_actions,
         )
-
+        self.n_players = n_players
         self.observations = [] #this will be a list of lists, each is the list of observations in a hand
         self.obs_flat = list(chain(*self.observations))
         
-        self.rewards = []
-        self.rewards_flat = list(chain(*self.rewards))
+        self.rewards = [[]] * n_players
+        self.rewards_flat = [list(chain(*self.rewards[x])) for x in range(self.n_players)]
 
-        self.values = []
-        self.val_flat = list(chain(*self.values))
+        self.values = [[]] * n_players
+        self.val_flat = [list(chain(*self.values[x])) for x in range(self.n_players)]
 
-        self.action_log_probabilies = []
-        self.alp_flat = list(chain(*self.action_log_probabilies))
+        self.action_log_probabilies = [[]] * n_players
+        self.alp_flat = [list(chain(*self.action_log_probabilies[x])) for x in range(self.n_players)]
 
         self.max_sequence = max_sequence
 
@@ -154,7 +154,8 @@ class actor_critic():
             self.obs_flat = list(chain(*self.observations))
 
             self.rewards = self.rewards[1:]
-            self.rewards_flat = list(chain(*self.rewards_flat))
+            self.rewards_flat = list(chain(*self.rewards))
+            
 
             self.values = self.values[1:]
             self.val_flat = list(chain(*self.values))
@@ -163,10 +164,11 @@ class actor_critic():
             self.alp_flat = list(chain(*self.action_log_probabilies))
 
         else:
+
             self.obs_flat = list(chain(*self.observations))
-            self.rewards_flat = list(chain(*self.rewards_flat))
-            self.val_flat = list(self.values)
-            self.alp_flat = list(chain(*self.action_log_probabilies))
+            self.rewards_flat = [list(chain(*self.rewards[x])) for x in range(self.n_players)]
+            self.val_flat = [list(chain(*self.values[x])) for x in range(self.n_players)]
+            self.alp_flat = [list(chain(*self.action_log_probabilies[x])) for x in range(self.n_players)]
 
     def play_hand(self):
         # makes agent play one hand
@@ -177,10 +179,11 @@ class actor_critic():
 
         # init lists for this hand
         self.observations += [observations] 
-        self.rewards += [rewards]
+        self.rewards[player] += [rewards]
         self.chop_seq() # prepare for input to model
-        self.values.append([])
-        self.rewards.append([])
+        self.values[player].append([])
+        self.rewards[player].append([])
+        self.action_log_probabilies[player].append([])
         hand_over = False
         while not hand_over:
             # get values and policy -- should be in list form over sequence length
@@ -193,35 +196,48 @@ class actor_critic():
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
 
             # add new information from this step
-            self.rewards[-1] += rewards
+            self.rewards[player][-1] += rewards #add tensor
             self.observations[-1] += obs
-            self.values[-1].append(value)
-            self.action_log_probabilies.append(alp)
+
+            # value needs to be on a per player basis
+            
+            self.values[player][-1].append(value) #needs to be tensor
+            self.action_log_probabilies[player][-1].append(alp)
             
             # prepare for next action
             self.chop_seq()
         
-        V_T, _ = self.agent(player, self.obs_flat)
+        Vals_T = [0] * self.n_players
+        for player in range(self.n_players):
+            V_T, _ = self.agent(player, self.obs_flat)
+            Vals_T[player] = V_T[-1].detach().numpy()[0,0]
         
         # process gradients and return loss:
-        return self.get_loss(V_T)
+        return self.get_loss(Vals_T)
 
-    def get_loss(self, V_T):
-
-        Qs = []
-        Q_t = V_T
-        for t in reversed(range(len(self.rewards_flat))):
-            Q_t = self.rewards_flat[t] + self.gamma * Q_t
-            Qs[t] = Q_t
+    def get_loss(self, Vals_T):
+        actor_loss = 0
+        critic_loss = 0
         
-        Qs = torch.FloatTensor(Qs)
-        values = torch.FloatTensor(self.val_flat)
-        alps = torch.stack(self.alp_flat)
-        advantages = Qs - values
+        for player in range(self.n_players):
+            Qs = []
+            Q_t = Vals_T[player]
+            for t in reversed(range(len(self.rewards_flat[player]))):
+                print(self.rewards_flat[player][t])
+                print(Q_t)
+                Q_t = self.rewards_flat[player][t] + self.gamma * Q_t
+                Qs[t] = Q_t
+            
+            Qs = torch.FloatTensor(Qs)
+            print(Qs)
+            values = torch.FloatTensor(self.val_flat[player])
+            alps = torch.stack(self.alp_flat[player])
+            advantages = Qs - values
 
+            
+            actor_loss += (-alps * advantages).mean() # loss function for policy going into softmax on backpass
+            critic_loss += 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
-        actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
-        critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         loss = actor_loss + critic_loss # no entropy in this since that would deviate from deepnash
         return loss
     
