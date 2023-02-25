@@ -38,17 +38,17 @@ class Player(mp.Process):
             score = 0
             while not done:
                 loss = self.local_actor_critic.play_hand()
-                self.optimizer.zero_grad()
+                self.optimizer.zero_grad() # zero gradient on the master copy
                 print(loss)
                 loss.backward()
                 for local_param, global_param in zip(
-                        self.local_actor_critic.parameters(),
+                        self.local_actor_critic.agent.model.parameters(),
                         self.global_actor_critic.parameters()):
                     global_param._grad = local_param.grad
                 self.optimizer.step()
-                self.local_actor_critic.load_state_dict(
+                self.local_actor_critic.agent.model.load_state_dict(
                         self.global_actor_critic.state_dict())
-                self.local_actor_critic.clear_memory()
+                self.local_actor_critic.clear_memory() # unsure what clear memory is -- zero grad? -- we don't want it to delete its sequence memory. I implemented the former
             t_step += 1
         with self.episode_idx.get_lock():
             self.episode_idx.value += 1

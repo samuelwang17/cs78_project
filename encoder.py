@@ -32,7 +32,6 @@ class encoder_layer(nn.Module):
         )
 
         self.ln1 = nn.LayerNorm(embed_dim)
-        self.ln2 = nn.LayerNorm(embed_dim)
 
         self.activation = nn.ReLU()
     

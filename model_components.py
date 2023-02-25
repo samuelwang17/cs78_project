@@ -7,7 +7,7 @@ import torch.nn as nn
 class grad_skip_softmax(nn.Module):
     def __init__(self) -> None:
         super().__init__()
-        self.sm = nn.Softmax()
+        self.sm = nn.Softmax(dim=1)
     
     def forward(self, x):
         return self.sm(x)

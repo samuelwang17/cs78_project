@@ -257,3 +257,8 @@ class actor_critic():
         print(loss.requires_grad)
         return loss
     
+
+    def clear_memory(self):
+        # zero the gradients of the model
+        self.agent.model.zero_grad()
+    
