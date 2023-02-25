@@ -164,7 +164,7 @@ class poker_env():
                 if self.in_hand[p]:
                     # payout!
                     advance_stage_rewards[0][p] += self.pot
-                    self.stacks[p] = self.pot
+                    self.stacks[p] += self.pot
                     advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot,
                                                    'p1': self.stacks[0],
                                                    'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3],
@@ -428,6 +428,6 @@ class poker_env():
                 winners = [p]
                 max_score = scores[p]
             elif scores[p] == max_score:
-                winners += p
+                winners += [p]
 
         return winners
