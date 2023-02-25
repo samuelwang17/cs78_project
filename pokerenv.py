@@ -29,11 +29,11 @@ class poker_env():
         self.button = (self.button + 1) % self.n_players
         self.in_turn = (self.button + 1) % self.n_players
         self.behind = [0] * self.n_players
+        self.current_bets = [0] * self.n_players
         self.in_hand = [True] * self.n_players
         self.took_action = [
                                False] * self.n_players  # tracks whether players have taken action in a specific round of betting
         self.pot = 0
-        self.current_bet = 0
         self.stage = 0  # 0: pre-flop, 1: flop, 2: turn, 3: river
         self.deck_position = 0
 
@@ -101,14 +101,13 @@ class poker_env():
             # move money from player to pot
             self.stacks[player] -= value
             self.pot += value
-            self.current_bet += value  # bets are valued independently and are NOT measured by cumulative sum -- current_bet tracks that
-
             # reward is negative of amount bet
             rewards[0][player] = -value
 
+            self.current_bets[player] = value
             # other players are now behind the bet
             for x in range(self.n_players):
-                self.behind[x] += value
+                self.behind[x] = max(self.behind[x], value - self.current_bets[x])
 
             # player who just bet cannot be behind
             self.behind[player] = 0
@@ -117,11 +116,11 @@ class poker_env():
             # need to catch up to current bet
             call_size = self.behind[player]
             self.behind[player] = 0
+            self.current_bets[player] += call_size
 
             # move money from player to pot
             self.stacks[player] -= call_size
             self.pot += call_size
-            self.current_bet += call_size  # bets are valued independently and are NOT measured by cumulative sum -- current_bet tracks that
 
             # reward is negative of amount bet
             rewards[0][player] = -1 * call_size
@@ -157,6 +156,9 @@ class poker_env():
         advance_stage_rewards = [torch.zeros(self.n_players)]
         advance_stage_observations = []
         hand_over = False
+
+        for x in range(self.n_players):
+            self.behind[x] = 0
 
         # payout if only one player is left
         if sum(self.in_hand) == 1:
