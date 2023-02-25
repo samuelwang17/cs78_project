@@ -127,8 +127,6 @@ class actor_critic():
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
         alp = torch.log(policy[-1] + .00001)[action_index] #.0001 used to avoid log(0) causing grad issues
-        print(torch.log(policy[-1]).isnan().any())
-        print(alp)
 
         # DETOKENIZE
         if action_index == 0: # all in
@@ -268,7 +266,7 @@ class actor_critic():
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        return loss, advantages, Qs, values, alps
+        return loss
     
 
     def clear_memory(self):

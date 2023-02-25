@@ -15,7 +15,7 @@ worker = actor_critic(
     )
 
 with torch.autograd.set_detect_anomaly(True):
-    loss, adv, Qs, values, alps = worker.play_hand()
+    loss  = worker.play_hand()
     print(loss)
     loss.backward()
 
