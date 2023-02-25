@@ -216,7 +216,7 @@ class poker_env():
             # one card to be revealed
             card_rewards = torch.zeros(self.n_players)
             card = self.get_next_cards(1)
-            self.community_cards += card
+            self.community_cards += [card]
             card_observations = [
                 {'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot, 'p1': self.stacks[0],
                  'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4],
