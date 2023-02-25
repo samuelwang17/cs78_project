@@ -12,8 +12,6 @@ class poker_env():
         self.n_players = n_players
 
         self.stacks = [0] * n_players
-        for player in range(n_players):
-            self.stacks[player] = 200
 
         self.button = 0  # button starts at player 0 WLOG
 
@@ -23,6 +21,8 @@ class poker_env():
                 self.deck += [[suit, rank]]
 
     def new_hand(self):
+        for player in range(self.n_players):
+            self.stacks[player] = 200
         self.community_cards = []
         self.hands = []
         self.deck_position = 0
