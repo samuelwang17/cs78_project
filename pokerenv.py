@@ -254,7 +254,7 @@ class poker_env():
 
             for card in cards:
                 suit_count[card[0]] += 1
-                rank_count[card[1]] += 1
+                rank_count[card[1] - 2] += 1
 
             # find rank with highest count and rank with second highest count
             first_count = 0
@@ -264,7 +264,7 @@ class poker_env():
             straight_count = 0
             straight_high = 0
             for rank in range(2, 15):
-                current_count = rank_count[rank]
+                current_count = rank_count[rank - 2]
                 if current_count > first_count:
                     second_count = first_count
                     second_rank = first_rank
@@ -291,10 +291,10 @@ class poker_env():
                     continue
 
                 if rank == 2:
-                    if rank_count[14] > 0:
+                    if rank_count[12] > 0:
                         straight_count = 2
                 else:
-                    if rank_count[rank - 1] > 0:
+                    if rank_count[rank - 3] > 0:
                         straight_count += 1
                     else:
                         straight_count = 1
@@ -319,14 +319,14 @@ class poker_env():
                 suit_ranks = [0] * 13
                 for card in cards:
                     if card[0] == flush_suit:
-                        suit_ranks[card[1]] = 1
+                        suit_ranks[card[1] - 2] = 1
 
                 for rank in range(2, 15):
                     if rank == 2:
-                        if suit_ranks[14]:
+                        if suit_ranks[12]:
                             sf_count = 2
                         else:
-                            if suit_ranks[rank - 1]:
+                            if suit_ranks[rank - 3]:
                                 sf_count += 1
                             else:
                                 sf_count = 1
