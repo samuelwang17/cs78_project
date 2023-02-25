@@ -135,7 +135,7 @@ class actor_critic():
         elif action_index == 3: # check
             action = {'player': player, 'type': 'bet', 'value': 0}
         else:
-            action = {'player': player, 'type': 'bet', 'value': linspace[action_index - 4] * pot}
+            action = {'player': player, 'type': 'bet', 'value': (linspace[action_index - 4] * pot) // 1}
 
         return alp, action, policy
     
