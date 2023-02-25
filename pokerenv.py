@@ -8,7 +8,6 @@ class poker_env():
     '''
 
     def __init__(self, n_players) -> None:
-        print('called \n \n')
 
         self.n_players = n_players
 

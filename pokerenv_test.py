@@ -4,6 +4,7 @@ from pokerenv import poker_env as poker
 player_count = 6
 game = poker(player_count)
 print(game.new_hand())
+exit()
 while True:
     for i in range(player_count):
         print(game.get_hand(i))

@@ -39,6 +39,7 @@ class Player(mp.Process):
             while not done:
                 loss = self.local_actor_critic.play_hand()
                 self.optimizer.zero_grad()
+                print(loss)
                 loss.backward()
                 for local_param, global_param in zip(
                         self.local_actor_critic.parameters(),
