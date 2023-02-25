@@ -121,7 +121,6 @@ class actor_critic():
 
         # grad skip softmax -- neural replicator dynamics
         policy = self.softmax(curr_logits)
-        print(policy[-1])
 
         np_dist = np.squeeze(policy[-1].detach().numpy())
         
@@ -129,8 +128,9 @@ class actor_critic():
         # SAMPLE
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
-        alp = torch.log(policy[-1])[action_index] 
-        assert not torch.log(policy[-1]).isnan().any()
+        alp = torch.log(policy[-1] + .0001)[action_index] 
+        print(torch.log(policy[-1]).isnan().any())
+        print(alp)
 
         # DETOKENIZE
         if action_index == 0: # all in
