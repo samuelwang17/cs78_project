@@ -109,7 +109,7 @@ class actor_critic():
         
         linspace = np.geomspace(.5, 2, num  = linspace_dim)
         stack_checker = lambda x: 1 if x * pot >= player_stack else 0
-        mask += stack_checker(linspace) # mask away bets that are larger than stack or all in
+        mask[4:] += np.fromiter((stack_checker(x) for x in linspace), linspace.dtype) # mask away bets that are larger than stack or all in
         tensor_mask = torch.Tensor(mask)
         # apply mask
         curr_logits.masked_fill_(tensor_mask == 1, float('-inf'))
@@ -117,7 +117,7 @@ class actor_critic():
         # grad skip softmax -- neural replicator dynamics
         policy = self.softmax(curr_logits)
 
-        np_dist = np.squeeze(policy.numpy())
+        np_dist = np.squeeze(policy[-1].numpy())
         
 
         # SAMPLE
@@ -128,11 +128,11 @@ class actor_critic():
         # DETOKENIZE
         if action_index == 0: # all in
             action = {'player': player, 'type': 'bet', 'value': player_stack}
-        if action_index == 1: # call
+        elif action_index == 1: # call
             action = {'player': player, 'type': 'call', 'value': 0}
-        if action_index == 2: # fold
+        elif action_index == 2: # fold
             action = {'player': player, 'type': 'fold', 'value': 0}
-        if action_index == 3: # check
+        elif action_index == 3: # check
             action = {'player': player, 'type': 'bet', 'value': 0}
         else:
             action = {'player': player, 'type': 'bet', 'value': linspace[action_index - 4] * pot}
@@ -165,7 +165,7 @@ class actor_critic():
         else:
             self.obs_flat = list(chain(*self.observations))
             self.rewards_flat = list(chain(*self.rewards_flat))
-            self.val_flat = list(chain(*self.values))
+            self.val_flat = list(self.values)
             self.alp_flat = list(chain(*self.action_log_probabilies))
 
     def play_hand(self):
@@ -182,8 +182,7 @@ class actor_critic():
         self.chop_seq() # prepare for input to model
         
         hand_over = False
-        while not hand_over:                
-
+        while not hand_over:
             # get values and policy -- should be in list form over sequence length
             policy_logits, values = self.agent(player, self.obs_flat)
             value = values[-1].detach().numpy()[0,0] # get last value estimate
@@ -191,13 +190,12 @@ class actor_critic():
 
             alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
 
-            alp = torch.log(policy[-1].squeeze(0))[action]
             reward, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
 
             # add new information from this step
             self.rewards[-1].append(reward)
             self.observations[-1].append(obs)
-            self.values[-1].append(value)
+            self.values.append(value)
             self.action_log_probabilies.append(alp)
             
             # prepare for next action
