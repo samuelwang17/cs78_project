@@ -12,9 +12,6 @@ def tokenize(observation):
     30-35 corresponds to the stack size of each player
     '''
     vec = torch.zeros(36)
-    if observation == 'player':
-        print('wtf')
-    print(observation)
     if observation['type'] == 'card':
         vec[6] = 1  # observation is type card
         suit = observation['suit']
