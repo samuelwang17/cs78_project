@@ -421,7 +421,7 @@ class poker_env():
 
         max_score = 0
         winners = []
-        for p in scores:
+        for p in range(len(scores)):
             if scores[p] > max_score:
                 winners = [p]
                 max_score = scores[p]
