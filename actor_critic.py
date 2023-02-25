@@ -73,14 +73,14 @@ class actor_critic():
         self.observations = [] #this will be a list of lists, each is the list of observations in a hand
         self.obs_flat = list(chain(*self.observations))
         
-        self.rewards = [[]] * n_players
-        self.rewards_flat = [list(chain(*self.rewards[x])) for x in range(self.n_players)]
+        self.rewards = []
+        self.rewards_flat = list(chain(*self.rewards))
 
-        self.values = [[]] * n_players
-        self.val_flat = [list(chain(*self.values[x])) for x in range(self.n_players)]
+        self.values = []
+        self.val_flat = list(chain(*self.values))
 
-        self.action_log_probabilies = [[]] * n_players
-        self.alp_flat = [list(chain(*self.action_log_probabilies[x])) for x in range(self.n_players)]
+        self.action_log_probabilies = []
+        self.alp_flat = list(chain(*self.action_log_probabilies))
 
         self.max_sequence = max_sequence
 
@@ -123,7 +123,7 @@ class actor_critic():
         # SAMPLE
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
-        alp = torch.log(policy.squeeze(0))[action_index] 
+        alp = torch.log(policy[-1])[action_index] 
 
         # DETOKENIZE
         if action_index == 0: # all in
@@ -166,9 +166,9 @@ class actor_critic():
         else:
 
             self.obs_flat = list(chain(*self.observations))
-            self.rewards_flat = [list(chain(*self.rewards[x])) for x in range(self.n_players)]
-            self.val_flat = [list(chain(*self.values[x])) for x in range(self.n_players)]
-            self.alp_flat = [list(chain(*self.action_log_probabilies[x])) for x in range(self.n_players)]
+            self.rewards_flat = list(chain(*self.rewards))
+            self.val_flat = list(chain(*self.values))
+            self.alp_flat = list(chain(*self.action_log_probabilies))
 
     def play_hand(self):
         # makes agent play one hand
@@ -178,12 +178,17 @@ class actor_critic():
         self.init_hands() # pre load all of the hands
 
         # init lists for this hand
-        self.observations += [observations] 
-        self.rewards[player] += [rewards]
+        self.observations.append(observations)
+        self.rewards.append(rewards)
         self.chop_seq() # prepare for input to model
-        self.values[player].append([])
-        self.rewards[player].append([])
-        self.action_log_probabilies[player].append([])
+        self.values.append([])
+        self.action_log_probabilies.append([])
+        for x in range(len(rewards)):
+                new_values = [-10000] * self.n_players #-10000 is filler value
+                self.values[-1].append(torch.Tensor(new_values))
+                new_alps = [-10000] * self.n_players
+                self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
+        
         hand_over = False
         while not hand_over:
             # get values and policy -- should be in list form over sequence length
@@ -192,20 +197,31 @@ class actor_critic():
             curr_logits = policy_logits[-1].detach() # get last policy distribution
 
             alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
-
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
 
             # add new information from this step
-            self.rewards[player][-1] += rewards #add tensor
+            self.rewards[-1] += rewards #add tensor
             self.observations[-1] += obs
 
             # value needs to be on a per player basis
-            
-            self.values[player][-1].append(value) #needs to be tensor
-            self.action_log_probabilies[player][-1].append(alp)
+
+            new_values = [-10000] * self.n_players #-10000 is filler value
+            new_values[player] = value
+            self.values[-1].append(torch.Tensor(new_values))
+            for x in range(len(rewards) - 1):
+                new_values = [-10000] * self.n_players #-10000 is filler value
+                self.values[-1].append(torch.Tensor(new_values))
+
+            new_alp = [-10000] * self.n_players
+            new_alp[player] = alp
+            self.action_log_probabilies[-1].append(torch.Tensor(new_alp))
+            for x in range(len(rewards) - 1):
+                new_alps = [-10000] * self.n_players
+                self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
             
             # prepare for next action
             self.chop_seq()
+
         
         Vals_T = [0] * self.n_players
         for player in range(self.n_players):
@@ -213,31 +229,30 @@ class actor_critic():
             Vals_T[player] = V_T[-1].detach().numpy()[0,0]
         
         # process gradients and return loss:
-        return self.get_loss(Vals_T)
+        return self.get_loss(torch.Tensor(Vals_T))
 
     def get_loss(self, Vals_T):
         actor_loss = 0
         critic_loss = 0
         
-        for player in range(self.n_players):
-            Qs = []
-            Q_t = Vals_T[player]
-            for t in reversed(range(len(self.rewards_flat[player]))):
-                print(self.rewards_flat[player][t])
-                print(Q_t)
-                Q_t = self.rewards_flat[player][t] + self.gamma * Q_t
-                Qs[t] = Q_t
-            
-            Qs = torch.FloatTensor(Qs)
-            print(Qs)
-            values = torch.FloatTensor(self.val_flat[player])
-            alps = torch.stack(self.alp_flat[player])
-            advantages = Qs - values
-
-            
-            actor_loss += (-alps * advantages).mean() # loss function for policy going into softmax on backpass
-            critic_loss += 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
+        Qs = [0] * len(self.rewards_flat)
+        Q_t = Vals_T
+        for t in reversed(range(len(self.rewards_flat))):
+            Q_t = self.rewards_flat[t] + self.gamma * Q_t #adds rewards up going backwards to get vals
+            Qs[t] = Q_t
         
-        loss = actor_loss + critic_loss # no entropy in this since that would deviate from deepnash
+        Qs = torch.stack(Qs) #2d tensor sequence, players
+
+        values = torch.stack(self.val_flat)
+
+        # set Qs to filler value where value is filler value
+        Qs.masked_fill(values == -10000, -10000)
+        alps = torch.stack(self.alp_flat) 
+        advantages = Qs - values 
+        
+        actor_loss += (-alps * advantages).mean() # loss function for policy going into softmax on backpass
+        critic_loss += 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
+        
+        loss = actor_loss + critic_loss
         return loss
     
