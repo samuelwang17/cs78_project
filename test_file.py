@@ -15,6 +15,6 @@ worker = actor_critic(
     )
 
 
-loss = worker.play_hand()
+loss,adv = worker.play_hand()
 print(loss)
 loss.backward()

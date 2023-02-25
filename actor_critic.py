@@ -182,7 +182,6 @@ class actor_critic():
         # makes agent play one hand
         # deal cards
         rewards, observations = self.env.new_hand() # start a new hand
-        player = self.env.in_turn
         self.init_hands() # pre load all of the hands
 
         # init lists for this hand
@@ -200,6 +199,7 @@ class actor_critic():
         hand_over = False
         while not hand_over:
             # get values and policy -- should be in list form over sequence length
+            player = self.env.in_turn
             policy_logits, values = self.agent(player, self.obs_flat)
             value = values.squeeze()[-1] # get last value estimate
             curr_logits = policy_logits[-1] # get last policy distribution
@@ -213,18 +213,18 @@ class actor_critic():
 
             # value needs to be on a per player basis
 
-            new_values = [-10000] * self.n_players #-10000 is filler value
+            new_values = [-100000] * self.n_players #-10000 is filler value
             new_values[player] = value
             self.values[-1].append(torch.Tensor(new_values))
             for x in range(len(rewards) - 1):
-                new_values = [-10000] * self.n_players #-10000 is filler value
+                new_values = [-100000] * self.n_players #-10000 is filler value
                 self.values[-1].append(torch.Tensor(new_values))
 
-            new_alp = [-10000] * self.n_players
+            new_alp = [-100000] * self.n_players
             new_alp[player] = alp
             self.action_log_probabilies[-1].append(torch.Tensor(new_alp))
             for x in range(len(rewards) - 1):
-                new_alps = [-10000] * self.n_players
+                new_alps = [-100000] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
             
             # prepare for next action
@@ -246,20 +246,24 @@ class actor_critic():
             Q_t = self.rewards_flat[t] + self.gamma * Q_t #adds rewards up going backwards to get vals
             Qs[t] = Q_t
         
-        Qs = torch.stack(Qs) #2d tensor sequence, players
 
-        values = torch.stack(self.val_flat)
+        # [2:] is a hacky way to not deal with blinds
+        # will need to be changed if multi-hand episodes are used
+
+        Qs = torch.stack(Qs)[2:] #2d tensor sequence, players
+
+        values = torch.stack(self.val_flat)[2:]
 
         # set Qs to filler value where value is filler value
-        Qs.masked_fill(values == -10000, -10000)
-        alps = torch.stack(self.alp_flat) 
+        Qs = Qs.masked_fill(values == -100000, -100000)
+        alps = torch.stack(self.alp_flat)[2:]
         advantages = Qs - values 
         
         actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        return loss
+        return loss, advantages, Qs, values
     
 
     def clear_memory(self):
