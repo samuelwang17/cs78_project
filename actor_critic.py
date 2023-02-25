@@ -29,18 +29,17 @@ class Agent(nn.Module):
             dec_layers = dec_layers,
             action_dim = action_dim,
         )
-
         self.tokenizer =  Tokenizer(model_dim=model_dim)
 
     def init_player(self, player, hand):
         # initialize this players hand and tokenize it, store it in buffer
-        hand_tensor = Tokenizer(hand) #hand needs to be card observations -- list of length two of tensors
+        hand_tensor = self.tokenizer(hand) #hand needs to be card observations -- list of length two of tensors
         self.register_buffer(f'hand_{player}', tensor= hand_tensor)
 
     def forward(self, player, obs_flat):
         #takes flattened inputs in list form, not tokenized
         enc_input = self.get_buffer(f'hand_{player}')
-        dec_input = Tokenizer(obs_flat)
+        dec_input = self.tokenizer(obs_flat)
         policy_logits, value = self.model(enc_input, dec_input)
 
         return policy_logits, value
@@ -171,9 +170,9 @@ class actor_critic():
 
     def play_hand(self):
         # makes agent play one hand
-        
         # deal cards
         rewards, observations = self.env.new_hand() # start a new hand
+        player = self.env.in_turn
         self.init_hands() # pre load all of the hands
 
         # init lists for this hand
@@ -186,7 +185,7 @@ class actor_critic():
         while not hand_over:                
 
             # get values and policy -- should be in list form over sequence length
-            policy_logits, values = self.agent(self.obs_flat)
+            policy_logits, values = self.agent(player, self.obs_flat)
             value = values[-1].detach().numpy()[0,0] # get last value estimate
             curr_logits = policy_logits[-1].detach() # get last policy distribution
 

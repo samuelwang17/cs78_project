@@ -13,7 +13,7 @@ class positional_encoding(nn.Module):
     sequence_length
     ) -> None:
         super().__init__()
-
+        self.model_dim = model_dim
         position = torch.arange(sequence_length).unsqueeze(1)
         freq = torch.exp(torch.arange(0, model_dim, 2) * (-math.log(10000.0) / model_dim))
         pe = torch.zeros(1, sequence_length, model_dim)
@@ -22,7 +22,11 @@ class positional_encoding(nn.Module):
         self.register_buffer('pe', pe)
     
     def forward(self, x):
-        return x + self.pe[:x.size(1)]
+        y = self.pe[:x.size(1)].squeeze()
+        gap = y.size()[0] - x.size()[0]
+        padding = torch.zeros((gap, self.model_dim))
+        x = torch.cat([padding, x])
+        return x + self.pe[:x.size(1)].squeeze()
 
 
 class decoder_layer(nn.Module):
@@ -77,14 +81,13 @@ class decoder_layer(nn.Module):
         # consider output sequence length and 
         y = self.ln1(x)
         enc = self.ln1(enc)
-        y = self.cross_mha(enc, x)
+        y = self.cross_mha(x, enc)
         x = self.gate2(x, self.activation(y))
 
         # position-wise multi layper perceptron
         y = self.ln1(x)
         y = self.mlp(y)
         x = self.gate2(x, self.activation(y))
-        
         return x
 
 class decoder(nn.Module):
@@ -116,8 +119,7 @@ class decoder(nn.Module):
         
     def forward(self, x, y):
         # y is input from encoder
-        x = self.pe(x)
+        x = self.pe(x).squeeze()
         for layer in self.block:
             x = layer(x,y)
-            
         return x

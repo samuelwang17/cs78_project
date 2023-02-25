@@ -53,7 +53,6 @@ class encoder(nn.Module):
     model_dim,
     mlp_dim,
     heads,
-    sequence_length
     ) -> None:
         super().__init__()
         

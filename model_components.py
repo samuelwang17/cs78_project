@@ -34,6 +34,7 @@ class gru(nn.Module):
         self.tanh = nn.Tanh()
 
     def forward(self, x, y):
+
         r = self.sigmoid(self.w_r(y) + self.u_r(x))
         z = self.sigmoid(self.w_z(y) + self.u_z(x) - self.b_g) # when zero, gate passes identity of residual
         h_hat = self.tanh(self.w_g(y) + self.u_g(r * x))
@@ -65,7 +66,7 @@ class cross_attention(nn.Module):
             )
     
     def forward(self, x, enc):
-
+        x = x.squeeze()
         return self.attention(x, enc, enc)[0]
 
 class self_attention(nn.Module):

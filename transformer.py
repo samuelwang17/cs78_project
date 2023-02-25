@@ -24,7 +24,6 @@ class mod_transformer(nn.Module):
             model_dim=model_dim,
             mlp_dim=mlp_dim,
             heads=attn_heads,
-            sequence_length = sequence_length
         )
 
         self.decoder = decoder(
@@ -50,7 +49,6 @@ class mod_transformer(nn.Module):
     def forward(self, enc_input, dec_input):
 
         enc = self.encoder(enc_input)
-        dec_input = self.positional_encoder(dec_input)
         dec = self.decoder(dec_input, enc)
         policy_logits = self.actor(dec)
         value = self.critic(dec)
