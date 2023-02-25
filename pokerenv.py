@@ -45,12 +45,12 @@ class poker_env():
         # big blind is 2, small blind is 1
         small_blind = {'player': self.in_turn, 'type': 'bet', 'value': 1, 'pot': self.pot, 'p1': self.stacks[0],
                        'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}
-        rewards_1, observations_1 = self.take_action(small_blind)
+        rewards_1, observations_1, hand_over = self.take_action(small_blind)
 
         big_blind_player = self.in_turn
         big_blind = {'player': big_blind_player, 'type': 'bet', 'value': 2, 'pot': self.pot, 'p1': self.stacks[0],
                        'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}
-        rewards_2, observations_2 = self.take_action(big_blind)
+        rewards_2, observations_2, hand_over = self.take_action(big_blind)
         self.took_action[big_blind_player] = False
 
         rewards_1 += rewards_2
