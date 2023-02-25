@@ -39,8 +39,7 @@ class mod_transformer(nn.Module):
         self.actor = nn.Sequential(
             nn.Linear(model_dim, action_dim),
             nn.ReLU(),
-            grad_skip_softmax() # To do neural replicator dynamics
-        )
+        ) # actor returns logits, softmax handled at higher level
 
         self.critic = nn.Sequential(
             nn.Linear(model_dim, mlp_dim),
@@ -54,6 +53,6 @@ class mod_transformer(nn.Module):
         enc = self.encoder(enc_input)
         dec_input = self.positional_encoder(dec_input)
         dec = self.decoder(dec_input, enc)
-        policy = self.actor(dec)
+        policy_logits = self.actor(dec)
         value = self.critic(dec)
-        return policy, value
+        return policy_logits, value

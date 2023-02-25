@@ -6,6 +6,8 @@ from transformer import mod_transformer as RLformer
 from tokenizer import Tokenizer
 from pokerenv import poker_env
 from itertools import chain
+import numpy as np
+from model_components import grad_skip_softmax
 
 class Agent(nn.Module):
     def __init__(self,
@@ -29,7 +31,7 @@ class Agent(nn.Module):
         )
 
         self.tokenizer =  Tokenizer(model_dim=model_dim)
-    
+
     def init_player(self, player, hand):
         # initialize this players hand and tokenize it, store it in buffer
         hand_tensor = Tokenizer(hand) #hand needs to be card observations -- list of length two of tensors
@@ -39,9 +41,9 @@ class Agent(nn.Module):
         #takes flattened inputs in list form, not tokenized
         enc_input = self.get_buffer(f'hand_{player}')
         dec_input = Tokenizer(obs_flat)
-        policy, value = self.model(enc_input, dec_input)
+        policy_logits, value = self.model(enc_input, dec_input)
 
-        return policy, value
+        return policy_logits, value
 
 class actor_critic():
     #Needs to be able to run hand, return loss with grad enabled
@@ -87,8 +89,57 @@ class actor_critic():
 
         self.n_actions = n_actions
 
-        self.detokenize = None #detokenizer HERE
+        self.softmax = grad_skip_softmax()
 
+
+    def sample_action(self, curr_logits):
+        # MASK, SAMPLE, DETOKENIZE
+        # get the player about to act
+        player = self.env.in_turn
+        player_stack = self.env.stacks[player]
+        pot = self.env.pot
+        linspace_dim = self.n_actions - 4
+        assert linspace_dim > 0
+        
+        # MASK
+        mask = [0] * self.n_actions
+        if self.env.behind[player] != 0:
+            mask[3] = 1 # cannot check
+        else:
+            mask[2] = 1 # cannot fold if not facing a bet
+        
+        linspace = np.geomspace(.5, 2, num  = linspace_dim)
+        stack_checker = lambda x: 1 if x * pot >= player_stack else 0
+        mask += stack_checker(linspace) # mask away bets that are larger than stack or all in
+        tensor_mask = torch.Tensor(mask)
+        # apply mask
+        curr_logits.masked_fill_(tensor_mask == 1, float('-inf'))
+
+        # grad skip softmax -- neural replicator dynamics
+        policy = self.softmax(curr_logits)
+
+        np_dist = np.squeeze(policy.numpy())
+        
+
+        # SAMPLE
+        action_index = np.random.choice(self.n_actions, p=np_dist)
+        # calculate action log prob for use in advantage later
+        alp = torch.log(policy.squeeze(0))[action_index] 
+
+        # DETOKENIZE
+        if action_index == 0: # all in
+            action = {'player': player, 'type': 'bet', 'value': player_stack}
+        if action_index == 1: # call
+            action = {'player': player, 'type': 'call', 'value': 0}
+        if action_index == 2: # fold
+            action = {'player': player, 'type': 'fold', 'value': 0}
+        if action_index == 3: # check
+            action = {'player': player, 'type': 'bet', 'value': 0}
+        else:
+            action = {'player': player, 'type': 'bet', 'value': linspace[action_index - 4] * pot}
+
+        return alp, action, policy
+    
     def init_hands(self):
         # get all hands
         # run encoder for each of players
@@ -135,17 +186,13 @@ class actor_critic():
         while not hand_over:                
 
             # get values and policy -- should be in list form over sequence length
-            policy, values = self.agent(self.obs_flat)
+            policy_logits, values = self.agent(self.obs_flat)
             value = values[-1].detach().numpy()[0,0] # get last value estimate
-            dist = policy[-1].detach().numpy() # get last policy distribution
+            curr_logits = policy_logits[-1].detach() # get last policy distribution
 
-            # randomly sample an action
-            action = np.random.choice(self.n_actions, p=np.squeeze(dist))
+            alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
 
-            # UNFINISHED: Need to detokenize actions HERE
-            action = self.detokenize(action)
-
-            alp = torch.log(policy.squeeze(0)[action])
+            alp = torch.log(policy[-1].squeeze(0))[action]
             reward, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
 
             # add new information from this step
