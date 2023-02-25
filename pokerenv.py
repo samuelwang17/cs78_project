@@ -361,14 +361,14 @@ class poker_env():
             # sort ranks now that high cards matter
             ranks = []
             for card in cards:
-                ranks += card[1]
+                ranks.append(card[1])
             ranks.sort()
 
             # trips
             if first_count == 3:
                 high = 0
                 second_high = 0
-                pos = 7
+                pos = 6
                 while high == 0 and second_high == 0:
                     if ranks[pos] == first_rank:
                         pass
@@ -384,7 +384,7 @@ class poker_env():
             # two pair
             if first_count == 2 and second_count == 2:
                 high = 0
-                pos = 7
+                pos = 6
                 while high == 0:
                     if ranks[pos] == first_rank or ranks[pos] == second_rank:
                         pass
@@ -401,7 +401,7 @@ class poker_env():
                 high = 0
                 second_high = 0
                 third_high = 0
-                pos = 7
+                pos = 6
                 while high == 0 and second_high == 0 and third_high == 0:
                     if ranks[pos] == first_rank or ranks[pos] == second_rank:
                         pass
@@ -416,7 +416,7 @@ class poker_env():
                 continue
 
             # high card
-            scores[p] = 0.2 * ranks[7] + 0.01 * ranks[6] + 0.002 * ranks[5] + 0.0005 * ranks[4] + 0.00001 * ranks[3]
+            scores[p] = 0.2 * ranks[6] + 0.01 * ranks[5] + 0.002 * ranks[4] + 0.0005 * ranks[3] + 0.00001 * ranks[2]
             continue
 
         max_score = 0
