@@ -18,7 +18,7 @@ class poker_env():
         self.button = 0  # button starts at player 0 WLOG
 
         self.deck = []
-        for suit in ["hearts", "diamonds", "spades", "clubs"]:
+        for suit in ["h", "d", "s", "c"]:
             for rank in range(2, 15):
                 self.deck += [[suit, rank]]
 
@@ -250,7 +250,7 @@ class poker_env():
             cards = self.community_cards + self.hands[p]
 
             rank_count = [0] * 13
-            suit_count = {"hearts": 0, "diamonds": 0, "spades": 0, "clubs": 0}
+            suit_count = {"h": 0, "d": 0, "s": 0, "c": 0}
 
             for card in cards:
                 suit_count[card[0]] += 1

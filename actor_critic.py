@@ -178,9 +178,9 @@ class actor_critic():
         # init lists for this hand
         self.observations += [observations] 
         self.rewards += [rewards]
-
         self.chop_seq() # prepare for input to model
-        
+        self.values.append([])
+        self.rewards.append([])
         hand_over = False
         while not hand_over:
             # get values and policy -- should be in list form over sequence length
@@ -193,15 +193,15 @@ class actor_critic():
             reward, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
 
             # add new information from this step
-            self.rewards[-1].append(reward)
-            self.observations[-1].append(obs)
-            self.values.append(value)
+            self.rewards[-1] += rewards
+            self.observations[-1] += obs
+            self.values[-1].append(value)
             self.action_log_probabilies.append(alp)
             
             # prepare for next action
             self.chop_seq()
         
-        V_T, _ = self.agent(self.obs_flat)
+        V_T, _ = self.agent(player, self.obs_flat)
         
         # process gradients and return loss:
         return self.get_loss(V_T)
