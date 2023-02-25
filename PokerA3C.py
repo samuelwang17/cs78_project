@@ -4,6 +4,7 @@ import torch
 import torch.optim as optim
 import os
 from pokerenv import poker_env
+from actor_critic import *
 import torch.multiprocessing as mp
 from shared_adam import SharedAdam
 from transformer import *
@@ -13,20 +14,30 @@ from transformer import *
 
 class Player(mp.Process):
     def __init__(self, global_actor_critic, global_ep_idx, optimizer, player_params):
-        super(Agent, self).__init__()
-        self.local_actor_critic = actor_critic(player_params)
+        super(Player, self).__init__()
+        self.local_actor_critic = actor_critic(
+            model_dim=player_params[0],
+            mlp_dim=player_params[1],
+            heads=player_params[2],
+            enc_layers=player_params[3],
+            dec_layers=player_params[4],
+            max_sequence=player_params[5],
+            n_players=player_params[6],
+            gamma=player_params[7],
+            n_actions=player_params[8]
+        )
         self.global_actor_critic = global_actor_critic
         self.episode_idx = global_ep_idx
         self.optimizer = optimizer
+        self.N_GAMES = 1000
 
     def run(self):
         t_step = 1
-        while self.episode_idx.value < N_GAMES:
+        while self.episode_idx.value < self.N_GAMES:
             done = False
             score = 0
-            self.local_actor_critic.clear_memory()
             while not done:
-                loss = self.local_actor_critic.calc_loss(done)
+                loss = self.local_actor_critic.play_hand()
                 self.optimizer.zero_grad()
                 loss.backward()
                 for local_param, global_param in zip(
@@ -49,33 +60,31 @@ if __name__ == '__main__':
     actor_count = 64
     # actor parameters
     max_sequence = 200
-    n_players = 2
+    n_players = 6
     gamma = .8
     n_actions = 10
     # model parameters
-    model_dim = 0
-    mlp_dim = 0
-    attn_heads = 0
-    sequence_length = 0
-    enc_layers = 0
-    dec_layers = 0
-    action_dim = 0
-    learning_rate = 0
-    player_params = [max_sequence, n_players, gamma, n_actions]
+    model_dim = 64
+    mlp_dim = 128
+    attn_heads = 4
+    sequence_length = 100
+    enc_layers = 2
+    dec_layers = 2
+    action_dim = 14
+    learning_rate = .01
+    player_params = [model_dim, mlp_dim, attn_heads, enc_layers, dec_layers, sequence_length, n_players, learning_rate, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, dec_layers, action_dim]
     # create poker environment
-    env = poker_env(n_players)
     # initialize global model
     global_model = RLformer(* model_params)
     global_model.share_memory()
     optimizer = SharedAdam(global_model.parameters(), lr=learning_rate)
-    optimizer.share_memory()
     global_ep, global_ep_r, res_queue = mp.Value('i', 0), mp.Value('d', 0.), mp.Queue()
     # initialize players
     players = []
     for i in range(actor_count):
         player = Player(global_model, global_ep, optimizer, player_params)
-        players.push(player)
+        players.append(player)
     [player.start() for player in players]
     [player.join() for player in players]
 
