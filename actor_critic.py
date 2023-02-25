@@ -116,11 +116,9 @@ class actor_critic():
         stack_checker = lambda x: 1 if x * pot >= player_stack else 0
         mask[4:] += np.fromiter((stack_checker(x) for x in linspace), linspace.dtype) # mask away bets that are larger than stack or all in
         tensor_mask = torch.Tensor(mask)
-        # apply mask
-        curr_logits.masked_fill_(tensor_mask == 1, float('-inf'))
 
-        # grad skip softmax -- neural replicator dynamics
-        policy = self.softmax(curr_logits)
+        # grad skip softmax -- neural replicator dynamics, with mask
+        policy = self.softmax(curr_logits.masked_fill(tensor_mask == 1, float('-inf')))
 
         np_dist = np.squeeze(policy[-1].detach().numpy())
         
@@ -128,7 +126,7 @@ class actor_critic():
         # SAMPLE
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
-        alp = torch.log(policy[-1] + .0001)[action_index] 
+        alp = torch.log(policy[-1] + .00001)[action_index] #.0001 used to avoid log(0) causing grad issues
         print(torch.log(policy[-1]).isnan().any())
         print(alp)
 
