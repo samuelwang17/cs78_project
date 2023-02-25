@@ -7,6 +7,7 @@ import torch
 
 'https://github.com/MorvanZhou/pytorch-A3C'
 
+
 class SharedAdam(torch.optim.Adam):
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.99), eps=1e-8,
                  weight_decay=0):

@@ -64,7 +64,6 @@ class encoder(nn.Module):
                 embed_dim = model_dim,
                 mlp_dim = mlp_dim,
                 attention_heads = heads,
-                sequence_length = sequence_length
             ))
             
     def forward(self, x):
