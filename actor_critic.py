@@ -69,6 +69,7 @@ class actor_critic():
             action_dim = n_actions,
         )
         self.n_players = n_players
+
         self.observations = [] #this will be a list of lists, each is the list of observations in a hand
         self.obs_flat = list(chain(*self.observations))
         
@@ -148,9 +149,13 @@ class actor_critic():
     def chop_seq(self):
         #if length of observations is above a certain size, chop it back down to under sequence length by removing oldest hand
         #return flattened version to give to model on next run
-        if len(self.observations) > self.max_sequence:
+        self.obs_flat = list(chain(*self.observations))
+        if len(self.obs_flat) > self.max_sequence:
+            before = len(self.obs_flat)
             self.observations = self.observations[1:]
             self.obs_flat = list(chain(*self.observations))
+            after = len(self.obs_flat)
+            assert len(self.obs_flat) <= self.max_sequence, f'prechop: {before}, postchop: {after}'
 
             self.rewards = self.rewards[1:]
             self.rewards_flat = list(chain(*self.rewards))
@@ -161,6 +166,7 @@ class actor_critic():
 
             self.action_log_probabilies = self.action_log_probabilies[1:]
             self.alp_flat = list(chain(*self.action_log_probabilies))
+            
 
         else:
 
@@ -168,6 +174,9 @@ class actor_critic():
             self.rewards_flat = list(chain(*self.rewards))
             self.val_flat = list(chain(*self.values))
             self.alp_flat = list(chain(*self.action_log_probabilies))
+        
+        assert len(self.obs_flat) <= self.max_sequence
+
 
     def play_hand(self):
         # makes agent play one hand
@@ -194,8 +203,6 @@ class actor_critic():
             policy_logits, values = self.agent(player, self.obs_flat)
             value = values.squeeze()[-1] # get last value estimate
             curr_logits = policy_logits[-1] # get last policy distribution
-
-            #print('in_loop', values.requires_grad, curr_logits.requires_grad)
 
             alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
@@ -252,9 +259,6 @@ class actor_critic():
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        print(critic_loss, critic_loss.requires_grad)
-        print(actor_loss, actor_loss.requires_grad)
-        print(loss.requires_grad)
         return loss
     
 

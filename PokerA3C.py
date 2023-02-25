@@ -57,28 +57,29 @@ class Player(mp.Process):
 
 if __name__ == '__main__':
     torch.manual_seed(0)
-    N_GAMES = 1000000000
-    actor_count = 64
+    N_GAMES = 100
+    actor_count = 4
     # actor parameters
-    max_sequence = 200
+    max_sequence = 100
     n_players = 6
-    gamma = .8
-    n_actions = 10
+    gamma = .98
+    n_actions = 14
     # model parameters
     model_dim = 64
     mlp_dim = 128
     attn_heads = 4
     sequence_length = 100
-    enc_layers = 2
-    dec_layers = 2
+    enc_layers = 3
+    dec_layers = 4
     action_dim = 14
-    learning_rate = .01
+    learning_rate = .0001
     player_params = [model_dim, mlp_dim, attn_heads, enc_layers, dec_layers, sequence_length, n_players, learning_rate, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, dec_layers, action_dim]
     # create poker environment
     # initialize global model
     global_model = RLformer(* model_params)
     global_model.share_memory()
+    print('Parameter_count: ', sum(p.numel() for p in global_model.parameters() if p.requires_grad))
     optimizer = SharedAdam(global_model.parameters(), lr=learning_rate)
     global_ep, global_ep_r, res_queue = mp.Value('i', 0), mp.Value('d', 0.), mp.Queue()
     # initialize players
