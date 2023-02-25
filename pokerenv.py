@@ -20,7 +20,7 @@ class poker_env():
         self.deck = []
         for suit in ["hearts", "diamonds", "spades", "clubs"]:
             for rank in range(2, 15):
-                self.deck += [suit, rank]
+                self.deck += [[suit, rank]]
 
     def new_hand(self):
         self.community_cards = []
@@ -40,14 +40,16 @@ class poker_env():
         # deal cards, pass to agents
         random.shuffle(self.deck)
         for i in range(self.n_players):
-            self.hands += self.get_next_cards(2)
+            self.hands += [self.get_next_cards(2)]
 
         # big blind is 2, small blind is 1
-        small_blind = {'player': self.in_turn, 'type': 'bet', 'value': 1}
+        small_blind = {'player': self.in_turn, 'type': 'bet', 'value': 1, 'pot': self.pot, 'p1': self.stacks[0],
+                       'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}
         rewards_1, observations_1 = self.take_action(small_blind)
 
         big_blind_player = self.in_turn
-        big_blind = {'player': big_blind_player, 'type': 'bet', 'value': 2}
+        big_blind = {'player': big_blind_player, 'type': 'bet', 'value': 2, 'pot': self.pot, 'p1': self.stacks[0],
+                       'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}
         rewards_2, observations_2 = self.take_action(big_blind)
         self.took_action[big_blind_player] = False
 
@@ -58,8 +60,14 @@ class poker_env():
 
     def get_hand(self, player):
         if len(self.hands) == 0:
-            return None
-        return self.hands[player]
+                    return None
+        card_observations = []
+        for card in self.hands[player]:
+            card_observations += [{'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot, 'p1': self.stacks[0],
+                    'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}]
+
+        
+        return card_observations
 
     def take_action(self, action):
         '''
@@ -70,6 +78,14 @@ class poker_env():
         Rewards implementation currently changing -- very fucked up rn
         '''
         rewards = [torch.zeros(self.n_players)]
+
+        action['pot'] = self.pot
+        action['p1'] = self.stacks[0]
+        action['p2'] = self.stacks[1]
+        action['p3'] = self.stacks[2]
+        action['p4'] = self.stacks[3]
+        action['p5'] = self.stacks[4]
+        action['6'] = self.stacks[5]
 
         observations = [action]  # first observation returned is always the action being taken
         player = action['player']
@@ -141,7 +157,8 @@ class poker_env():
                 if self.in_hand[p]:
                     # payout!
                     advance_stage_rewards[0][p] += self.pot
-                    advance_stage_observations += {'player': p, 'type': 'win', 'value': self.pot}
+                    advance_stage_observations += {'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot, 'p1': self.stacks[0],
+                       'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
             advance_stage_observations += new_hand_observations
@@ -160,7 +177,8 @@ class poker_env():
             winners = self.determine_showdown_winners()
             for p in winners:
                 advance_stage_rewards[0][p] += self.pot / len(winners)
-                advance_stage_observations += {'player': p, 'type': 'win', 'value': self.pot / len(winners)}
+                advance_stage_observations += {'player': p, 'type': 'win', 'value': self.pot / len(winners), 'pot': self.pot, 'p1': self.stacks[0],
+                       'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}
 
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
@@ -173,13 +191,19 @@ class poker_env():
         if self.stage == 0:
             # revealing the flop
             card_rewards = [torch.zeros(self.n_players)] * 3  # card reveals have reward zero
-            card_observations = self.get_next_cards(3)
-            self.community_cards.extend(card_observations)
+            cards = self.get_next_cards(3)
+            self.community_cards.extend(cards)
+            card_observations = []
+            for card in cards:
+                card_observations += {'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot, 'p1': self.stacks[0],
+                       'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}
         else:
             # one card to be revealed
             card_rewards = torch.zeros(self.n_players)
-            card_observations = self.get_next_cards(1)
-            self.community_cards.extend(card_observations)
+            card = self.get_next_cards(1)
+            self.community_cards += card
+            card_observations = [{'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot, 'p1': self.stacks[0],
+                       'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3], 'p5': self.stacks[4], 'p6': self.stacks[5]}]
         self.in_turn = (self.button + 1) % self.n_players
 
         return card_rewards, card_observations
