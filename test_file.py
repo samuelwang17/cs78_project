@@ -1,8 +1,6 @@
-#%%
+
 
 from actor_critic import actor_critic
-
-#%%
 
 worker = actor_critic(
     model_dim = 64,
@@ -17,7 +15,6 @@ worker = actor_critic(
     )
 
 
-worker.play_hand()
-#%%
-
-
+loss = worker.play_hand()
+print(loss)
+loss.backward()

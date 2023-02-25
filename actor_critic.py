@@ -41,7 +41,6 @@ class Agent(nn.Module):
         enc_input = self.get_buffer(f'hand_{player}')
         dec_input = self.tokenizer(obs_flat)
         policy_logits, value = self.model(enc_input, dec_input)
-
         return policy_logits, value
 
 class actor_critic():
@@ -117,7 +116,7 @@ class actor_critic():
         # grad skip softmax -- neural replicator dynamics
         policy = self.softmax(curr_logits)
 
-        np_dist = np.squeeze(policy[-1].numpy())
+        np_dist = np.squeeze(policy[-1].detach().numpy())
         
 
         # SAMPLE
@@ -193,8 +192,10 @@ class actor_critic():
         while not hand_over:
             # get values and policy -- should be in list form over sequence length
             policy_logits, values = self.agent(player, self.obs_flat)
-            value = values[-1].detach().numpy()[0,0] # get last value estimate
-            curr_logits = policy_logits[-1].detach() # get last policy distribution
+            value = values.squeeze()[-1] # get last value estimate
+            curr_logits = policy_logits[-1] # get last policy distribution
+
+            #print('in_loop', values.requires_grad, curr_logits.requires_grad)
 
             alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
@@ -225,16 +226,13 @@ class actor_critic():
         
         Vals_T = [0] * self.n_players
         for player in range(self.n_players):
-            V_T, _ = self.agent(player, self.obs_flat)
-            Vals_T[player] = V_T[-1].detach().numpy()[0,0]
+            _, V_T = self.agent(player, self.obs_flat)
+            Vals_T[player] = V_T.squeeze()[-1]
         
         # process gradients and return loss:
-        return self.get_loss(torch.Tensor(Vals_T))
+        return self.get_loss(torch.stack(Vals_T))
 
     def get_loss(self, Vals_T):
-        actor_loss = 0
-        critic_loss = 0
-        
         Qs = [0] * len(self.rewards_flat)
         Q_t = Vals_T
         for t in reversed(range(len(self.rewards_flat))):
@@ -250,9 +248,12 @@ class actor_critic():
         alps = torch.stack(self.alp_flat) 
         advantages = Qs - values 
         
-        actor_loss += (-alps * advantages).mean() # loss function for policy going into softmax on backpass
-        critic_loss += 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
+        actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
+        critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
+        print(critic_loss, critic_loss.requires_grad)
+        print(actor_loss, actor_loss.requires_grad)
+        print(loss.requires_grad)
         return loss
     
