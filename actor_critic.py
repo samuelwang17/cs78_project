@@ -190,7 +190,7 @@ class actor_critic():
 
             alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
 
-            reward, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
+            rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
 
             # add new information from this step
             self.rewards[-1] += rewards
@@ -206,12 +206,12 @@ class actor_critic():
         # process gradients and return loss:
         return self.get_loss(V_T)
 
-    def get_loss(self, values, rewards, V_T):
+    def get_loss(self, V_T):
 
         Qs = []
         Q_t = V_T
-        for t in reversed(range(len(rewards))):
-            Q_t = rewards[t] + self.gamma * Q_t
+        for t in reversed(range(len(self.rewards_flat))):
+            Q_t = self.rewards_flat[t] + self.gamma * Q_t
             Qs[t] = Q_t
         
         Qs = torch.FloatTensor(Qs)

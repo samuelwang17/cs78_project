@@ -164,10 +164,10 @@ class poker_env():
                 if self.in_hand[p]:
                     # payout!
                     advance_stage_rewards[0][p] += self.pot
-                    advance_stage_observations += {'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot,
+                    advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot,
                                                    'p1': self.stacks[0],
                                                    'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3],
-                                                   'p5': self.stacks[4], 'p6': self.stacks[5]}
+                                                   'p5': self.stacks[4], 'p6': self.stacks[5]}]
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
             advance_stage_observations += new_hand_observations
