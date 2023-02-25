@@ -164,6 +164,7 @@ class poker_env():
                 if self.in_hand[p]:
                     # payout!
                     advance_stage_rewards[0][p] += self.pot
+                    self.stacks[p] = self.pot
                     advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot,
                                                    'p1': self.stacks[0],
                                                    'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3],
@@ -187,6 +188,7 @@ class poker_env():
             winners = self.determine_showdown_winners()
             for p in winners:
                 advance_stage_rewards[0][p] += self.pot / len(winners)
+                self.stacks[p] = self.pot / len(winners)
                 advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot / len(winners),
                                                'pot': self.pot, 'p1': self.stacks[0],
                                                'p2': self.stacks[1], 'p3': self.stacks[2], 'p4': self.stacks[3],
