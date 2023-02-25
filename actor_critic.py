@@ -64,7 +64,7 @@ class actor_critic():
         self.agent = Agent(
             model_dim = model_dim,
             mlp_dim = mlp_dim,
-            attn_head = heads,
+            attn_heads = heads,
             sequence_length = max_sequence,
             enc_layers = enc_layers,
             dec_layers = dec_layers,

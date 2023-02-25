@@ -3,7 +3,6 @@
 import torch.nn as nn
 from encoder import encoder
 from decoder import decoder
-from model_components import grad_skip_softmax
 
 
 class mod_transformer(nn.Module):
