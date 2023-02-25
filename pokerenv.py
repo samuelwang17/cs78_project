@@ -138,7 +138,7 @@ class poker_env():
                 square_check = False
 
         hand_over = False
-        if square_check:
+        if square_check or sum(self.in_hand) == 1:
             # advance stage, and any other subcalls that come with that
             advance_stage_rewards, advance_stage_observations, hand_ovr = self.advance_stage()
             if hand_ovr:
