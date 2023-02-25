@@ -1,5 +1,5 @@
 
-
+import torch
 from actor_critic import actor_critic
 
 worker = actor_critic(
@@ -14,7 +14,8 @@ worker = actor_critic(
     n_actions = 14
     )
 
+with torch.autograd.set_detect_anomaly(True):
+    loss, adv, Qs, values, alps = worker.play_hand()
+    print(loss)
+    loss.backward()
 
-loss,adv = worker.play_hand()
-print(loss)
-loss.backward()

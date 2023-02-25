@@ -90,6 +90,11 @@ class actor_critic():
 
         self.softmax = grad_skip_softmax()
 
+        self.padding = nn.ConstantPad1d(
+            padding = n_players - 1,
+            value = -100000
+        )
+
 
     def sample_action(self, curr_logits):
         # MASK, SAMPLE, DETOKENIZE
@@ -116,6 +121,7 @@ class actor_critic():
 
         # grad skip softmax -- neural replicator dynamics
         policy = self.softmax(curr_logits)
+        print(policy[-1])
 
         np_dist = np.squeeze(policy[-1].detach().numpy())
         
@@ -124,6 +130,7 @@ class actor_critic():
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
         alp = torch.log(policy[-1])[action_index] 
+        assert not torch.log(policy[-1]).isnan().any()
 
         # DETOKENIZE
         if action_index == 0: # all in
@@ -202,6 +209,7 @@ class actor_critic():
             player = self.env.in_turn
             policy_logits, values = self.agent(player, self.obs_flat)
             value = values.squeeze()[-1] # get last value estimate
+            assert value.requires_grad
             curr_logits = policy_logits[-1] # get last policy distribution
 
             alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
@@ -213,16 +221,15 @@ class actor_critic():
 
             # value needs to be on a per player basis
 
-            new_values = [-100000] * self.n_players #-10000 is filler value
-            new_values[player] = value
-            self.values[-1].append(torch.Tensor(new_values))
+            new_values = self.padding(value.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
+            self.values[-1].append(new_values)
             for x in range(len(rewards) - 1):
                 new_values = [-100000] * self.n_players #-10000 is filler value
+                # fill_tensor = torch.Tensor(new_values)
                 self.values[-1].append(torch.Tensor(new_values))
-
-            new_alp = [-100000] * self.n_players
-            new_alp[player] = alp
-            self.action_log_probabilies[-1].append(torch.Tensor(new_alp))
+            
+            new_alp = self.padding(alp.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
+            self.action_log_probabilies[-1].append(new_alp)
             for x in range(len(rewards) - 1):
                 new_alps = [-100000] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
@@ -263,7 +270,7 @@ class actor_critic():
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        return loss, advantages, Qs, values
+        return loss, advantages, Qs, values, alps
     
 
     def clear_memory(self):
