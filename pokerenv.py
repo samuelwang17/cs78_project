@@ -201,7 +201,7 @@ class poker_env():
 
     def card_reveal(self):
 
-        if self.stage == 0:
+        if self.stage == 1:
             # revealing the flop
             card_rewards = [torch.zeros(self.n_players)] * 3  # card reveals have reward zero
             cards = self.get_next_cards(3)
