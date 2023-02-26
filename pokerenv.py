@@ -129,12 +129,14 @@ class poker_env():
         if type == 'call':
             # need to catch up to current bet
             call_size = self.behind[player]
-            self.behind[player] = 0
+            observations[0]['value'] = call_size
             self.current_bets[player] += call_size
 
             # move money from player to pot
             self.stacks[player] -= call_size
             self.pot += call_size
+
+            self.behind[player] = 0
 
             # reward is negative of amount bet
             rewards[0][player] = -1 * call_size
