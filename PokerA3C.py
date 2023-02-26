@@ -82,6 +82,10 @@ if __name__ == '__main__':
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, dec_layers, action_dim]
     # create poker environment
     # initialize global model
+
+    with open("hand_replays.txt", 'w') as file:
+        file.writelines("Hand History \n")
+
     global_model = RLformer(* model_params)
     global_model.share_memory()
     print('Parameter_count: ', sum(p.numel() for p in global_model.parameters() if p.requires_grad))

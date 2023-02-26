@@ -1,6 +1,5 @@
 import torch
 import random
-import os
 
 class poker_env():
     '''
@@ -192,18 +191,12 @@ class poker_env():
             advance_stage_observations += new_hand_observations
             hand_over = True
 
-            if os.path.isfile(self.filename):
-                with open(self.filename, 'a') as file:
-                    self.history.append("\n\n")
-                    self.history.append("Hand End\n")
-                    self.history.append("--------------------------------------------------------------------------------\n")
-                    file.writelines(self.history)
-            else:
-                with open(self.filename, 'w') as file:
-                    self.history.append("\n\n")
-                    self.history.append("Hand End\n")
-                    self.history.append("--------------------------------------------------------------------------------\n")
-                    file.writelines(self.history)
+            with open(self.filename, 'a') as file:
+                self.history.append("\n\n")
+                self.history.append("Hand End\n")
+                self.history.append("--------------------------------------------------------------------------------\n")
+                file.writelines(self.history)
+
         # advance stage if not river
         elif self.stage != 3:
             self.stage += 1
@@ -227,18 +220,12 @@ class poker_env():
             advance_stage_observations += new_hand_observations
             hand_over = True
 
-            if os.path.isfile(self.filename):
-                with open(self.filename, 'a') as file:
-                    self.history.append("\n\n")
-                    self.history.append("Hand End\n")
-                    self.history.append("--------------------------------------------------------------------------------\n")
-                    file.writelines(self.history)
-            else:
-                with open(self.filename, 'w') as file:
-                    self.history.append("\n\n")
-                    self.history.append("Hand End\n")
-                    self.history.append("--------------------------------------------------------------------------------\n")
-                    file.writelines(self.history)
+            with open(self.filename, 'a') as file:
+                self.history.append("\n\n")
+                self.history.append("Hand End\n")
+                self.history.append(
+                    "--------------------------------------------------------------------------------\n")
+                file.writelines(self.history)
         return advance_stage_rewards, advance_stage_observations, hand_over
 
     def card_reveal(self):
