@@ -228,17 +228,17 @@ class poker_env():
             hand_over = True
 
             if os.path.isfile(self.filename):
-                with open(self.filename, 'w') as file:
-                    file.writelines(self.history)
-                    file.write("\n\n")
-                    file.write("Hand End\n")
-                    file.write("--------------------------------------------------------------------------------\n")
-            else:
                 with open(self.filename, 'a') as file:
+                    self.history.append("\n\n")
+                    self.history.append("Hand End\n")
+                    self.history.append("--------------------------------------------------------------------------------\n")
                     file.writelines(self.history)
-                    file.write("\n\n")
-                    file.write("Hand End\n")
-                    file.write("--------------------------------------------------------------------------------\n")
+            else:
+                with open(self.filename, 'w') as file:
+                    self.history.append("\n\n")
+                    self.history.append("Hand End\n")
+                    self.history.append("--------------------------------------------------------------------------------\n")
+                    file.writelines(self.history)
         return advance_stage_rewards, advance_stage_observations, hand_over
 
     def card_reveal(self):
