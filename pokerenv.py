@@ -164,7 +164,7 @@ class poker_env():
 
         hand_over = False
         # if action count = 3, then big blind is still left to act
-        if (square_check or sum(self.in_hand) == 1) and self.action_count != 3:
+        if sum(self.in_hand) == 1 or (square_check and self.action_count != 3):
             # advance stage, and any other subcalls that come with that
             advance_stage_rewards, advance_stage_observations, hand_ovr = self.advance_stage()
             if hand_ovr:
