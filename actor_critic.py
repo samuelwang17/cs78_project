@@ -194,7 +194,7 @@ class actor_critic():
         self.values.append([])
         self.action_log_probabilies.append([])
         for x in range(len(rewards)):
-                new_values = [-10000] * self.n_players #-10000 is filler value
+                new_values = [-5783] * self.n_players # -5783 fed here so that 
                 self.values[-1].append(torch.Tensor(new_values))
                 new_alps = [0] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
@@ -258,6 +258,7 @@ class actor_critic():
         Qs = Qs.masked_fill(values == -100000, -100000)
         y_logits = torch.stack(self.alp_flat)
         advantages = Qs - values 
+        advantages = advantages.masked_fill(values == -5783, 0) # using arbitrary filler from earlier to mask out the blinds
         #logit should be high when advantage high, so if + advantage, + logit, loss should be negative
         actor_loss = (-y_logits * advantages).mean() # loss function for policy going into softmax on backpass
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
