@@ -61,6 +61,7 @@ class mlp(nn.Module):
         self.block = nn.Sequential(
             nn.Linear(embed_dim, internal_dim),
             nn.ReLU(),
+            nn.Dropout(.1),
             nn.Linear(internal_dim, embed_dim)
         ) # no second relu at output of mlp
 

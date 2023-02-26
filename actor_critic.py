@@ -98,6 +98,8 @@ class actor_critic():
 
         self.lsm = grad_skip_logsoftmax()
 
+        self.silu = nn.SiLU()
+
 
     def sample_action(self, curr_logits):
         # MASK, SAMPLE, DETOKENIZE
@@ -271,7 +273,7 @@ class actor_critic():
         advantages = advantages.masked_fill(values == -5783, 0) # using arbitrary filler from earlier to mask out the blinds
         #logit should be high when advantage high, so if + advantage, + logit, loss should be negative
         actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
-        critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
+        critic_loss = 0.5 * (self.silu(advantages)).pow(2).mean() / 100 # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
 

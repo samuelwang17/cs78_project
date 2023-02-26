@@ -34,10 +34,12 @@ class encoder_layer(nn.Module):
         self.ln1 = nn.LayerNorm(embed_dim)
 
         self.activation = nn.ReLU()
+        self.dropout = nn.Dropout(.1)
     
     def forward(self, x):
         y = self.ln1(x)
         y = self.mha(y)
+        y = self.dropout(y)
         x = self.gate1(x,self.activation(y))
         y = self.ln1(x)
         y = self.mlp(y)
