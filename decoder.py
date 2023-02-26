@@ -42,7 +42,7 @@ class decoderXL_layer(nn.Module):
 
         self.mha = decoder_mha(
             model_dim=embed_dim,
-            sequence_length=sequence_lenth,
+            sequence_length=sequence_lenth + mem_length,
             heads=attention_heads
         ) #smeared key masked self attention
 
@@ -72,7 +72,7 @@ class decoderXL_layer(nn.Module):
         self.ln1 = nn.LayerNorm(embed_dim)
         self.dropout = nn.Dropout(.1)
         self.mem_length = mem_length
-        self.register_buffer('prev_hidden', torch.Tensor([0]*mem_length))
+        self.register_buffer('prev_hidden', torch.zeros((mem_length,embed_dim)))
     
     def forward(self, x):
         # masked self attention, smeared key
@@ -80,11 +80,13 @@ class decoderXL_layer(nn.Module):
         #XL STRUCTURE
         mem = self.get_buffer('prev_hidden')
         y = torch.cat([mem,y])
-        y = self.mha(y)
-        y = y[:-self.mem_length]
-        mem = y
+        print(y.size())
+        y = self.mha(y).squeeze()
         
-        
+        mem = y[:self.mem_length]
+        y = y[self.mem_length:]
+        print(y.size())
+
         y = self.dropout(y)
         x = self.gate1(x,self.activation(y))
 
