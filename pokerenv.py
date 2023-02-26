@@ -186,16 +186,17 @@ class poker_env():
                     advance_stage_rewards[0][p] += self.pot
                     self.stacks[p] += self.pot
                     advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot}]
+                    self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot))
+
+            with open(self.filename, 'a') as file:
+                self.history.append("\n\nHand End\n")
+                self.history.append("--------------------------------------------------------------------------------\n")
+                file.writelines(self.history)
+
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
             advance_stage_observations += new_hand_observations
             hand_over = True
-
-            with open(self.filename, 'a') as file:
-                self.history.append("\n\n")
-                self.history.append("Hand End\n")
-                self.history.append("--------------------------------------------------------------------------------\n")
-                file.writelines(self.history)
 
         # advance stage if not river
         elif self.stage != 3:
@@ -214,18 +215,19 @@ class poker_env():
                 self.stacks[p] += self.pot / len(winners)
                 advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot / len(winners),
                                                'pot': self.pot}]
+                self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)))
+
+            with open(self.filename, 'a') as file:
+                self.history.append("\n\nand End\n")
+                self.history.append(
+                    "--------------------------------------------------------------------------------\n")
+                file.writelines(self.history)
 
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
             advance_stage_observations += new_hand_observations
             hand_over = True
 
-            with open(self.filename, 'a') as file:
-                self.history.append("\n\n")
-                self.history.append("Hand End\n")
-                self.history.append(
-                    "--------------------------------------------------------------------------------\n")
-                file.writelines(self.history)
         return advance_stage_rewards, advance_stage_observations, hand_over
 
     def card_reveal(self):
