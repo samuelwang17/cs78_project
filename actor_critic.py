@@ -252,23 +252,21 @@ class actor_critic():
         return self.get_loss(torch.stack(Vals_T))
 
     def get_loss(self, Vals_T):
-        shifted_rewards = self.rewards[-1].copy()
-        shifted_rewards.pop(0)
-        shifted_rewards.append(0)
-        Qs = [0] * len(shifted_rewards)
+
+        Qs = [0] * len(self.rewards[-1])
         Q_t = Vals_T
-        for t in reversed(range(len(shifted_rewards))):
-            Q_t = shifted_rewards[t] + self.gamma * Q_t #adds rewards up going backwards to get vals
+        for t in reversed(range(len(self.rewards[-1]))):
+            Q_t = self.rewards[-1][t] + self.gamma * Q_t #adds rewards up going backwards to get vals
             Qs[t] = Q_t
         
 
-        Qs = torch.stack(Qs)#2d tensor sequence, players
+        Qs = torch.stack(Qs)[1:] #2d tensor sequence, players
 
-        values = torch.stack(self.values[-1])
+        values = torch.stack(self.values[-1])[:-1]
 
         # set Qs to filler value where value is filler value
         Qs = Qs.masked_fill(values == -100000, -100000)
-        alps = torch.stack(self.action_log_probabilies[-1])
+        alps = torch.stack(self.action_log_probabilies[-1])[:-1]
         advantages = Qs - values 
         advantages = advantages.masked_fill(values == -5783, 0) # using arbitrary filler from earlier to mask out the blinds
         #logit should be high when advantage high, so if + advantage, + logit, loss should be negative
