@@ -7,8 +7,6 @@ class poker_env():
     '''
 
     def __init__(self, n_players) -> None:
-        self.action_count = 0
-
         self.n_players = n_players
 
         self.stacks = [0] * n_players
@@ -36,6 +34,7 @@ class poker_env():
 
     def new_hand(self):
         self.hand_count += 1
+
         self.history = []
 
         if self.hand_count % self.hand_until_log == 0:
@@ -52,11 +51,10 @@ class poker_env():
         self.current_bets = [0] * self.n_players
         self.current_largest_bet = 0
         self.in_hand = [True] * self.n_players
-        self.took_action = [
-                               False] * self.n_players  # tracks whether players have taken action in a specific round of betting
         self.pot = 0
         self.stage = 0  # 0: pre-flop, 1: flop, 2: turn, 3: river
         self.deck_position = 0
+        self.action_count = 0 # to allow for big blind action
 
         # deal cards, pass to agents
         random.shuffle(self.deck)
@@ -70,7 +68,6 @@ class poker_env():
         big_blind_player = self.in_turn
         big_blind = {'player': big_blind_player, 'type': 'bet', 'value': 2, 'pot': self.pot}
         rewards_2, observations_2, hand_over = self.take_action(big_blind)
-        self.took_action[big_blind_player] = False
 
         rewards_1 += rewards_2
         observations_1 += observations_2
@@ -102,8 +99,6 @@ class poker_env():
         player = action['player']
         type = action['type']  # action type is one of {bet, call, fold}
         value = action['value']
-
-        self.took_action[player] = True
 
         if type == 'bet':
             # move money from player to pot
@@ -161,12 +156,15 @@ class poker_env():
         # if everyone is square or folded, advance to next game stage
         square_check = True
         for p in range(self.n_players):
-            if (self.in_hand[p] and self.behind[p] != 0) or not self.took_action[
-                p]:  # Big blind option handled via took_action
+            if self.in_hand[p] and self.behind[p] != 0:
                 square_check = False
 
+        if value == 1:
+            square_check = False  # big blind left to acgt
+
         hand_over = False
-        if square_check or sum(self.in_hand) == 1:
+        # if action count = 3, then big blind is still left to act
+        if (square_check or sum(self.in_hand) == 1) and self.action_count != 3:
             # advance stage, and any other subcalls that come with that
             advance_stage_rewards, advance_stage_observations, hand_ovr = self.advance_stage()
             if hand_ovr:
@@ -213,10 +211,6 @@ class poker_env():
         # advance stage if not river
         elif self.stage != 3:
             self.stage += 1
-            for p in range(self.n_players):
-                if self.in_hand[
-                    p]:  # this keeps took_action true for players who have folded to save a conditional above
-                    self.took_action[p] = False
             advance_stage_rewards, advance_stage_observations = self.card_reveal()
 
         # compare hands and payout, then deal new hand
