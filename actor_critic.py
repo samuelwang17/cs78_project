@@ -264,7 +264,9 @@ class actor_critic():
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        return loss, advantages, Qs, values, y_logits
+        print(actor_loss, critic_loss)
+
+        return loss
     
 
     def clear_memory(self):
