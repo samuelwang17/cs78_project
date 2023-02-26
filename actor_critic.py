@@ -7,7 +7,7 @@ from tokenizer import Tokenizer
 from pokerenv import poker_env
 from itertools import chain
 import numpy as np
-from model_components import grad_skip_softmax
+from model_components import grad_skip_softmax, grad_skip_logsoftmax
 
 class Agent(nn.Module):
     def __init__(self,
@@ -96,6 +96,8 @@ class actor_critic():
             value = -100000
         )
 
+        self.lsm = grad_skip_logsoftmax()
+
 
     def sample_action(self, curr_logits):
         # MASK, SAMPLE, DETOKENIZE
@@ -128,7 +130,9 @@ class actor_critic():
         # SAMPLE
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
-        y_logit = curr_logits[-1][action_index] #.0001 used to avoid log(0) causing grad issues
+        # y_logit = curr_logits[-1][action_index] #.0001 used to avoid log(0) causing grad issues
+        alps = self.lsm(curr_logits)[-1]
+        alp = alps[action_index]
 
         # DETOKENIZE
         if action_index == 0: # all in
@@ -142,7 +146,7 @@ class actor_critic():
         else:
             action = {'player': player, 'type': 'bet', 'value': (linspace[action_index - 4] * pot) // 1}
 
-        return y_logit, action
+        return alp, action
     
     def init_hands(self):
         # get all hands

@@ -15,6 +15,17 @@ class grad_skip_softmax(nn.Module):
     def backward(self, grad):
         # skip gradient through the softmax on backward pass
         return grad
+    
+class grad_skip_logsoftmax(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.lsm = nn.LogSoftmax(dim=1)
+    
+    def forward(self, x):
+        return self.lsm(x)
+    
+    def backward(self, grad):
+        return 1/grad
         
 class gru(nn.Module):
     # 'gated-recurrent-unit type gating' as seen in GTrXL paper
