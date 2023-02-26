@@ -256,14 +256,14 @@ class actor_critic():
 
         # set Qs to filler value where value is filler value
         Qs = Qs.masked_fill(values == -100000, -100000)
-        alps = torch.stack(self.alp_flat)
+        y_logits = torch.stack(self.alp_flat)
         advantages = Qs - values 
         #logit should be high when advantage high, so if + advantage, + logit, loss should be negative
-        actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
+        actor_loss = (-y_logits * advantages).mean() # loss function for policy going into softmax on backpass
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        return loss, advantages, Qs, values, alps
+        return loss, advantages, Qs, values, y_logits
     
 
     def clear_memory(self):
