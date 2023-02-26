@@ -115,8 +115,9 @@ class actor_critic():
         else:
             mask[1] = 1 # cannot call
             mask[2] = 1 # cannot fold if not facing a bet
-        if self.env.behind[player] + self.env.current_bets[player] == self.env.stacks[player]:
-            mask[0] = 1 # cannot shove if shoving and calling are equivalent
+
+        if self.env.behind[player] == self.env.stacks[player]:
+            mask[0] = 1  # cannot shove if shoving and calling are equivalent
         
         linspace = np.geomspace(.5, 2, num = linspace_dim)
         stack_checker = lambda x: 1 if x * pot >= player_stack or x < (2 * self.env.current_largest_bet) else 0
