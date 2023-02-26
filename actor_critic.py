@@ -126,7 +126,7 @@ class actor_critic():
         # SAMPLE
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
-        alp = torch.log(policy[-1] + .00001)[action_index] #.0001 used to avoid log(0) causing grad issues
+        y_logit = curr_logits[-1][action_index] #.0001 used to avoid log(0) causing grad issues
 
         # DETOKENIZE
         if action_index == 0: # all in
@@ -140,7 +140,7 @@ class actor_critic():
         else:
             action = {'player': player, 'type': 'bet', 'value': (linspace[action_index - 4] * pot) // 1}
 
-        return alp, action, policy
+        return y_logit, action
     
     def init_hands(self):
         # get all hands
@@ -196,7 +196,7 @@ class actor_critic():
         for x in range(len(rewards)):
                 new_values = [-10000] * self.n_players #-10000 is filler value
                 self.values[-1].append(torch.Tensor(new_values))
-                new_alps = [-10000] * self.n_players
+                new_alps = [0] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
         
         hand_over = False
@@ -208,7 +208,7 @@ class actor_critic():
             assert value.requires_grad
             curr_logits = policy_logits[-1] # get last policy distribution
 
-            alp, action, policy = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
+            y_logit, action = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
 
             # add new information from this step
@@ -224,7 +224,7 @@ class actor_critic():
                 # fill_tensor = torch.Tensor(new_values)
                 self.values[-1].append(torch.Tensor(new_values))
             
-            new_alp = self.padding(alp.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
+            new_alp = self.padding(y_logit.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
             self.action_log_probabilies[-1].append(new_alp)
             for x in range(len(rewards) - 1):
                 new_alps = [-100000] * self.n_players
@@ -250,23 +250,20 @@ class actor_critic():
             Qs[t] = Q_t
         
 
-        # [2:] is a hacky way to not deal with blinds
-        # will need to be changed if multi-hand episodes are used
+        Qs = torch.stack(Qs)#2d tensor sequence, players
 
-        Qs = torch.stack(Qs)[2:] #2d tensor sequence, players
-
-        values = torch.stack(self.val_flat)[2:]
+        values = torch.stack(self.val_flat)
 
         # set Qs to filler value where value is filler value
         Qs = Qs.masked_fill(values == -100000, -100000)
-        alps = torch.stack(self.alp_flat)[2:]
+        alps = torch.stack(self.alp_flat)
         advantages = Qs - values 
-        
+        #logit should be high when advantage high, so if + advantage, + logit, loss should be negative
         actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        return loss
+        return loss, advantages, Qs, values, alps
     
 
     def clear_memory(self):
