@@ -116,9 +116,9 @@ class actor_critic():
             mask[1] = 1 # cannot call
             mask[2] = 1 # cannot fold if not facing a bet
         
-        linspace = np.geomspace(.5, 2, num  = linspace_dim)
-        stack_checker = lambda x: 1 if x * pot >= player_stack else 0
-        mask[4:] += np.fromiter((stack_checker(x) for x in linspace), linspace.dtype) # mask away bets that are larger than stack or all in
+        linspace = np.geomspace(.5, 2, num = linspace_dim)
+        stack_checker = lambda x: 1 if x * pot >= player_stack or x < (2 * self.env.current_largest_bet) else 0
+        mask[4:] += np.fromiter((stack_checker(x) for x in linspace), linspace.dtype) # mask away bets that are larger than stack or all in or bets that are are not 2x larger than last bet
         tensor_mask = torch.Tensor(mask)
 
         # grad skip softmax -- neural replicator dynamics, with mask

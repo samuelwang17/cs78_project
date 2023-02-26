@@ -15,6 +15,8 @@ class poker_env():
 
         self.button = 0  # button starts at player 0 WLOG
 
+        self.current_largest_bet = 0
+
         self.deck = []
         for suit in ["h", "d", "s", "c"]:
             for rank in range(2, 15):
@@ -30,12 +32,13 @@ class poker_env():
 
         self.filename = "hand_replays.txt"
         self.hand_count = 0
+        self.hand_until_log = 1000
 
     def new_hand(self):
         self.hand_count += 1
         self.history = []
 
-        if self.hand_count % 1000 == 0:
+        if self.hand_count % self.hand_until_log == 0:
             self.history.append("\n\n--------------------------------------------------------------------------------\n")
             self.history.append("Hand Start\n")
         for player in range(self.n_players):
@@ -47,6 +50,7 @@ class poker_env():
         self.in_turn = (self.button + 1) % self.n_players
         self.behind = [0] * self.n_players
         self.current_bets = [0] * self.n_players
+        self.current_largest_bet = 0
         self.in_hand = [True] * self.n_players
         self.took_action = [
                                False] * self.n_players  # tracks whether players have taken action in a specific round of betting
@@ -108,10 +112,13 @@ class poker_env():
             # reward is negative of amount bet
             rewards[0][player] = -value
 
-            self.current_bets[player] = value
             # other players are now behind the bet
             for x in range(self.n_players):
-                self.behind[x] = max(self.behind[x], value - self.current_bets[x])
+                self.behind[x] = max(self.behind[x], value + self.current_bets[player] - self.current_bets[x])
+
+            self.current_bets[player] += value
+
+            self.current_largest_bet = self.current_bets[player]
 
             # player who just bet cannot be behind
             self.behind[player] = 0
@@ -139,7 +146,7 @@ class poker_env():
         action['pot'] = self.pot
         observations = [action]
 
-        if self.hand_count % 1000 == 0:
+        if self.hand_count % self.hand_until_log == 0:
             self.history.append("\n\nPlayer's Cards: \n")
             for i in range(2):
                 self.history.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
@@ -181,6 +188,8 @@ class poker_env():
 
         for x in range(self.n_players):
             self.behind[x] = 0
+            self.current_bets[x] = 0
+        self.current_largest_bet = 0
 
         # payout if only one player is left
         if sum(self.in_hand) == 1:
@@ -190,10 +199,10 @@ class poker_env():
                     advance_stage_rewards[0][p] += self.pot
                     self.stacks[p] += self.pot
                     advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot}]
-                    if self.hand_count % 1000 == 0:
+                    if self.hand_count % self.hand_until_log == 0:
                         self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot))
 
-            if self.hand_count % 1000 == 0:
+            if self.hand_count % self.hand_until_log == 0:
                 with open(self.filename, 'a') as file:
                     self.history.append("\n\nHand End\n")
                     self.history.append("--------------------------------------------------------------------------------\n")
@@ -221,10 +230,10 @@ class poker_env():
                 self.stacks[p] += self.pot / len(winners)
                 advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot / len(winners),
                                                'pot': self.pot}]
-                if self.hand_count % 1000 == 0:
+                if self.hand_count % self.hand_until_log == 0:
                     self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)))
 
-            if self.hand_count % 1000 == 0:
+            if self.hand_count % self.hand_until_log == 0:
                 with open(self.filename, 'a') as file:
                     self.history.append("\n\nHand End\n")
                     self.history.append(
