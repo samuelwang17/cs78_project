@@ -17,11 +17,11 @@ worker = actor_critic(
 with torch.autograd.set_detect_anomaly(True):
     loss  = worker.play_hand()
     print(loss)
-    loss.backward()
+    loss.backward(retain_graph=True)
     loss  = worker.play_hand()
     print(loss)
-    loss.backward()
+    loss.backward(retain_graph=True)
     loss  = worker.play_hand()
     print(loss)
-    loss.backward()
+    loss.backward(retain_graph=True)
 

@@ -26,12 +26,6 @@ def tokenize(observation):
 
         # pot size and stack sizes
         vec[29] = observation['pot']
-        vec[30] = observation['p1']
-        vec[31] = observation['p2']
-        vec[32] = observation['p3']
-        vec[33] = observation['p4']
-        vec[34] = observation['p5']
-        vec[35] = observation['p5']
 
     elif observation['type'] == 'bet':
         vec[7] = 1  # observation is type bet
@@ -40,13 +34,6 @@ def tokenize(observation):
 
         # pot size and stack sizes
         vec[29] = observation['pot']
-        vec[30] = observation['p1']
-        vec[31] = observation['p2']
-        vec[32] = observation['p3']
-        vec[33] = observation['p4']
-        vec[34] = observation['p5']
-        vec[35] = observation['p5']
-
 
     elif observation['type'] == 'call':
         vec[8] = 1  # observation is type call
@@ -55,12 +42,6 @@ def tokenize(observation):
 
         # pot size and stack sizes
         vec[29] = observation['pot']
-        vec[30] = observation['p1']
-        vec[31] = observation['p2']
-        vec[32] = observation['p3']
-        vec[33] = observation['p4']
-        vec[34] = observation['p5']
-        vec[35] = observation['p5']
 
     elif observation['type'] == 'fold':
         vec[9] = 1  # observation is type fold
@@ -68,12 +49,6 @@ def tokenize(observation):
 
         # pot size and stack sizes
         vec[29] = observation['pot']
-        vec[30] = observation['p1']
-        vec[31] = observation['p2']
-        vec[32] = observation['p3']
-        vec[33] = observation['p4']
-        vec[34] = observation['p5']
-        vec[35] = observation['p5']
 
     elif observation['type'] == 'win':
         vec[10] = 1  # observation is type win
@@ -81,12 +56,6 @@ def tokenize(observation):
 
         # pot size and stack sizes
         vec[29] = observation['pot']
-        vec[30] = observation['p1']
-        vec[31] = observation['p2']
-        vec[32] = observation['p3']
-        vec[33] = observation['p4']
-        vec[34] = observation['p5']
-        vec[35] = observation['p5']
 
     return vec
 
