@@ -143,6 +143,8 @@ class poker_env():
             replay.append("\nCommunity Cards: \n")
             for i in range(len(self.community_cards)):
                 replay.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
+            if len(self.community_cards) == 0:
+                replay.append("Preflop\n")
             replay.append("\nAction: \n")
             replay.append(str(action))
             file.writelines(replay)
