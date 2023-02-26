@@ -32,7 +32,7 @@ class poker_env():
 
         self.filename = "hand_replays.txt"
         self.hand_count = 0
-        self.hand_until_log = 1000
+        self.hand_until_log = 500
 
     def new_hand(self):
         self.hand_count += 1
