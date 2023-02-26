@@ -42,6 +42,8 @@ class Player(mp.Process):
                     self.global_actor_critic.parameters()):
                 global_param._grad = local_param.grad
             self.optimizer.step()
+            self.local_actor_critic.agent.model.load_state_dict(
+                self.global_actor_critic.state_dict())
             self.local_actor_critic.clear_memory()
             with self.episode_idx.get_lock():
                 self.episode_idx.value += 1
@@ -51,7 +53,7 @@ class Player(mp.Process):
 if __name__ == '__main__':
     torch.manual_seed(0)
     N_GAMES = 100
-    actor_count = 4
+    actor_count = 2
     # actor parameters
     max_sequence = 100
     n_players = 6
@@ -82,6 +84,7 @@ if __name__ == '__main__':
         players.append(player)
     [player.start() for player in players]
     [player.join() for player in players]
+    torch.save(global_model.state_dict(), 'PokerA3CModel.pt')
 
 
 
