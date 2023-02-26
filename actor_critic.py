@@ -30,15 +30,16 @@ class Agent(nn.Module):
             action_dim = action_dim,
         )
         self.tokenizer =  Tokenizer(model_dim=model_dim)
+        self.hand_dict = {}
 
     def init_player(self, player, hand):
         # initialize this players hand and tokenize it, store it in buffer
         hand_tensor = self.tokenizer(hand) #hand needs to be card observations -- list of length two of tensors
-        self.register_buffer(f'hand_{player}', tensor= hand_tensor)
+        self.hand_dict[player] = hand_tensor
 
     def forward(self, player, obs_flat):
         #takes flattened inputs in list form, not tokenized
-        enc_input = self.get_buffer(f'hand_{player}')
+        enc_input = self.hand_dict[player]
         dec_input = self.tokenizer(obs_flat)
         policy_logits, value = self.model(enc_input, dec_input)
         return policy_logits, value
@@ -264,7 +265,6 @@ class actor_critic():
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-        print(actor_loss, critic_loss)
 
         return loss
     
