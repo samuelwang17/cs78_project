@@ -32,27 +32,20 @@ class Player(mp.Process):
         self.N_GAMES = 1000
 
     def run(self):
-        t_step = 1
         while self.episode_idx.value < self.N_GAMES:
-            done = False
-            score = 0
-            while not done:
-                loss = self.local_actor_critic.play_hand()
-                self.optimizer.zero_grad() # zero gradient on the master copy
-                print(loss)
-                loss.backward()
-                for local_param, global_param in zip(
-                        self.local_actor_critic.agent.model.parameters(),
-                        self.global_actor_critic.parameters()):
-                    global_param._grad = local_param.grad
-                self.optimizer.step()
-                self.local_actor_critic.agent.model.load_state_dict(
-                        self.global_actor_critic.state_dict())
-                self.local_actor_critic.clear_memory() # unsure what clear memory is -- zero grad? -- we don't want it to delete its sequence memory. I implemented the former
-            t_step += 1
-        with self.episode_idx.get_lock():
-            self.episode_idx.value += 1
-        print(self.name, 'episode ', self.episode_idx.value, 'reward %.1f' % score)
+            loss = self.local_actor_critic.play_hand()
+            self.optimizer.zero_grad() # zero gradient on the master copy
+            with torch.autograd.set_detect_anomaly(True):
+                loss.backward(retain_graph=True)
+            for local_param, global_param in zip(
+                    self.local_actor_critic.agent.model.parameters(),
+                    self.global_actor_critic.parameters()):
+                global_param._grad = local_param.grad
+            self.optimizer.step()
+            self.local_actor_critic.clear_memory()
+            with self.episode_idx.get_lock():
+                self.episode_idx.value += 1
+            print(f'{self.name} episode {self.episode_idx.value} loss {loss}')
 
 
 if __name__ == '__main__':
@@ -81,7 +74,7 @@ if __name__ == '__main__':
     global_model.share_memory()
     print('Parameter_count: ', sum(p.numel() for p in global_model.parameters() if p.requires_grad))
     optimizer = SharedAdam(global_model.parameters(), lr=learning_rate)
-    global_ep, global_ep_r, res_queue = mp.Value('i', 0), mp.Value('d', 0.), mp.Queue()
+    global_ep = mp.Value('i', 0)
     # initialize players
     players = []
     for i in range(actor_count):
