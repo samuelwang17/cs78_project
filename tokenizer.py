@@ -14,7 +14,7 @@ def tokenize(observation):
     vec = torch.zeros(36)
     if observation['type'] == 'card':
         vec[6] = 1  # observation is type card
-        vec[observation['value'] + 13] = 1  # rank of card
+        vec[observation['rank'] + 13] = 1  # rank of card
         suit = observation['suit']
         if suit == 'h':
             vec[11] = 1
