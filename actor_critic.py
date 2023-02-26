@@ -266,7 +266,7 @@ class actor_critic():
         
         loss = actor_loss + critic_loss
 
-        return loss
+        return loss, actor_loss, critic_loss
     
 
     def clear_memory(self):
