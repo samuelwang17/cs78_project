@@ -40,7 +40,7 @@ class poker_env():
 
         if self.hand_count % self.hand_until_log == 0:
             self.history.append("\n\n--------------------------------------------------------------------------------\n")
-            self.history.append("Hand Start\n")
+            self.history.append("Hand " + str(self.hand_count) + " Start\n")
         for player in range(self.n_players):
             self.stacks[player] = 200
         self.community_cards = []
