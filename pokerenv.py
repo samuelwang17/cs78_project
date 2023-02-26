@@ -28,13 +28,16 @@ class poker_env():
         self.rank_mapping['13'] = "K"
         self.rank_mapping['14'] = "A"
 
-        self.history = []
-
         self.filename = "hand_replays.txt"
+        self.hand_count = 0
 
     def new_hand(self):
-        self.history.append("\n\n--------------------------------------------------------------------------------\n")
-        self.history.append("Hand Start\n")
+        self.hand_count += 1
+        self.history = []
+
+        if self.hand_count % 1000 == 0:
+            self.history.append("\n\n--------------------------------------------------------------------------------\n")
+            self.history.append("Hand Start\n")
         for player in range(self.n_players):
             self.stacks[player] = 200
         self.community_cards = []
@@ -136,16 +139,17 @@ class poker_env():
         action['pot'] = self.pot
         observations = [action]
 
-        self.history.append("\n\nPlayer's Cards: \n")
-        for i in range(2):
-            self.history.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
-        self.history.append("\nCommunity Cards: \n")
-        for i in range(len(self.community_cards)):
-            self.history.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
-        if len(self.community_cards) == 0:
-            self.history.append("Preflop")
-        self.history.append("\nAction: \n")
-        self.history.append(str(action))
+        if self.hand_count % 1000 == 0:
+            self.history.append("\n\nPlayer's Cards: \n")
+            for i in range(2):
+                self.history.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
+            self.history.append("\nCommunity Cards: \n")
+            for i in range(len(self.community_cards)):
+                self.history.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
+            if len(self.community_cards) == 0:
+                self.history.append("Preflop")
+            self.history.append("\nAction: \n")
+            self.history.append(str(action))
 
         # if everyone is square or folded, advance to next game stage
         square_check = True
@@ -186,12 +190,14 @@ class poker_env():
                     advance_stage_rewards[0][p] += self.pot
                     self.stacks[p] += self.pot
                     advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot}]
-                    self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot))
+                    if self.hand_count % 1000 == 0:
+                        self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot))
 
-            with open(self.filename, 'a') as file:
-                self.history.append("\n\nHand End\n")
-                self.history.append("--------------------------------------------------------------------------------\n")
-                file.writelines(self.history)
+            if self.hand_count % 1000 == 0:
+                with open(self.filename, 'a') as file:
+                    self.history.append("\n\nHand End\n")
+                    self.history.append("--------------------------------------------------------------------------------\n")
+                    file.writelines(self.history)
 
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
@@ -215,13 +221,15 @@ class poker_env():
                 self.stacks[p] += self.pot / len(winners)
                 advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot / len(winners),
                                                'pot': self.pot}]
-                self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)))
+                if self.hand_count % 1000 == 0:
+                    self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)))
 
-            with open(self.filename, 'a') as file:
-                self.history.append("\n\nand End\n")
-                self.history.append(
-                    "--------------------------------------------------------------------------------\n")
-                file.writelines(self.history)
+            if self.hand_count % 1000 == 0:
+                with open(self.filename, 'a') as file:
+                    self.history.append("\n\nHand End\n")
+                    self.history.append(
+                        "--------------------------------------------------------------------------------\n")
+                    file.writelines(self.history)
 
             new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
             advance_stage_rewards += new_hand_rewards
