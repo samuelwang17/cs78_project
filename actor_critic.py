@@ -252,10 +252,13 @@ class actor_critic():
         return self.get_loss(torch.stack(Vals_T))
 
     def get_loss(self, Vals_T):
-        Qs = [0] * len(self.rewards[-1])
+        shifted_rewards = self.rewards[-1].copy()
+        shifted_rewards.pop(0)
+        shifted_rewards.append(0)
+        Qs = [0] * len(shifted_rewards)
         Q_t = Vals_T
-        for t in reversed(range(len(self.rewards[-1]))):
-            Q_t = self.rewards[-1][t] + self.gamma * Q_t #adds rewards up going backwards to get vals
+        for t in reversed(range(len(shifted_rewards))):
+            Q_t = shifted_rewards[t] + self.gamma * Q_t #adds rewards up going backwards to get vals
             Qs[t] = Q_t
         
 
