@@ -29,8 +29,9 @@ class poker_env():
         self.rank_mapping['13'] = "K"
         self.rank_mapping['14'] = "A"
 
-        filename = "hand_replays.txt"
-        self.file = open(filename, 'w')
+        self.filename = "hand_replays.txt"
+        with open(self.filename, 'w') as file:
+            file.write("Hand History \n\n")
 
     def new_hand(self):
         for player in range(self.n_players):
@@ -134,17 +135,18 @@ class poker_env():
         action['pot'] = self.pot
         observations = [action]
 
-        replay = []
-        replay.append("Player's Cards: \n")
-        for i in range(2):
-            replay.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
-        replay.append("\nCommunity Cards: \n")
-        for i in range(len(self.community_cards)):
-            replay.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
-        replay.append("\nAction: \n")
-        replay.append(str(action))
-        self.file.writelines(replay)
-        self.file.write("\n\n")
+        with open(self.filename, 'a') as file:
+            replay = []
+            replay.append("Player's Cards: \n")
+            for i in range(2):
+                replay.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
+            replay.append("\nCommunity Cards: \n")
+            for i in range(len(self.community_cards)):
+                replay.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
+            replay.append("\nAction: \n")
+            replay.append(str(action))
+            file.writelines(replay)
+            file.write("\n\n")
 
         # if everyone is square or folded, advance to next game stage
         square_check = True
