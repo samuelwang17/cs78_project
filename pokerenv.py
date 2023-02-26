@@ -8,6 +8,7 @@ class poker_env():
     '''
 
     def __init__(self, n_players) -> None:
+        self.action_count = 0
 
         self.n_players = n_players
 
@@ -19,6 +20,17 @@ class poker_env():
         for suit in ["h", "d", "s", "c"]:
             for rank in range(2, 15):
                 self.deck += [[suit, rank]]
+
+        self.rank_mapping = {}
+        for i in range(2, 11):
+            self.rank_mapping[str(i)] = str(i)
+        self.rank_mapping['11'] = "J"
+        self.rank_mapping['12'] = "Q"
+        self.rank_mapping['13'] = "K"
+        self.rank_mapping['14'] = "A"
+
+        filename = "hand_replays.txt"
+        self.file = open(filename, 'w')
 
     def new_hand(self):
         for player in range(self.n_players):
@@ -74,6 +86,8 @@ class poker_env():
         Moves game state to next point where action input is required
         Rewards implementation currently changing -- very fucked up rn
         '''
+        self.action_count += 1
+
         rewards = [torch.zeros(self.n_players)]
 
         action['pot'] = self.pot
@@ -84,6 +98,18 @@ class poker_env():
         value = action['value']
 
         self.took_action[player] = True
+
+        replay = []
+        replay.append("Player's Cards: \n")
+        for i in range(2):
+            replay.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
+        replay.append("\nCommunity Cards: \n")
+        for i in range(len(self.community_cards)):
+            replay.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
+        replay.append("\nAction: \n")
+        replay.append(str(action))
+        self.file.writelines(replay)
+        self.file.write("\n\n")
 
         if type == 'bet':
             # move money from player to pot
