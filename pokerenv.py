@@ -32,7 +32,7 @@ class poker_env():
 
         self.filename = "hand_replays.txt"
         self.hand_count = 0
-        self.hand_until_log = 500
+        self.hand_until_log = 5
 
     def new_hand(self):
         self.hand_count += 1
@@ -208,9 +208,6 @@ class poker_env():
                     self.history.append("--------------------------------------------------------------------------------\n")
                     file.writelines(self.history)
 
-            new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
-            advance_stage_rewards += new_hand_rewards
-            advance_stage_observations += new_hand_observations
             hand_over = True
 
         # advance stage if not river
@@ -240,9 +237,6 @@ class poker_env():
                         "--------------------------------------------------------------------------------\n")
                     file.writelines(self.history)
 
-            new_hand_rewards, new_hand_observations = self.new_hand()  # move on to next hand
-            advance_stage_rewards += new_hand_rewards
-            advance_stage_observations += new_hand_observations
             hand_over = True
 
         return advance_stage_rewards, advance_stage_observations, hand_over
