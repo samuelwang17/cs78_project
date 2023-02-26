@@ -111,6 +111,7 @@ class actor_critic():
         if self.env.behind[player] != 0:
             mask[3] = 1 # cannot check
         else:
+            mask[1] = 1 # cannot call
             mask[2] = 1 # cannot fold if not facing a bet
         
         linspace = np.geomspace(.5, 2, num  = linspace_dim)
