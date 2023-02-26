@@ -55,7 +55,7 @@ if __name__ == '__main__':
     actor_count = 2
     # actor parameters
     max_sequence = 100
-    n_players = 6
+    n_players = 2
     gamma = .98
     n_actions = 14
     # model parameters
