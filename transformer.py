@@ -14,8 +14,10 @@ class mod_transformer(nn.Module):
     attn_heads,
     sequence_length,
     enc_layers,
+    memory_layers,
+    mem_length,
     dec_layers,
-    action_dim
+    action_dim,
     ) -> None:
         super().__init__()
 
@@ -32,6 +34,8 @@ class mod_transformer(nn.Module):
             mlp_dim=mlp_dim,
             heads=attn_heads,
             sequence_length=sequence_length,
+            memory_layers=memory_layers,
+            mem_length=mem_length
         )
 
         self.actor = nn.Sequential(
@@ -47,7 +51,7 @@ class mod_transformer(nn.Module):
 
 
     def forward(self, enc_input, dec_input):
-
+        
         enc = self.encoder(enc_input)
         dec = self.decoder(dec_input, enc)
         policy_logits = self.actor(dec)

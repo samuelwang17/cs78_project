@@ -16,6 +16,8 @@ class Agent(nn.Module):
         attn_heads,
         sequence_length,
         enc_layers,
+        memory_layers,
+        mem_length,
         dec_layers,
         action_dim,
     ) -> None:
@@ -26,6 +28,8 @@ class Agent(nn.Module):
             attn_heads = attn_heads,
             sequence_length = sequence_length,
             enc_layers = enc_layers,
+            memory_layers=memory_layers,
+            mem_length = mem_length,
             dec_layers = dec_layers,
             action_dim = action_dim,
         )
@@ -35,6 +39,7 @@ class Agent(nn.Module):
     def init_player(self, player, hand):
         # initialize this players hand and tokenize it, store it in buffer
         hand_tensor = self.tokenizer(hand) #hand needs to be card observations -- list of length two of tensors
+        assert hand_tensor != None
         self.hand_dict[player] = hand_tensor
 
     def forward(self, player, obs_flat):
@@ -51,6 +56,8 @@ class actor_critic():
     mlp_dim,
     heads,
     enc_layers,
+    memory_layers,
+    mem_length,
     dec_layers,
     max_sequence: int = 200, 
     n_players: int = 2,
@@ -66,6 +73,8 @@ class actor_critic():
             attn_heads = heads,
             sequence_length = max_sequence,
             enc_layers = enc_layers,
+            memory_layers= memory_layers,
+            mem_length=mem_length,
             dec_layers = dec_layers,
             action_dim = n_actions,
         )

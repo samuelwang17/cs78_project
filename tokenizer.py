@@ -65,8 +65,10 @@ class Tokenizer(nn.Module):
     def __init__(self, model_dim) -> None:
         super().__init__()
         self.embedding = nn.Sequential(
-            nn.Linear(36, model_dim), # tokenizer has 36 dimensional output
-            nn.ReLU() # allows feature superposition in embedding
+            nn.Linear(36, 2*model_dim), # tokenizer has 36 dimensional output
+            nn.ReLU(), # allows feature superposition in embedding
+            nn.LayerNorm(2*model_dim),
+            nn.Linear(2*model_dim, model_dim)
         )
 
     def tokenize_list(self, observations):
@@ -81,4 +83,5 @@ class Tokenizer(nn.Module):
     
     def forward(self, observations):
         obs_tensor = self.tokenize_list(observations)
-        return self.embedding(obs_tensor) # sequence, model_dim
+        token = self.embedding(obs_tensor) # sequence, model_dim
+        return token

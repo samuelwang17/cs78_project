@@ -20,11 +20,13 @@ class Player(mp.Process):
             mlp_dim=player_params[1],
             heads=player_params[2],
             enc_layers=player_params[3],
-            dec_layers=player_params[4],
-            max_sequence=player_params[5],
-            n_players=player_params[6],
-            gamma=player_params[7],
-            n_actions=player_params[8]
+            memory_layers = player_params[4],
+            mem_length = player_params[5],
+            dec_layers=player_params[6],
+            max_sequence=player_params[7],
+            n_players=player_params[8],
+            gamma=player_params[9],
+            n_actions=player_params[10]
         )
         self.global_actor_critic = global_actor_critic
         self.episode_idx = global_ep_idx
@@ -73,13 +75,15 @@ if __name__ == '__main__':
     model_dim = 32
     mlp_dim = 64
     attn_heads = 4
-    sequence_length = 200
-    enc_layers = 3
-    dec_layers = 7
+    sequence_length = 50
+    enc_layers = 4
+    memory_layers = 3 #pre_mem, mem layered
+    mem_length = 50
+    dec_layers = 3
     action_dim = 7
     learning_rate = .001
-    player_params = [model_dim, mlp_dim, attn_heads, enc_layers, dec_layers, sequence_length, n_players, learning_rate, action_dim]
-    model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, dec_layers, action_dim]
+    player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]
+    model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, memory_layers, mem_length, dec_layers, action_dim]
     # create poker environment
     # initialize global model
 
@@ -89,7 +93,7 @@ if __name__ == '__main__':
     global_model = RLformer(* model_params)
     global_model.share_memory()
     print('Parameter_count: ', sum(p.numel() for p in global_model.parameters() if p.requires_grad))
-    optimizer = SharedAdam(global_model.parameters(), lr=learning_rate)
+    optimizer = SharedAdam(global_model.parameters(), lr=learning_rate, weight_decay=.01)
     global_ep = mp.Value('i', 0)
     global_loss_ema = mp.Value('d', 0)
     global_actor_ema = mp.Value('d', 0)
