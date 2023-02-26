@@ -115,6 +115,8 @@ class actor_critic():
         else:
             mask[1] = 1 # cannot call
             mask[2] = 1 # cannot fold if not facing a bet
+        if self.env.behind[player] + self.env.current_bets[player] == self.env.stacks[player]:
+            mask[0] = 1 # cannot shove if shoving and calling are equivalent
         
         linspace = np.geomspace(.5, 2, num = linspace_dim)
         stack_checker = lambda x: 1 if x * pot >= player_stack or x < (2 * self.env.current_largest_bet) else 0
@@ -249,24 +251,24 @@ class actor_critic():
         return self.get_loss(torch.stack(Vals_T))
 
     def get_loss(self, Vals_T):
-        Qs = [0] * len(self.rewards_flat)
+        Qs = [0] * len(self.rewards[-1])
         Q_t = Vals_T
-        for t in reversed(range(len(self.rewards_flat))):
-            Q_t = self.rewards_flat[t] + self.gamma * Q_t #adds rewards up going backwards to get vals
+        for t in reversed(range(len(self.rewards[-1]))):
+            Q_t = self.rewards[-1][t] + self.gamma * Q_t #adds rewards up going backwards to get vals
             Qs[t] = Q_t
         
 
         Qs = torch.stack(Qs)#2d tensor sequence, players
 
-        values = torch.stack(self.val_flat)
+        values = torch.stack(self.values[-1])
 
         # set Qs to filler value where value is filler value
         Qs = Qs.masked_fill(values == -100000, -100000)
-        y_logits = torch.stack(self.alp_flat)
+        alps = torch.stack(self.action_log_probabilies[-1])
         advantages = Qs - values 
         advantages = advantages.masked_fill(values == -5783, 0) # using arbitrary filler from earlier to mask out the blinds
         #logit should be high when advantage high, so if + advantage, + logit, loss should be negative
-        actor_loss = (-y_logits * advantages).mean() # loss function for policy going into softmax on backpass
+        actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
         critic_loss = 0.5 * advantages.pow(2).mean() # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss

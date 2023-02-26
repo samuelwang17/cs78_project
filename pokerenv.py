@@ -13,7 +13,7 @@ class poker_env():
 
         self.button = 0  # button starts at player 0 WLOG
 
-        self.current_largest_bet = 0
+        self.current_largest_bet = 2
 
         self.deck = []
         for suit in ["h", "d", "s", "c"]:
@@ -49,7 +49,7 @@ class poker_env():
         self.in_turn = (self.button + 1) % self.n_players
         self.behind = [0] * self.n_players
         self.current_bets = [0] * self.n_players
-        self.current_largest_bet = 0
+        self.current_largest_bet = 2
         self.in_hand = [True] * self.n_players
         self.pot = 0
         self.stage = 0  # 0: pre-flop, 1: flop, 2: turn, 3: river
