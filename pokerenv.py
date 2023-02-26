@@ -90,26 +90,11 @@ class poker_env():
 
         rewards = [torch.zeros(self.n_players)]
 
-        action['pot'] = self.pot
-
-        observations = [action]  # first observation returned is always the action being taken
         player = action['player']
         type = action['type']  # action type is one of {bet, call, fold}
         value = action['value']
 
         self.took_action[player] = True
-
-        replay = []
-        replay.append("Player's Cards: \n")
-        for i in range(2):
-            replay.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
-        replay.append("\nCommunity Cards: \n")
-        for i in range(len(self.community_cards)):
-            replay.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
-        replay.append("\nAction: \n")
-        replay.append(str(action))
-        self.file.writelines(replay)
-        self.file.write("\n\n")
 
         if type == 'bet':
             # move money from player to pot
@@ -129,7 +114,7 @@ class poker_env():
         if type == 'call':
             # need to catch up to current bet
             call_size = self.behind[player]
-            observations[0]['value'] = call_size
+            action['value'] = call_size
             self.current_bets[player] += call_size
 
             # move money from player to pot
@@ -144,6 +129,22 @@ class poker_env():
         if type == 'fold':
             # player becomes inactive
             self.in_hand[player] = False
+
+
+        action['pot'] = self.pot
+        observations = [action]
+
+        replay = []
+        replay.append("Player's Cards: \n")
+        for i in range(2):
+            replay.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
+        replay.append("\nCommunity Cards: \n")
+        for i in range(len(self.community_cards)):
+            replay.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
+        replay.append("\nAction: \n")
+        replay.append(str(action))
+        self.file.writelines(replay)
+        self.file.write("\n\n")
 
         # if everyone is square or folded, advance to next game stage
         square_check = True

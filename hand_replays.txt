@@ -1,0 +1,609 @@
+Player's Cards: 
+10c, 5c, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+4s, 9c, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+2s, 3s, 
+Community Cards: 
+
+Action: 
+{'player': 4, 'type': 'bet', 'value': 5.0, 'pot': 8.0}
+
+Player's Cards: 
+3h, 6c, 
+Community Cards: 
+
+Action: 
+{'player': 5, 'type': 'call', 'value': 5.0, 'pot': 13.0}
+
+Player's Cards: 
+Qh, Ac, 
+Community Cards: 
+
+Action: 
+{'player': 0, 'type': 'bet', 'value': 19.0, 'pot': 32.0}
+
+Player's Cards: 
+2h, 3c, 
+Community Cards: 
+
+Action: 
+{'player': 1, 'type': 'call', 'value': 19.0, 'pot': 51.0}
+
+Player's Cards: 
+10c, 5c, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'bet', 'value': 34.0, 'pot': 85.0}
+
+Player's Cards: 
+4s, 9c, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'bet', 'value': 57.0, 'pot': 142.0}
+
+Player's Cards: 
+2s, 3s, 
+Community Cards: 
+
+Action: 
+{'player': 4, 'type': 'bet', 'value': 178.0, 'pot': 320.0}
+
+Player's Cards: 
+3h, 6c, 
+Community Cards: 
+
+Action: 
+{'player': 5, 'type': 'call', 'value': 173.0, 'pot': 493.0}
+
+Player's Cards: 
+Qh, Ac, 
+Community Cards: 
+
+Action: 
+{'player': 0, 'type': 'call', 'value': 159.0, 'pot': 652.0}
+
+Player's Cards: 
+2h, 3c, 
+Community Cards: 
+
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 652.0}
+
+Player's Cards: 
+10c, 5c, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'bet', 'value': 165.0, 'pot': 817.0}
+
+Player's Cards: 
+4s, 9c, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'fold', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+10c, 5c, 
+Community Cards: 
+4d, 10d, 5s, 
+Action: 
+{'player': 2, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+4s, 9c, 
+Community Cards: 
+4d, 10d, 5s, 
+Action: 
+{'player': 3, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+2s, 3s, 
+Community Cards: 
+4d, 10d, 5s, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+3h, 6c, 
+Community Cards: 
+4d, 10d, 5s, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+Qh, Ac, 
+Community Cards: 
+4d, 10d, 5s, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+10c, 5c, 
+Community Cards: 
+4d, 10d, 5s, 5h, 
+Action: 
+{'player': 2, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+4s, 9c, 
+Community Cards: 
+4d, 10d, 5s, 5h, 
+Action: 
+{'player': 3, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+2s, 3s, 
+Community Cards: 
+4d, 10d, 5s, 5h, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+3h, 6c, 
+Community Cards: 
+4d, 10d, 5s, 5h, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+Qh, Ac, 
+Community Cards: 
+4d, 10d, 5s, 5h, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+10c, 5c, 
+Community Cards: 
+4d, 10d, 5s, 5h, 8s, 
+Action: 
+{'player': 2, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+4s, 9c, 
+Community Cards: 
+4d, 10d, 5s, 5h, 8s, 
+Action: 
+{'player': 3, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+2s, 3s, 
+Community Cards: 
+4d, 10d, 5s, 5h, 8s, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+3h, 6c, 
+Community Cards: 
+4d, 10d, 5s, 5h, 8s, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+Qh, Ac, 
+Community Cards: 
+4d, 10d, 5s, 5h, 8s, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 817.0}
+
+Player's Cards: 
+8d, Ad, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+3d, Jh, 
+Community Cards: 
+
+Action: 
+{'player': 4, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+9d, 4h, 
+Community Cards: 
+
+Action: 
+{'player': 4, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+5c, 8c, 
+Community Cards: 
+
+Action: 
+{'player': 5, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+10s, 3c, 
+Community Cards: 
+
+Action: 
+{'player': 0, 'type': 'bet', 'value': 3.0, 'pot': 6.0}
+
+Player's Cards: 
+9h, 5h, 
+Community Cards: 
+
+Action: 
+{'player': 1, 'type': 'bet', 'value': 3.0, 'pot': 9.0}
+
+Player's Cards: 
+Kc, 7d, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'bet', 'value': 11.0, 'pot': 20.0}
+
+Player's Cards: 
+10h, Qs, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'bet', 'value': 29.0, 'pot': 49.0}
+
+Player's Cards: 
+9d, 4h, 
+Community Cards: 
+
+Action: 
+{'player': 4, 'type': 'fold', 'value': 0, 'pot': 49.0}
+
+Player's Cards: 
+5c, 8c, 
+Community Cards: 
+
+Action: 
+{'player': 5, 'type': 'bet', 'value': 198, 'pot': 247.0}
+
+Player's Cards: 
+10s, 3c, 
+Community Cards: 
+
+Action: 
+{'player': 0, 'type': 'bet', 'value': 197.0, 'pot': 444.0}
+
+Player's Cards: 
+9h, 5h, 
+Community Cards: 
+
+Action: 
+{'player': 1, 'type': 'bet', 'value': 197.0, 'pot': 641.0}
+
+Player's Cards: 
+Kc, 7d, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'fold', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+10h, Qs, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'fold', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+9d, 4h, 
+Community Cards: 
+7c, 4d, Ah, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+5c, 8c, 
+Community Cards: 
+7c, 4d, Ah, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+10s, 3c, 
+Community Cards: 
+7c, 4d, Ah, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+9h, 5h, 
+Community Cards: 
+7c, 4d, Ah, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+9d, 4h, 
+Community Cards: 
+7c, 4d, Ah, 8d, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+5c, 8c, 
+Community Cards: 
+7c, 4d, Ah, 8d, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+10s, 3c, 
+Community Cards: 
+7c, 4d, Ah, 8d, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+9h, 5h, 
+Community Cards: 
+7c, 4d, Ah, 8d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+9d, 4h, 
+Community Cards: 
+7c, 4d, Ah, 8d, 2d, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+5c, 8c, 
+Community Cards: 
+7c, 4d, Ah, 8d, 2d, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+10s, 3c, 
+Community Cards: 
+7c, 4d, Ah, 8d, 2d, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+9h, 5h, 
+Community Cards: 
+7c, 4d, Ah, 8d, 2d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 641.0}
+
+Player's Cards: 
+7c, 9h, 
+Community Cards: 
+
+Action: 
+{'player': 5, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+7h, 5d, 
+Community Cards: 
+
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Ad, Qc, 
+Community Cards: 
+
+Action: 
+{'player': 0, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+10c, 8c, 
+Community Cards: 
+
+Action: 
+{'player': 1, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Ah, Js, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'call', 'value': 2, 'pot': 5}
+
+Player's Cards: 
+6d, 2d, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'bet', 'value': 6.0, 'pot': 11.0}
+
+Player's Cards: 
+7h, 5c, 
+Community Cards: 
+
+Action: 
+{'player': 4, 'type': 'bet', 'value': 200, 'pot': 211.0}
+
+Player's Cards: 
+9s, Qd, 
+Community Cards: 
+
+Action: 
+{'player': 5, 'type': 'bet', 'value': 167.0, 'pot': 378.0}
+
+Player's Cards: 
+Ad, Qc, 
+Community Cards: 
+
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+10c, 8c, 
+Community Cards: 
+
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+Ah, Js, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'fold', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+6d, 2d, 
+Community Cards: 
+
+Action: 
+{'player': 3, 'type': 'fold', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+Ad, Qc, 
+Community Cards: 
+4c, Ks, As, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+10c, 8c, 
+Community Cards: 
+4c, Ks, As, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+Ah, Js, 
+Community Cards: 
+4c, Ks, As, 
+Action: 
+{'player': 2, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+6d, 2d, 
+Community Cards: 
+4c, Ks, As, 
+Action: 
+{'player': 3, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+7h, 5c, 
+Community Cards: 
+4c, Ks, As, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+9s, Qd, 
+Community Cards: 
+4c, Ks, As, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+Ad, Qc, 
+Community Cards: 
+4c, Ks, As, Qs, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+10c, 8c, 
+Community Cards: 
+4c, Ks, As, Qs, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+Ah, Js, 
+Community Cards: 
+4c, Ks, As, Qs, 
+Action: 
+{'player': 2, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+6d, 2d, 
+Community Cards: 
+4c, Ks, As, Qs, 
+Action: 
+{'player': 3, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+7h, 5c, 
+Community Cards: 
+4c, Ks, As, Qs, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+9s, Qd, 
+Community Cards: 
+4c, Ks, As, Qs, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+Ad, Qc, 
+Community Cards: 
+4c, Ks, As, Qs, Ac, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+10c, 8c, 
+Community Cards: 
+4c, Ks, As, Qs, Ac, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+Ah, Js, 
+Community Cards: 
+4c, Ks, As, Qs, Ac, 
+Action: 
+{'player': 2, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+6d, 2d, 
+Community Cards: 
+4c, Ks, As, Qs, Ac, 
+Action: 
+{'player': 3, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+7h, 5c, 
+Community Cards: 
+4c, Ks, As, Qs, Ac, 
+Action: 
+{'player': 4, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+9s, Qd, 
+Community Cards: 
+4c, Ks, As, Qs, Ac, 
+Action: 
+{'player': 5, 'type': 'bet', 'value': 0, 'pot': 378.0}
+
+Player's Cards: 
+7s, 10s, 
+Community Cards: 
+
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+3c, 7c, 
+Community Cards: 
+
+Action: 
+{'player': 2, 'type': 'bet', 'value': 2, 'pot': 3}
+
