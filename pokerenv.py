@@ -1,6 +1,6 @@
 import torch
 import random
-
+import os
 
 class poker_env():
     '''
@@ -29,11 +29,13 @@ class poker_env():
         self.rank_mapping['13'] = "K"
         self.rank_mapping['14'] = "A"
 
+        self.history = []
+
         self.filename = "hand_replays.txt"
-        with open(self.filename, 'w') as file:
-            file.write("Hand History \n\n")
 
     def new_hand(self):
+        self.history.append("\n\n--------------------------------------------------------------------------------\n")
+        self.history.append("Hand Start\n")
         for player in range(self.n_players):
             self.stacks[player] = 200
         self.community_cards = []
@@ -135,20 +137,16 @@ class poker_env():
         action['pot'] = self.pot
         observations = [action]
 
-        with open(self.filename, 'a') as file:
-            replay = []
-            replay.append("Player's Cards: \n")
-            for i in range(2):
-                replay.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
-            replay.append("\nCommunity Cards: \n")
-            for i in range(len(self.community_cards)):
-                replay.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
-            if len(self.community_cards) == 0:
-                replay.append("Preflop")
-            replay.append("\nAction: \n")
-            replay.append(str(action))
-            file.writelines(replay)
-            file.write("\n\n")
+        self.history.append("\n\nPlayer's Cards: \n")
+        for i in range(2):
+            self.history.append(self.rank_mapping[str(self.hands[player][i][1])] + str(self.hands[player][i][0]) + ", ")
+        self.history.append("\nCommunity Cards: \n")
+        for i in range(len(self.community_cards)):
+            self.history.append(self.rank_mapping[str(self.community_cards[i][1])] + str(self.community_cards[i][0]) + ", ")
+        if len(self.community_cards) == 0:
+            self.history.append("Preflop")
+        self.history.append("\nAction: \n")
+        self.history.append(str(action))
 
         # if everyone is square or folded, advance to next game stage
         square_check = True
@@ -194,6 +192,18 @@ class poker_env():
             advance_stage_observations += new_hand_observations
             hand_over = True
 
+            if os.path.isfile(self.filename):
+                with open(self.filename, 'a') as file:
+                    self.history.append("\n\n")
+                    self.history.append("Hand End\n")
+                    self.history.append("--------------------------------------------------------------------------------\n")
+                    file.writelines(self.history)
+            else:
+                with open(self.filename, 'w') as file:
+                    self.history.append("\n\n")
+                    self.history.append("Hand End\n")
+                    self.history.append("--------------------------------------------------------------------------------\n")
+                    file.writelines(self.history)
         # advance stage if not river
         elif self.stage != 3:
             self.stage += 1
@@ -217,6 +227,18 @@ class poker_env():
             advance_stage_observations += new_hand_observations
             hand_over = True
 
+            if os.path.isfile(self.filename):
+                with open(self.filename, 'w') as file:
+                    file.writelines(self.history)
+                    file.write("\n\n")
+                    file.write("Hand End\n")
+                    file.write("--------------------------------------------------------------------------------\n")
+            else:
+                with open(self.filename, 'a') as file:
+                    file.writelines(self.history)
+                    file.write("\n\n")
+                    file.write("Hand End\n")
+                    file.write("--------------------------------------------------------------------------------\n")
         return advance_stage_rewards, advance_stage_observations, hand_over
 
     def card_reveal(self):
