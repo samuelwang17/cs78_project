@@ -236,7 +236,7 @@ class actor_critic():
             curr_logits = policy_logits[-1] # get last policy distribution
 
             
-            y_logit, action = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
+            alp, action = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
             
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
             
@@ -253,7 +253,7 @@ class actor_critic():
                 # fill_tensor = torch.Tensor(new_values)
                 self.values[-1].append(torch.Tensor(new_values))
             
-            new_alp = self.padding(y_logit.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
+            new_alp = self.padding(alp.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
             self.action_log_probabilies[-1].append(new_alp)
             for x in range(len(rewards) - 1):
                 new_alps = [-100000] * self.n_players
@@ -270,7 +270,7 @@ class actor_critic():
         self.time_dict['model_inference'] += time.time_ns() - clock
         # process gradients and return loss:
         out = self.get_loss(torch.stack(Vals_T))
-        self.time_dict['total'] += time.time_ns() - clock1
+        self.time_dict['total'] = time.time_ns() - clock1
         return out
 
     def get_loss(self, Vals_T):

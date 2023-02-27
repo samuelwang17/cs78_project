@@ -13,7 +13,7 @@ from transformer import *
 
 
 class Player(mp.Process):
-    def __init__(self, global_actor_critic, global_ep_idx, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema):
+    def __init__(self, global_actor_critic, global_ep_idx, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema, global_inference_ema):
         super(Player, self).__init__()
         self.local_actor_critic = actor_critic(
             model_dim=player_params[0],
@@ -35,6 +35,7 @@ class Player(mp.Process):
         self.global_actor_ema = global_actor_ema
         self.global_critic_ema = global_critic_ema
         self.global_loss_ema = global_loss_ema
+        self.global_inference_ema = global_inference_ema
 
 
     def run(self):
@@ -53,14 +54,15 @@ class Player(mp.Process):
             with self.episode_idx.get_lock():
                 self.episode_idx.value += 1
             with self.global_loss_ema.get_lock():
-                self.global_loss_ema.value = self.global_loss_ema.value * .995 + loss * .005 if self.global_loss_ema.value != 0 else loss
+                self.global_loss_ema.value = self.global_loss_ema.value * .99 + loss * .01 if self.global_loss_ema.value != 0. else loss
             with self.global_actor_ema.get_lock():
-                self.global_actor_ema.value = self.global_actor_ema.value * .995 + actor_loss * .005 if self.global_actor_ema.value != 0 else actor_loss
+                self.global_actor_ema.value = self.global_actor_ema.value * .99 + actor_loss * .01 if self.global_actor_ema.value != 0. else actor_loss
             with self.global_critic_ema.get_lock():
-                self.global_critic_ema.value = self.global_critic_ema.value * .995 + critic_loss * .005 if self.global_critic_ema.value != 0 else critic_loss
+                self.global_critic_ema.value = self.global_critic_ema.value * .99 + critic_loss * .01 if self.global_critic_ema.value != 0. else critic_loss
+            with self.global_inference_ema.get_lock():
+                self.global_inference_ema.value = self.global_inference_ema.value * .99 + time_dict['total'] * .01 if self.global_inference_ema.value != 0. else time_dict['total']
             if self.episode_idx.value % 100 == 0:
-                print(f'episode: {self.episode_idx.value}, loss: {self.global_loss_ema.value * 100 // 1 / 100}, actor loss: {self.global_actor_ema.value * 100 // 1 / 100}, critic_loss: {self.global_critic_ema.value * 100 // 1}')
-                print(f'total time: {time_dict["total"]}, model: {time_dict["model_inference"]/time_dict["total"]}')
+                print(f'episode: {self.episode_idx.value}, loss: {self.global_loss_ema.value * 100 // 1 / 100}, actor loss: {self.global_actor_ema.value * 100 // 1 / 100}, critic loss: {self.global_critic_ema.value * 100 // 1}, inference time: {self.global_inference_ema.value / 1e6 // 1 / 1e3}')
 
 
 if __name__ == '__main__':
@@ -73,16 +75,17 @@ if __name__ == '__main__':
     gamma = 1
     n_actions = 6
     # model parameters
-    model_dim = 64
-    mlp_dim = 128
+    model_dim = 32
+    mlp_dim = 64
     attn_heads = 8
     sequence_length = 50
     enc_layers = 4
-    memory_layers = 0 #pre_mem, mem layered
+    memory_layers = 0 # pre_mem, mem layered
     mem_length = 25
     dec_layers = 8
     action_dim = 8
-    learning_rate = .0001
+    learning_rate = .001
+    weight_decay = .001
     player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, memory_layers, mem_length, dec_layers, action_dim]
     # create poker environment
@@ -94,15 +97,16 @@ if __name__ == '__main__':
     global_model = RLformer(* model_params)
     global_model.share_memory()
     print('Parameter_count: ', sum(p.numel() for p in global_model.parameters() if p.requires_grad))
-    optimizer = SharedAdam(global_model.parameters(), lr=learning_rate, weight_decay=.01)
+    optimizer = SharedAdam(global_model.parameters(), lr=learning_rate, weight_decay=weight_decay)
     global_ep = mp.Value('i', 0)
     global_loss_ema = mp.Value('d', 0)
     global_actor_ema = mp.Value('d', 0)
     global_critic_ema = mp.Value('d', 0)
+    global_inference_ema = mp.Value('d', 0)
     # initialize players
     players = []
     for i in range(actor_count):
-        player = Player(global_model, global_ep, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema)
+        player = Player(global_model, global_ep, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema, global_inference_ema)
         players.append(player)
     [player.start() for player in players]
     [player.join() for player in players]

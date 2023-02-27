@@ -62,7 +62,6 @@ class mod_transformer(nn.Module):
             self.seen[player] = True
             enc = self.encoder(enc_input)
             self.hands[player] = enc
-        
         dec = self.decoder(dec_input, enc)
         policy_logits = self.actor(dec)
         value = self.critic(dec)
