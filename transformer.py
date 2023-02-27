@@ -39,8 +39,9 @@ class mod_transformer(nn.Module):
         )
 
         self.actor = nn.Sequential(
-            nn.Linear(model_dim, action_dim),
+            nn.Linear(model_dim, model_dim),
             nn.ReLU(),
+            nn.Linear(model_dim, action_dim)
         ) # actor returns logits, softmax handled at higher level
 
         self.critic = nn.Sequential(
@@ -49,10 +50,19 @@ class mod_transformer(nn.Module):
             nn.Linear(mlp_dim, 1)
         )
 
+        self.hands = {}
+        self.seen = {0: False, 1: False}
 
-    def forward(self, enc_input, dec_input):
+    def forward(self, enc_input, dec_input, player, new_hand):
+        if new_hand:
+            self.seen = {0: False, 1: False}
+        if self.seen[player]: 
+            enc = self.hands[player]   
+        else:
+            self.seen[player] = True
+            enc = self.encoder(enc_input)
+            self.hands[player] = enc
         
-        enc = self.encoder(enc_input)
         dec = self.decoder(dec_input, enc)
         policy_logits = self.actor(dec)
         value = self.critic(dec)

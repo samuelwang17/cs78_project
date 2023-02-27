@@ -39,7 +39,7 @@ class Player(mp.Process):
 
     def run(self):
         while self.episode_idx.value < self.N_GAMES:
-            loss, actor_loss, critic_loss = self.local_actor_critic.play_hand()
+            loss, actor_loss, critic_loss, time_dict = self.local_actor_critic.play_hand()
             self.optimizer.zero_grad() # zero gradient on the master copy
             with torch.autograd.set_detect_anomaly(True):
                 loss.backward(retain_graph=True)
@@ -60,6 +60,7 @@ class Player(mp.Process):
                 self.global_critic_ema.value = self.global_critic_ema.value * .995 + critic_loss * .005 if self.global_critic_ema.value != 0 else critic_loss
             if self.episode_idx.value % 100 == 0:
                 print(f'episode: {self.episode_idx.value}, loss: {self.global_loss_ema.value * 100 // 1 / 100}, actor loss: {self.global_actor_ema.value * 100 // 1 / 100}, critic_loss: {self.global_critic_ema.value * 100 // 1}')
+                print(f'total time: {time_dict["total"]}, model: {time_dict["model_inference"]/time_dict["total"]}')
 
 
 if __name__ == '__main__':
@@ -72,16 +73,16 @@ if __name__ == '__main__':
     gamma = 1
     n_actions = 6
     # model parameters
-    model_dim = 32
-    mlp_dim = 64
-    attn_heads = 4
+    model_dim = 64
+    mlp_dim = 128
+    attn_heads = 8
     sequence_length = 50
     enc_layers = 4
-    memory_layers = 3 #pre_mem, mem layered
-    mem_length = 50
-    dec_layers = 3
-    action_dim = 7
-    learning_rate = .001
+    memory_layers = 0 #pre_mem, mem layered
+    mem_length = 25
+    dec_layers = 8
+    action_dim = 8
+    learning_rate = .0001
     player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, memory_layers, mem_length, dec_layers, action_dim]
     # create poker environment

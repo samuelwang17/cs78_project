@@ -8,7 +8,7 @@ from pokerenv import poker_env
 from itertools import chain
 import numpy as np
 from model_components import grad_skip_softmax, grad_skip_logsoftmax
-
+import time
 class Agent(nn.Module):
     def __init__(self,
         model_dim,
@@ -42,11 +42,11 @@ class Agent(nn.Module):
         assert hand_tensor != None
         self.hand_dict[player] = hand_tensor
 
-    def forward(self, player, obs_flat):
+    def forward(self, player, obs_flat, new_hand):
         #takes flattened inputs in list form, not tokenized
         enc_input = self.hand_dict[player]
         dec_input = self.tokenizer(obs_flat)
-        policy_logits, value = self.model(enc_input, dec_input)
+        policy_logits, value = self.model(enc_input, dec_input, player, new_hand)
         return policy_logits, value
 
 class actor_critic():
@@ -108,6 +108,8 @@ class actor_critic():
         self.lsm = grad_skip_logsoftmax()
 
         self.silu = nn.SiLU()
+
+        self.time_dict = {'total': 0, 'env': 0, 'model_inference': 0, 'loss': 0}
 
 
     def sample_action(self, curr_logits):
@@ -202,11 +204,12 @@ class actor_critic():
 
 
     def play_hand(self):
+        self.time_dict = {'total': 0, 'env': 0, 'model_inference': 0, 'loss': 0}
+        clock1 = time.time_ns()
         # makes agent play one hand
         # deal cards
         rewards, observations = self.env.new_hand() # start a new hand
         self.init_hands() # pre load all of the hands
-
         # init lists for this hand
         self.observations.append(observations)
         self.rewards.append(rewards)
@@ -223,14 +226,20 @@ class actor_critic():
         while not hand_over:
             # get values and policy -- should be in list form over sequence length
             player = self.env.in_turn
-            policy_logits, values = self.agent(player, self.obs_flat)
+            
+            clock = time.time_ns()
+            policy_logits, values = self.agent(player, self.obs_flat, new_hand = True)
+            self.time_dict['model_inference'] += time.time_ns() - clock
+            
             value = values.squeeze()[-1] # get last value estimate
             assert value.requires_grad
             curr_logits = policy_logits[-1] # get last policy distribution
 
+            
             y_logit, action = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
+            
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
-
+            
             # add new information from this step
             self.rewards[-1] += rewards #add tensor
             self.observations[-1] += obs
@@ -249,21 +258,23 @@ class actor_critic():
             for x in range(len(rewards) - 1):
                 new_alps = [-100000] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
-            
+           
             # prepare for next action
             self.chop_seq()
 
-        
+        clock = time.time_ns()
         Vals_T = [0] * self.n_players
         for player in range(self.n_players):
-            _, V_T = self.agent(player, self.obs_flat)
+            _, V_T = self.agent(player, self.obs_flat, new_hand = False)
             Vals_T[player] = V_T.squeeze()[-1]
-        
+        self.time_dict['model_inference'] += time.time_ns() - clock
         # process gradients and return loss:
-        return self.get_loss(torch.stack(Vals_T))
+        out = self.get_loss(torch.stack(Vals_T))
+        self.time_dict['total'] += time.time_ns() - clock1
+        return out
 
     def get_loss(self, Vals_T):
-
+        clock = time.time_ns()
         Qs = [0] * len(self.rewards[-1])
         Q_t = Vals_T
         for t in reversed(range(len(self.rewards[-1]))):
@@ -280,13 +291,13 @@ class actor_critic():
         alps = torch.stack(self.action_log_probabilies[-1])[:-1]
         advantages = Qs - values 
         advantages = advantages.masked_fill(values == -5783, 0) # using arbitrary filler from earlier to mask out the blinds
-        #logit should be high when advantage high, so if + advantage, + logit, loss should be negative
+        
         actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
-        critic_loss = 0.5 * (self.silu(advantages)).pow(2).mean() / 100 # autogressive critic loss - MSE
+        critic_loss = (advantages).pow(2).mean() / 200 # autogressive critic loss - MSE
         
         loss = actor_loss + critic_loss
-
-        return loss, actor_loss, critic_loss
+        self.time_dict['loss'] = time.time_ns() - clock
+        return loss, actor_loss, critic_loss, self.time_dict
     
 
     def clear_memory(self):
