@@ -66,7 +66,7 @@ class actor_critic():
     ) -> None:
     
         self.gamma = gamma
-        self.env = poker_env(n_players = n_players)
+        self.env = poker_env(n_players = n_players, batch_size = 128)
         self.agent = Agent(
             model_dim = model_dim,
             mlp_dim = mlp_dim,
