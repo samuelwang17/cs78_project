@@ -78,10 +78,7 @@ class poker_env():
         for i in range(self.batch_size):
             self.took_action[i][big_blind_player] = False
 
-        rewards += r
-        observations += o
-
-        return rewards, observations
+        return [rewards, r], [observations, o]
 
     def get_hand(self, player):
         if len(self.hands) == 0:
