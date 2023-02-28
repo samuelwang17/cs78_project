@@ -38,15 +38,18 @@ class Agent(nn.Module):
 
     def init_player(self, player, hand):
         # initialize this players hand and tokenize it, store it in buffer
-        hand_tensor = self.tokenizer(hand) #hand needs to be card observations -- list of length two of tensors
+        hand_tensor = self.tokenizer(hand) # hand needs to be card observations -- list of length two of tensors
         assert hand_tensor != None
         self.hand_dict[player] = hand_tensor
 
     def forward(self, player, obs_flat, new_hand):
-        #takes flattened inputs in list form, not tokenized
-        enc_input = self.hand_dict[player]
-        dec_input = self.tokenizer(obs_flat)
-        policy_logits, value = self.model(enc_input, dec_input, player, new_hand)
+        # takes flattened inputs in list form, not tokenized
+        enc_input = []
+        dec_input = []
+        for x in range(len(obs_flat)): # expects obs_flat to be a list of flattened observation lists
+            dec_input.append(self.tokenizer(obs_flat[x])) # env steam is what obs_flat used to be
+            enc_input.append(self.hand_dict[player[x]])
+        policy_logits, value = self.model(enc_input, dec_input, player, new_hand) # expects a list of tensors for dec_input
         return policy_logits, value
 
 class actor_critic():
@@ -208,19 +211,23 @@ class actor_critic():
         clock1 = time.time_ns()
         # makes agent play one hand
         # deal cards
-        rewards, observations = self.env.new_hand() # start a new hand
+        rewards, observations = self.env.new_hand() # start a new hand, observations is list of observation lists
         self.init_hands() # pre load all of the hands
         # init lists for this hand
-        self.observations.append(observations)
-        self.rewards.append(rewards)
+        for x in range(len(self.observations)):
+            self.observations[x].append(observations[x])
+        for x in range(len(self.rewards)):
+            self.rewards[x].append(rewards[x])
         self.chop_seq() # prepare for input to model
         self.values.append([])
         self.action_log_probabilies.append([])
-        for x in range(len(rewards)):
-                new_values = [-5783] * self.n_players # -5783 fed here so that 
-                self.values[-1].append(torch.Tensor(new_values))
+        for x in range(len(self.values[0])):
+                new_values = [-5783] * self.n_players # -5783 filler value
+                for x in range(len(self.values)):
+                    self.values[x][-1].append(torch.Tensor(new_values))
                 new_alps = [0] * self.n_players
-                self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
+                for x in range(len(self.action_log_probabilies)):
+                    self.action_log_probabilies[x][-1].append(torch.Tensor(new_alps))
         
         hand_over = False
         while not hand_over:
@@ -229,8 +236,7 @@ class actor_critic():
             
             clock = time.time_ns()
             policy_logits, values = self.agent(player, self.obs_flat, new_hand = True)
-            self.time_dict['model_inference'] += time.time_ns() - clock
-            
+            assert False, player
             value = values.squeeze()[-1] # get last value estimate
             assert value.requires_grad
             curr_logits = policy_logits[-1] # get last policy distribution

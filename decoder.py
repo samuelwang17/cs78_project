@@ -22,6 +22,7 @@ class positional_encoding(nn.Module):
         self.register_buffer('pe', pe)
     
     def forward(self, x):
+        # x is a 1d tensor of variable length -- observations
         y = self.pe[:x.size(1)].squeeze()
         gap = y.size()[0] - x.size()[0]
         padding = torch.zeros((gap, self.model_dim))
@@ -266,7 +267,11 @@ class decoder(nn.Module):
 
     def forward(self, x, y):
         # y is input from encoder
-        x = self.pe(x).squeeze()
+        # x was a tensor, now it is a list of tensors
+        embedded_input = []
+        for l in x:
+            embedded_input.append(self.pe(l).squeeze())
+        x = torch.stack(embedded_input) # stack all inputs into a batch
         for xllayer in self.block1:
             x = xllayer(x)
         for layer in self.block2:

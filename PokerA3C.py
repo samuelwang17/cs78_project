@@ -28,6 +28,7 @@ class Player(mp.Process):
             gamma=player_params[9],
             n_actions=player_params[10]
         )
+        
         self.global_actor_critic = global_actor_critic
         self.episode_idx = global_ep_idx
         self.optimizer = optimizer
@@ -66,7 +67,7 @@ class Player(mp.Process):
 if __name__ == '__main__':
     torch.manual_seed(0)
     N_GAMES = 100
-    actor_count = 8
+    actor_count = 1
     # actor parameters
     max_sequence = 200
     n_players = 2

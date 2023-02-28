@@ -50,20 +50,25 @@ class mod_transformer(nn.Module):
             nn.Linear(mlp_dim, 1)
         )
 
-        self.hands = {}
+        
         self.seen = {0: False, 1: False}
 
     def forward(self, enc_input, dec_input, player, new_hand):
         if new_hand:
-            self.seen = {0: False, 1: False}
-        if self.seen[player]: 
-            enc = self.hands[player]   
-        else:
-            self.seen[player] = True
-            enc = self.encoder(enc_input)
-            self.hands[player] = enc
+            self.seen = [{0: False, 1: False}] * len(dec_input)
+            self.hands = [{}] * len(dec_input)
         
-        dec = self.decoder(dec_input, enc)
+        enc = []
+        for x in range(len(dec_input)):
+            if self.seen[x][player]: 
+                enc[x] = self.hands[x][player]
+        
+            else:
+                self.seen[x][player] = True
+                enc.append(self.encoder(enc_input[x]))
+                self.hands[x][player] = enc[x]
+
+        dec = self.decoder(dec_input, enc) #expects a list of tensors as dec_input, enc_input
         policy_logits = self.actor(dec)
         value = self.critic(dec)
         return policy_logits, value
