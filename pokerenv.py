@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 
 class poker_env():
@@ -78,7 +79,11 @@ class poker_env():
         for i in range(self.batch_size):
             self.took_action[i][big_blind_player] = False
 
-        return [rewards, r], [observations, o]
+        for i in range(self.batch_size):
+            rewards[i].append(r[i])
+            observations[i].append(o[i])
+
+        return rewards, observations
 
     def get_hand(self, player):
         if len(self.hands) == 0:
