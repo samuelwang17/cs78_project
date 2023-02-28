@@ -201,7 +201,7 @@ class poker_env():
             self.hand_overs[i] = hand_over
             rewards_batch.append(rewards)
             observations_batch.append(observations)
-            hand_over_batch.append(False)
+            hand_over_batch.append(hand_over)
         return rewards_batch, observations_batch, hand_over_batch
 
     def advance_stage(self, index):
