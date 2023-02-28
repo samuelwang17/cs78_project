@@ -1,6 +1,7 @@
 # Main model
 
 import torch.nn as nn
+import torch
 from encoder import encoder
 from decoder import decoder
 
@@ -58,16 +59,16 @@ class mod_transformer(nn.Module):
             self.seen = [{0: False, 1: False}] * len(dec_input)
             self.hands = [{}] * len(dec_input)
         
-        enc = []
+        enc = [[] for _ in range(128)]
         for x in range(len(dec_input)):
-            if self.seen[x][player]: 
-                enc[x] = self.hands[x][player]
+            if self.seen[x][player[x]]:
+                enc[x] = self.hands[x][player[x]]
         
             else:
-                self.seen[x][player] = True
-                enc.append(self.encoder(enc_input[x]))
-                self.hands[x][player] = enc[x]
-
+                self.seen[x][player[x]] = True
+                enc[x] = self.encoder(enc_input[x])
+                self.hands[x][player[x]] = enc[x]
+        enc = torch.stack(enc)
         dec = self.decoder(dec_input, enc) #expects a list of tensors as dec_input, enc_input
         policy_logits = self.actor(dec)
         value = self.critic(dec)
