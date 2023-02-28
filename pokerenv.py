@@ -9,11 +9,11 @@ class poker_env():
     def __init__(self, n_players, batch_size) -> None:
         self.n_players = n_players
 
-        self.stacks = [[0] * n_players] * batch_size
+        self.stacks = [[0 for i in range(n_players)] for j in range(batch_size)]
 
-        self.button = [0] * batch_size  # button starts at player 0 WLOG
+        self.button = [0 for i in range(n_players)]  # button starts at player 0 WLOG
 
-        self.current_largest_bet = [1] * batch_size
+        self.current_largest_bet = [1 for i in range(n_players)]
 
         self.deck = []
         for suit in ["h", "d", "s", "c"]:
@@ -39,8 +39,9 @@ class poker_env():
         self.history = []
 
         if self.hand_count % self.hand_until_log == 0:
-             self.history.append("\n\n--------------------------------------------------------------------------------\n")
-             self.history.append("Hand " + str(self.hand_count) + " Start\n")
+            self.history.append(
+                "\n\n--------------------------------------------------------------------------------\n")
+            self.history.append("Hand " + str(self.hand_count) + " Start\n")
 
         for i in range(self.batch_size):
             for player in range(self.n_players):
@@ -52,19 +53,19 @@ class poker_env():
         for i in range(len(self.button)):
             self.button[i] = (self.button[i] + 1) % self.n_players
 
-        self.in_turn = [0] * self.batch_size
+        self.in_turn = [0 for i in range(self.batch_size)]
         for i in range(len(self.in_turn)):
             self.in_turn[i] = (self.button[i] + 1) % self.n_players
 
-        self.behind = [[0] * self.n_players] * self.batch_size
-        self.current_bets = [[0] * self.n_players] * self.batch_size
-        self.current_largest_bet = [1] * self.batch_size
-        self.in_hand = [[True] * self.n_players] * self.batch_size
-        self.took_action = [[
-                                False] * self.n_players] * self.batch_size  # tracks whether players have taken action in a specific round of betting
-        self.pot = [0] * self.batch_size
-        self.stage = [0] * self.batch_size  # 0: pre-flop, 1: flop, 2: turn, 3: river
-        self.hand_overs = [False] * self.batch_size
+        self.behind = [[0 for i in range(self.n_players)] for j in range(self.batch_size)]
+        self.current_bets = [[0 for i in range(self.n_players)] for j in range(self.batch_size)]
+        self.current_largest_bet = [1 for i in range(self.n_players)]
+        self.in_hand = [[True for i in range(self.n_players)] for j in range(self.batch_size)]
+        self.took_action = [[False for i in range(self.n_players)] for j in range(
+            self.batch_size)]  # tracks whether players have taken action in a specific round of betting
+        self.pot = [0 for i in range(self.batch_size)]
+        self.stage = [0 for i in range(self.batch_size)]  # 0: pre-flop, 1: flop, 2: turn, 3: river
+        self.hand_overs = [False for i in range(self.batch_size)]
 
         # deal cards, pass to agents
         random.shuffle(self.deck)
@@ -108,7 +109,7 @@ class poker_env():
         hand_over_batch = []
         for i in range(self.batch_size):
 
-            rewards = [[0] * self.n_players]
+            rewards = [[0 for i in range(self.n_players)]]
             if self.hand_overs[i]:
                 rewards_batch.append(rewards)
                 observations_batch.append([])
@@ -132,7 +133,7 @@ class poker_env():
                 # other players are now behind the bet
                 for x in range(self.n_players):
                     self.behind[i][x] = max(self.behind[i][x],
-                                                value + self.current_bets[i][player] - self.current_bets[i][x])
+                                            value + self.current_bets[i][player] - self.current_bets[i][x])
 
                 self.current_bets[i][player] += value
 
@@ -206,7 +207,7 @@ class poker_env():
 
     def advance_stage(self, index):
         # this is called anytime that there is no player who is: 1. in the hand, 2. behind the bet, and 3. has not taken action
-        advance_stage_rewards = [[0] * self.n_players]
+        advance_stage_rewards = [[0 for i in range(self.n_players)]]
         advance_stage_observations = []
         hand_over = False
 
@@ -222,7 +223,8 @@ class poker_env():
                     # payout!
                     advance_stage_rewards[0][p] += self.pot[index]
                     self.stacks[index][p] += self.pot[index]
-                    advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot[index], 'pot': self.pot[index]}]
+                    advance_stage_observations += [
+                        {'player': p, 'type': 'win', 'value': self.pot[index], 'pot': self.pot[index]}]
                     if self.hand_count % self.hand_until_log == 0 and index == 0:
                         self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot[index]))
 
@@ -310,14 +312,14 @@ class poker_env():
         return None
 
     def determine_showdown_winners(self, index):
-        scores = [0] * self.n_players
+        scores = [0 for i in range(self.n_players)]
         for p in range(self.n_players):
             if not self.in_hand[index][p]:
                 continue
 
             cards = self.community_cards + self.hands[p]
 
-            rank_count = [0] * 13
+            rank_count = [0 for i in range(13)]
             suit_count = {"h": 0, "d": 0, "s": 0, "c": 0}
 
             for card in cards:
@@ -384,7 +386,7 @@ class poker_env():
             if flush_high != 0 and straight_high != 0:
                 sf_high = 0
                 sf_count = 0
-                suit_ranks = [0] * 13
+                suit_ranks = [0 for i in range(13)]
                 for card in cards:
                     if card[0] == flush_suit:
                         suit_ranks[card[1] - 2] = 1
