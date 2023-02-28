@@ -21,7 +21,7 @@ class grad_skip_softmax(nn.Module):
 class grad_skip_logsoftmax(nn.Module):
     def __init__(self) -> None:
         super().__init__()
-        self.lsm = nn.LogSoftmax(dim=1)
+        self.lsm = nn.LogSoftmax(dim=0)
 
     def forward(self, x):
         return self.lsm(x)
@@ -175,7 +175,7 @@ class critic_head(nn.Module):
         values = self.value_outs(x)
         gate = self.gating(x)
         weighted_values = values * gate
-        return weighted_values.sum(dim=1)
+        return weighted_values.sum(dim=2)
         
         
 

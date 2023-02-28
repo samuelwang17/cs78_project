@@ -48,11 +48,15 @@ class Agent(nn.Module):
         # takes flattened inputs in list form, not tokenized
         enc_input = []
         dec_input = []
-        for x in range(len(obs_flat)):  # expects obs_flat to be a list of flattened observation lists
-            dec_input.append(self.tokenizer(obs_flat[x]))  # env steam is what obs_flat used to be
-            enc_input.append(self.hand_dict[player[x]])
-        policy_logits, value = self.model(enc_input, dec_input, player,
-                                          new_hand)  # expects a list of tensors for dec_input
+        for index, obs in enumerate(obs_flat):
+            dec_input_temp = []
+            enc_input_temp = []
+            for x in range(len(obs)):  # expects obs_flat to be a list of flattened observation lists
+                dec_input_temp.append(self.tokenizer(obs[x]))  # env steam is what obs_flat used to be
+                enc_input_temp.append(self.hand_dict[player[index]])
+            dec_input.append(torch.stack(dec_input_temp).squeeze())
+            enc_input.append(torch.stack(enc_input_temp).squeeze())
+        policy_logits, value = self.model(enc_input, dec_input, player, new_hand)  # expects a list of tensors for dec_input
         return policy_logits, value
 
 
@@ -106,7 +110,7 @@ class actor_critic():
 
         self.n_actions = n_actions
 
-        self.softmax = grad_skip_softmax()
+        self.softmax = nn.Softmax()
 
         self.padding = nn.ConstantPad1d(
             padding=n_players - 1,
@@ -123,8 +127,8 @@ class actor_critic():
         # MASK, SAMPLE, DETOKENIZE
         # get the player about to act
         player = self.env.in_turn[batch_num]
-        player_stack = self.env.stacks[player]
-        pot = self.env.pot
+        player_stack = self.env.stacks[batch_num][player]
+        pot = self.env.pot[batch_num]
         linspace_dim = self.n_actions - 4
         assert linspace_dim > 0
 
@@ -140,21 +144,20 @@ class actor_critic():
             mask[0] = 1  # cannot shove if shoving and calling are equivalent
 
         linspace = np.geomspace(.5, 2, num=linspace_dim)
-        stack_checker = lambda x: 1 if x * pot >= player_stack or x < (2 * self.env.current_largest_bet) else 0
-        mask[4:] += np.fromiter((stack_checker(x) for x in linspace),
-                                linspace.dtype)  # mask away bets that are larger than stack or all in or bets that are are not 2x larger than last bet
+        stack_checker = lambda x: 1 if x * pot >= player_stack or x * pot < (2 * self.env.current_largest_bet[batch_num]) or x * pot < self.env.behind[batch_num][player] else 0
+        mask[4:] += np.fromiter((stack_checker(x) for x in linspace),linspace.dtype)  # mask away bets that are larger than stack or all in or bets that are are not 2x larger than last bet
         tensor_mask = torch.Tensor(mask)
 
         # grad skip softmax -- neural replicator dynamics, with mask
         policy = self.softmax(curr_logits.masked_fill(tensor_mask == 1, float('-inf')))
 
-        np_dist = np.squeeze(policy[-1].detach().numpy())
+        np_dist = policy.detach().numpy()
 
         # SAMPLE
         action_index = np.random.choice(self.n_actions, p=np_dist)
         # calculate action log prob for use in advantage later
         # y_logit = curr_logits[-1][action_index] #.0001 used to avoid log(0) causing grad issues
-        alps = self.lsm(curr_logits)[-1]
+        alps = self.lsm(curr_logits)
         alp = alps[action_index]
 
         # DETOKENIZE
@@ -181,9 +184,9 @@ class actor_critic():
     def chop_seq(self):
         # if length of observations is above a certain size, chop it back down to under sequence length by removing oldest hand
         # return flattened version to give to model on next run
-        self.obs_flat = []
-        for observation in self.observations:
-            self.obs_flat.append(list(chain(*observation)))
+        self.obs_flat = [[] for i in range(128)]
+        for index, observation in enumerate(self.observations):
+            self.obs_flat[index].append(list(chain(*observation)))
         for i in range(len(self.observations)):
             if len(self.obs_flat[i]) > self.max_sequence:
                 before = len(self.obs_flat[i])
@@ -210,29 +213,27 @@ class actor_critic():
         assert len(self.obs_flat[i]) <= self.max_sequence
 
     def play_hand(self):
+        hand_over = [False for i in range(128)]
         self.time_dict = {'total': 0, 'env': 0, 'model_inference': 0, 'loss': 0}
         clock1 = time.time_ns()
         # makes agent play one hand
         # deal cards
-        rewards, observations = self.env.new_hand()  # start a new hand, observations is list of observation lists
+        rewards, observations = self.env.new_hand() # start a new hand, observations is list of observation lists
         self.init_hands()  # pre load all of the hands
         # init lists for this hand
         for x in range(len(self.observations)):
             self.observations[x].append(observations[x])
         for x in range(len(self.rewards)):
             self.rewards[x].append(rewards[x])
+            self.values[x].append([])
+            self.action_log_probabilies[x].append([])
         self.chop_seq()  # prepare for input to model
-        self.values.append([])
-        self.action_log_probabilies.append([])
-        hand_over = []
-        for x in range(len(self.values[0])):
-            new_values = [-5783] * self.n_players  # -5783 filler value
-            for x in range(len(self.values)):
+        for x in range(128):
+            for y in range(len(rewards[x])):
+                new_values = [-5783 for i in range(self.n_players)]  # -5783 filler value
                 self.values[x][-1].append(torch.Tensor(new_values))
-            new_alps = [0] * self.n_players
-            for x in range(len(self.action_log_probabilies)):
+                new_alps = [0] * self.n_players
                 self.action_log_probabilies[x][-1].append(torch.Tensor(new_alps))
-            hand_over.append(False)
 
         all_over = False
         while not all_over:
@@ -241,77 +242,91 @@ class actor_critic():
 
             clock = time.time_ns()
             policy_logits, values = self.agent(player, self.obs_flat, new_hand=True)
-            print(values)
             vals = []
-            alp = []
-            all_over = True
+            alps = []
+            actions = []
             for x in range(len(values)):
-                print(hand_over)
                 if not hand_over[x]:
-                    vals.append(values[x].squeeze()[-1])
+                    vals.append(values[x])
                     this_alp, action = self.sample_action(policy_logits[x][-1], x)
-                    alp.append(this_alp)
-                    r, o, h = self.env.take_action(action)
-                    hand_over[x] = h
-                    all_over = all_over and h
-                    if not h:
-                        self.rewards[x][-1] += r  # add tensor
-                        self.observations[x][-1] += o
+                    alps.append(this_alp)
+                    actions.append(action)
+                else:
+                    actions.append(-1) # filler value, shouldn't matter as the environment also keeps track of hand status
+                    vals.append('hand_over')
+                    alps.append('hand_over')
+            r, o, h = self.env.take_actions(actions)
+            all_over = True
+            for index, x in enumerate(r):
+                if not hand_over[index]:
+                    all_over = False
+                    self.rewards[index][-1] += r[index]  # add tensor
+                    self.observations[index][-1] += o[index]
 
             # value needs to be on a per player basis
+            for index, value in enumerate(values):
+                if not hand_over[index]:
+                    new_value = self.padding(value[-1].unsqueeze(-1))[
+                                 (self.n_players - player[index] - 1):(2 * self.n_players - player[index] - 1)].squeeze()
+                    self.values[index][-1].append(new_value)
+                    diff = len(self.rewards[index][-1]) - len(self.values[index][-1])
+                    for x in range(diff):
+                        new_values = [-100000 for i in range(self.n_players)]  # -10000 is filler value
+                        # fill_tensor = torch.Tensor(new_values)
+                        self.values[index][-1].append(torch.Tensor(new_values))
 
-            new_values = self.padding(values.unsqueeze(-1))[
-                         (self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
-            self.values[-1].append(new_values)
-            for x in range(len(rewards) - 1):
-                new_values = [-100000] * self.n_players  # -10000 is filler value
-                # fill_tensor = torch.Tensor(new_values)
-                self.values[-1].append(torch.Tensor(new_values))
-
-            new_alp = self.padding(alp.unsqueeze(-1))[
-                      (self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
-            self.action_log_probabilies[-1].append(new_alp)
-            for x in range(len(rewards) - 1):
-                new_alps = [-100000] * self.n_players
-                self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
-
+            for index, alp in enumerate(alps):
+                if not hand_over[index]:
+                    new_alp = self.padding(alp.unsqueeze(-1))[
+                              (self.n_players - player[index] - 1):(2 * self.n_players - player[index] - 1)].squeeze()
+                    self.action_log_probabilies[index][-1].append(new_alp)
+                    diff = len(self.rewards[index][-1]) - len(self.action_log_probabilies[index][-1])
+                    for x in range(diff):
+                        new_alps = [-100000 for i in range(self.n_players)]
+                        self.action_log_probabilies[index][-1].append(torch.Tensor(new_alps))
+            for index, bool in enumerate(h):
+                hand_over[index] = bool
             # prepare for next action
-            self.chop_seq()
+        self.chop_seq()
 
         clock = time.time_ns()
-        Vals_T = [0] * self.n_players
-        for player in range(self.n_players):
-            _, V_T = self.agent(player, self.obs_flat, new_hand=False)
-            Vals_T[player] = V_T.squeeze()[-1]
+        # _, V_T = self.agent(player, self.obs_flat, new_hand=False)
+        # Vals_T = [0 for i in range(self.n_players)]
+        # Vals_T[player] = V_T.squeeze()[-1]
+        Vals_T = torch.zeros([128, 2])
         self.time_dict['model_inference'] += time.time_ns() - clock
         # process gradients and return loss:
-        out = self.get_loss(torch.stack(Vals_T))
+        out = self.get_loss(Vals_T)
         self.time_dict['total'] = time.time_ns() - clock1
         return out
 
     def get_loss(self, Vals_T):
         clock = time.time_ns()
-        Qs = [0] * len(self.rewards[-1])
-        Q_t = Vals_T
-        for t in reversed(range(len(self.rewards[-1]))):
-            Q_t = self.rewards[-1][t] + self.gamma * Q_t  # adds rewards up going backwards to get vals
-            Qs[t] = Q_t
+        Q_t = Vals_T # 128 2 zeros
+        actor_loss_total = 0
+        critic_loss_total = 0
+        for i in range(128):
+            Qs = [[] for i in range(len(self.rewards[i][-1]))]
+            for t in reversed(range(len(self.rewards[i][-1]))):
+                Q_t[i] = torch.tensor(self.rewards[i][-1][t]) + self.gamma * Q_t[i] # adds rewards up going backwards to get vals
+                Qs[t] = Q_t[i]
+            Qs = torch.stack(Qs)[1:]  # 2d tensor sequence, players
+            values = torch.stack(self.values[i][-1])[:-1]
 
-        Qs = torch.stack(Qs)[1:]  # 2d tensor sequence, players
+            # set Qs to filler value where value is filler value
+            Qs = Qs.masked_fill(values == -100000, -100000)
+            alps = torch.stack(self.action_log_probabilies[i][-1])[:-1]
+            advantages = Qs - values
+            advantages = advantages.masked_fill(values == -5783,
+                                                0)  # using arbitrary filler from earlier to mask out the blinds
 
-        values = torch.stack(self.values[-1])[:-1]
-
-        # set Qs to filler value where value is filler value
-        Qs = Qs.masked_fill(values == -100000, -100000)
-        alps = torch.stack(self.action_log_probabilies[-1])[:-1]
-        advantages = Qs - values
-        advantages = advantages.masked_fill(values == -5783,
-                                            0)  # using arbitrary filler from earlier to mask out the blinds
-
-        actor_loss = (-alps * advantages).mean()  # loss function for policy going into softmax on backpass
-        critic_loss = (advantages).pow(2).mean() / 200  # autogressive critic loss - MSE
-
-        loss = actor_loss + critic_loss
+            actor_loss = (-alps * advantages).mean()  # loss function for policy going into softmax on backpass
+            actor_loss_total += actor_loss
+            critic_loss = (advantages).pow(2).mean() / 200  # autogressive critic loss - MSE
+            critic_loss_total += critic_loss
+        actor_loss_total = actor_loss_total / 128
+        critic_loss_total = critic_loss_total / 128
+        loss = actor_loss_total + critic_loss_total
         self.time_dict['loss'] = time.time_ns() - clock
         return loss, actor_loss, critic_loss, self.time_dict
 
