@@ -80,8 +80,8 @@ class poker_env():
             self.took_action[i][big_blind_player] = False
 
         for i in range(self.batch_size):
-            rewards[i].append(r[i])
-            observations[i].append(o[i])
+            rewards[i] += r[i]
+            observations[i] += o[i]
 
         return rewards, observations
 
