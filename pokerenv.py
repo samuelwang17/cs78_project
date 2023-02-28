@@ -272,7 +272,7 @@ class poker_env():
         if self.stage[index] == 1:
             # revealing the flop
             card_rewards = [[0] * self.n_players] * 3  # card reveals have reward zero
-            if len(self.community_cards) == 3:
+            if len(self.community_cards) >= 3:
                 cards = self.community_cards[0:3]
             else:
                 cards = self.get_next_cards(3)
@@ -282,7 +282,7 @@ class poker_env():
                 card_observations += [{'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot[index]}]
         else:
             card_rewards = [[0] * self.n_players]
-            if len(self.community_cards) == self.stage[index] + 2:
+            if len(self.community_cards) >= self.stage[index] + 2:
                 card = self.community_cards[self.stage[index] + 1]
             else:
                 # one card to be revealed
