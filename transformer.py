@@ -45,11 +45,16 @@ class mod_transformer(nn.Module):
             nn.Linear(model_dim, action_dim)
         ) # actor returns logits, softmax handled at higher level
 
-        self.critic = critic_head(
-            value_points=5,
-            model_dim=model_dim,
-            critic_dim=model_dim*2
+        self.critic = nn.Sequential(
+            nn.Linear(model_dim, model_dim),
+            nn.ReLU(),
+            nn.Linear(model_dim, 1)
         )
+        # critic_head(
+        #     value_points=5,
+        #     model_dim=model_dim,
+        #     critic_dim=model_dim*2
+        # )
         
         self.seen = {0: False, 1: False}
 
