@@ -70,7 +70,7 @@ if __name__ == '__main__':
     warnings.filterwarnings("ignore")
     torch.manual_seed(0)
     N_GAMES = 100
-    actor_count = 3
+    actor_count = 1
     # actor parameters
     max_sequence = 200
     n_players = 2

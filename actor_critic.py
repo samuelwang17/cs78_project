@@ -97,13 +97,10 @@ class actor_critic():
         self.obs_flat = [[] for _ in range(self.games_per_run)]
 
         self.rewards = [[] for _ in range(self.games_per_run)]
-        self.rewards_flat = [[] for _ in range(self.games_per_run)]
 
         self.values = [[] for _ in range(self.games_per_run)]
-        self.val_flat = [[] for _ in range(self.games_per_run)]
 
         self.action_log_probabilies = [[] for _ in range(self.games_per_run)]
-        self.alp_flat = [[] for _ in range(self.games_per_run)]
 
         self.max_sequence = max_sequence
 
@@ -194,23 +191,35 @@ class actor_critic():
                 self.obs_flat[i][0] = list(chain(*self.observations[i]))
 
                 self.rewards[i] = self.rewards[i][1:]
-                self.rewards_flat[i] = list(chain(*self.rewards[i]))
 
                 self.values[i] = self.values[i][1:]
-                self.val_flat[i] = list(chain(*self.values[i]))
 
                 self.action_log_probabilies[i] = self.action_log_probabilies[i][1:]
-                self.alp_flat[i] = list(chain(*self.action_log_probabilies[i]))
 
-
-            else:
-                self.rewards_flat[i] = list(chain(*self.rewards[i]))
-                self.val_flat[i] = list(chain(*self.values[i]))
-                self.alp_flat[i] = list(chain(*self.action_log_probabilies[i]))
 
         assert len(self.obs_flat[i]) <= self.max_sequence
 
+
+
+
     def play_hand(self):
+        # print('-------------Playing hand-------------------')
+        # attributes = [self.observations, self.obs_flat, self.rewards, self.values, self.val_flat, self.action_log_probabilies, self.alp_flat]
+        # for attribute in attributes:
+        #     try:
+        #         print(np.asarray(attribute).shape)
+        #     except:
+        #         for i in attribute:
+        #             try:
+        #                 print(i.shape)
+        #             except:
+        #                 for j in i:
+        #                     try:
+        #                         print(j.shape)
+        #                     except:
+        #                         for k in j:
+        #                             print(k.shape)
+
         hand_over = [False for i in range(self.games_per_run)]
         self.time_dict = {'total': 0, 'env': 0, 'model_inference': 0, 'loss': 0}
         clock1 = time.time_ns()

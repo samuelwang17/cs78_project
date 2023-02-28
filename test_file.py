@@ -14,7 +14,7 @@ worker = actor_critic(
     n_actions = 14,
     memory_layers=0,
     mem_length=0,
-    games_per_run=2,
+    games_per_run=30,
     )
 
 with torch.autograd.set_detect_anomaly(True):
