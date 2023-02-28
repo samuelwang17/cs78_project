@@ -94,7 +94,7 @@ class poker_env():
             card_observations += [
                 {'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': 0}]
 
-        return [card_observations] * self.batch_size
+        return card_observations
 
     def take_actions(self, actions):
         '''
@@ -188,7 +188,7 @@ class poker_env():
             hand_over = False
             if square_check or sum(self.in_hand[i]) == 1:
                 # advance stage, and any other subcalls that come with that
-                advance_stage_rewards, advance_stage_observations, hand_ovr = self.advance_stage()
+                advance_stage_rewards, advance_stage_observations, hand_ovr = self.advance_stage(i)
                 if hand_ovr:
                     hand_over = True
                 rewards += advance_stage_rewards
@@ -196,7 +196,7 @@ class poker_env():
 
             else:
                 # advance to next player
-                self.in_turn[i] = (self.in_turn[i] + 1) % self.n_players[i]
+                self.in_turn[i] = (self.in_turn[i] + 1) % self.n_players
 
             self.hand_overs[i] = hand_over
             rewards_batch.append(rewards)
