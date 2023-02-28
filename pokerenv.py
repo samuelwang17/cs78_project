@@ -254,7 +254,7 @@ class poker_env():
                 advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot[index] / len(winners),
                                                 'pot': self.pot[index]}]
                 if self.hand_count % self.hand_until_log == 0 and index == 0:
-                    self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)))
+                    self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot[index] / len(winners)))
 
             if self.hand_count % self.hand_until_log == 0 and index == 0:
                 with open(self.filename, 'a') as file:
@@ -269,7 +269,7 @@ class poker_env():
 
     def card_reveal(self, index):
 
-        if self.stage == 1:
+        if self.stage[index] == 1:
             # revealing the flop
             card_rewards = [[0] * self.n_players] * 3  # card reveals have reward zero
             if len(self.community_cards) == 3:
