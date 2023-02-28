@@ -136,7 +136,7 @@ class poker_env():
 
                 self.current_bets[i][player] += value
 
-                self.current_largest_bet = self.current_bets[i][player]
+                self.current_largest_bet[i] = self.current_bets[i][player]
 
                 # player who just bet cannot be behind
                 self.behind[i][player] = 0
