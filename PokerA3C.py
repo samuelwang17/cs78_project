@@ -28,7 +28,7 @@ class Player(mp.Process):
             gamma=player_params[9],
             n_actions=player_params[10]
         )
-        
+
         self.global_actor_critic = global_actor_critic
         self.episode_idx = global_ep_idx
         self.optimizer = optimizer

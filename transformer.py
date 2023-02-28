@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch
 from encoder import encoder
 from decoder import decoder
-
+from model_components import critic_head
 
 class mod_transformer(nn.Module):
     # tested and functional
@@ -45,12 +45,11 @@ class mod_transformer(nn.Module):
             nn.Linear(model_dim, action_dim)
         ) # actor returns logits, softmax handled at higher level
 
-        self.critic = nn.Sequential(
-            nn.Linear(model_dim, mlp_dim),
-            nn.ReLU(),
-            nn.Linear(mlp_dim, 1)
+        self.critic = critic_head(
+            value_points=5,
+            model_dim=model_dim,
+            critic_dim=model_dim*2
         )
-
         
         self.seen = {0: False, 1: False}
 

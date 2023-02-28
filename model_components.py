@@ -82,7 +82,6 @@ class cross_attention(nn.Module):
 
     def forward(self, x, enc):
         x = x.squeeze()
-        print(x.size())
         return self.attention(x, enc, enc)[0]
 
 
@@ -147,5 +146,37 @@ class decoder_mha(nn.Module):
         out = self.output(mha)
         # batch, sequence, model_dim
         return out
+
+class critic_head(nn.Module):
+    
+    def __init__(self,
+        value_points,
+        model_dim,
+        critic_dim
+        ) -> None:
+        super().__init__()
+
+        self.value_outs = nn.Sequential(
+            nn.Linear(model_dim,critic_dim),
+            nn.ReLU(),
+            nn.Linear(critic_dim, value_points),
+            nn.ReLU()
+        )
+
+        self.gating = nn.Sequential(
+            nn.Linear(model_dim, critic_dim),
+            nn.ReLU(),
+            nn.Linear(critic_dim, value_points),
+            nn.LayerNorm(value_points),
+            grad_skip_softmax()
+        )
+
+    def forward(self, x):
+        values = self.value_outs(x)
+        gate = self.gating(x)
+        weighted_values = values * gate
+        return weighted_values.sum()
+        
+        
 
 
