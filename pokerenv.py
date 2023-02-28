@@ -50,7 +50,6 @@ class poker_env():
         self.hands = []
         self.deck_position = 0
 
-
         self.button = (self.button + 1) % self.n_players
 
         self.in_turn = [(self.button + 1) % self.n_players for i in range(self.batch_size)]
@@ -63,6 +62,8 @@ class poker_env():
         self.pot = [0 for i in range(self.batch_size)]
         self.stage = [0 for i in range(self.batch_size)]  # 0: pre-flop, 1: flop, 2: turn, 3: river
         self.hand_overs = [False for i in range(self.batch_size)]
+
+        self.current_largest_bet = [1 for i in range(self.batch_size)]
 
         # deal cards, pass to agents
         random.shuffle(self.deck)
@@ -134,6 +135,8 @@ class poker_env():
                                             value + self.current_bets[i][player] - self.current_bets[i][x])
 
                 self.current_bets[i][player] += value
+
+                self.current_largest_bet = self.current_bets[i][player]
 
                 # player who just bet cannot be behind
                 self.behind[i][player] = 0
@@ -210,6 +213,7 @@ class poker_env():
         for x in range(self.n_players):
             self.behind[index][x] = 0
             self.current_bets[index][x] = 0
+        self.current_largest_bet[index] = 0
 
         # payout if only one player is left
         if sum(self.in_hand[index]) == 1:
