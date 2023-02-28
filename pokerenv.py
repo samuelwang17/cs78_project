@@ -64,13 +64,12 @@ class poker_env():
                                 False] * self.n_players] * self.batch_size  # tracks whether players have taken action in a specific round of betting
         self.pot = [0] * self.batch_size
         self.stage = [0] * self.batch_size  # 0: pre-flop, 1: flop, 2: turn, 3: river
-        self.deck_position = [0] * self.batch_size
         self.hand_overs = [False] * self.batch_size
 
         # deal cards, pass to agents
         random.shuffle(self.deck)
         for x in range(self.n_players):
-            self.hands[x] += [self.get_next_cards(2)]
+            self.hands += [self.get_next_cards(2)]
 
         small_blinds = [{'player': self.in_turn[0], 'type': 'bet', 'value': 1, 'pot': 0}] * self.batch_size
         rewards, observations, hand_over = self.take_actions(small_blinds)
