@@ -78,10 +78,12 @@ class poker_env():
         for i in range(self.batch_size):
             self.took_action[i][big_blind_player] = False
 
-        [rewards].append(r)
-        [observations].append(o)
+        rewards_batch = [rewards]
+        observations_batch = [observations]
+        rewards_batch.append(r)
+        observations_batch.append(o)
 
-        return rewards, observations
+        return rewards_batch, observations_batch
 
     def get_hand(self, player):
         if len(self.hands) == 0:
@@ -124,7 +126,7 @@ class poker_env():
                 self.stacks[i][player] -= value
                 self.pot[i] += value
                 # reward is negative of amount bet
-                rewards[0][player] = -value
+                rewards[0 ][player] = -value
 
                 # other players are now behind the bet
                 for x in range(self.n_players):
