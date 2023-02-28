@@ -11,9 +11,7 @@ class poker_env():
 
         self.stacks = [[0 for i in range(n_players)] for j in range(batch_size)]
 
-        self.button = [0 for i in range(n_players)]  # button starts at player 0 WLOG
-
-        self.current_largest_bet = [1 for i in range(n_players)]
+        self.button = 0  # button starts at player 0 WLOG
 
         self.deck = []
         for suit in ["h", "d", "s", "c"]:
@@ -50,16 +48,14 @@ class poker_env():
         self.community_cards = []
         self.hands = []
         self.deck_position = 0
-        for i in range(len(self.button)):
-            self.button[i] = (self.button[i] + 1) % self.n_players
 
-        self.in_turn = [0 for i in range(self.batch_size)]
-        for i in range(len(self.in_turn)):
-            self.in_turn[i] = (self.button[i] + 1) % self.n_players
+
+        self.button = (self.button + 1) % self.n_players
+
+        self.in_turn = [(self.button + 1) % self.n_players for i in range(self.batch_size)]
 
         self.behind = [[0 for i in range(self.n_players)] for j in range(self.batch_size)]
         self.current_bets = [[0 for i in range(self.n_players)] for j in range(self.batch_size)]
-        self.current_largest_bet = [1 for i in range(self.n_players)]
         self.in_hand = [[True for i in range(self.n_players)] for j in range(self.batch_size)]
         self.took_action = [[False for i in range(self.n_players)] for j in range(
             self.batch_size)]  # tracks whether players have taken action in a specific round of betting
@@ -137,8 +133,6 @@ class poker_env():
 
                 self.current_bets[i][player] += value
 
-                self.current_largest_bet[i] = self.current_bets[i][player]
-
                 # player who just bet cannot be behind
                 self.behind[i][player] = 0
 
@@ -214,7 +208,6 @@ class poker_env():
         for x in range(self.n_players):
             self.behind[index][x] = 0
             self.current_bets[index][x] = 0
-        self.current_largest_bet[index] = 0
 
         # payout if only one player is left
         if sum(self.in_hand[index]) == 1:
@@ -292,7 +285,7 @@ class poker_env():
             card_observations = [
                 {'type': 'card', 'suit': card[0], 'rank': card[1], 'pot': self.pot[index]}]
 
-        self.in_turn[index] = (self.button[index] + 1) % self.n_players
+        self.in_turn[index] = (self.button + 1) % self.n_players
         return card_rewards, card_observations
 
     def get_next_cards(self, num_cards):
