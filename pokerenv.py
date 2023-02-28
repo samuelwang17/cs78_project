@@ -78,8 +78,8 @@ class poker_env():
         for i in range(self.batch_size):
             self.took_action[i][big_blind_player] = False
 
-        rewards.append(r)
-        observations.append(o)
+        [rewards].append(r)
+        [observations].append(o)
 
         return rewards, observations
 
@@ -197,7 +197,7 @@ class poker_env():
             rewards_batch.append(rewards)
             observations_batch.append(observations)
             hand_over_batch.append(False)
-        return rewards_batch, observations_batch, hand_over_batch
+        return [rewards_batch], [observations_batch], hand_over_batch
 
     def advance_stage(self, index):
         # this is called anytime that there is no player who is: 1. in the hand, 2. behind the bet, and 3. has not taken action
