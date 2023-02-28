@@ -49,8 +49,13 @@ class poker_env():
         self.community_cards = []
         self.hands = []
         self.deck_position = 0
-        self.button = [(self.button + 1) % self.n_players] * self.batch_size
-        self.in_turn = [(self.button + 1) % self.n_players] * self.batch_size
+        for i in range(len(self.button)):
+            self.button[i] = (self.button[i] + 1) % self.n_players
+
+        self.in_turn = [0] * self.batch_size
+        for i in range(len(self.in_turn)):
+            self.in_turn[i] = (self.button[i] + 1) % self.n_players
+
         self.behind = [[0] * self.n_players] * self.batch_size
         self.current_bets = [[0] * self.n_players] * self.batch_size
         self.current_largest_bet = [1] * self.batch_size
