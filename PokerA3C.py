@@ -70,7 +70,7 @@ if __name__ == '__main__':
     warnings.filterwarnings("ignore")
     torch.manual_seed(0)
     N_GAMES = 100
-    actor_count = 3
+    actor_count = 7
     # actor parameters
     max_sequence = 200
     n_players = 2
@@ -81,10 +81,10 @@ if __name__ == '__main__':
     mlp_dim = 64
     attn_heads = 8
     sequence_length = 50
-    enc_layers = 4
+    enc_layers = 3
     memory_layers = 0 #pre_mem, mem layered
     mem_length = 25
-    dec_layers = 8
+    dec_layers = 4
     action_dim = 8
     learning_rate = .0001
     player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]

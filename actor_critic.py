@@ -240,6 +240,7 @@ class actor_critic():
 
             clock = time.time_ns()
             policy_logits, values = self.agent(player, self.obs_flat, self.games_per_run, new_hand=True)
+            self.time_dict['model_inference'] += time.time_ns() - clock
             vals = []
             alps = []
             actions = []
@@ -287,12 +288,12 @@ class actor_critic():
             # prepare for next action
         self.chop_seq()
 
-        clock = time.time_ns()
+        
         # _, V_T = self.agent(player, self.obs_flat, new_hand=False)
         # Vals_T = [0 for i in range(self.n_players)]
         # Vals_T[player] = V_T.squeeze()[-1]
         Vals_T = torch.zeros([self.games_per_run, 2])
-        self.time_dict['model_inference'] += time.time_ns() - clock
+        
         # process gradients and return loss:
         out = self.get_loss(Vals_T)
         self.time_dict['total'] = time.time_ns() - clock1
