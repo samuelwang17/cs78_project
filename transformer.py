@@ -53,12 +53,12 @@ class mod_transformer(nn.Module):
         
         self.seen = {0: False, 1: False}
 
-    def forward(self, enc_input, dec_input, player, new_hand):
+    def forward(self, enc_input, dec_input, player, new_hand, games_per_run):
         if new_hand:
             self.seen = [{0: False, 1: False}] * len(dec_input)
             self.hands = [{}] * len(dec_input)
         
-        enc = [[] for _ in range(128)]
+        enc = [[] for _ in range(games_per_run)]
         for x in range(len(dec_input)):
             if self.seen[x][player[x]]:
                 enc[x] = self.hands[x][player[x]]

@@ -7,7 +7,9 @@ from pokerenv import poker_env
 from actor_critic import *
 import torch.multiprocessing as mp
 from shared_adam import SharedAdam
-from transformer import *
+from transformer import mod_transformer as RLformer
+import warnings
+
 
 'inspired from https://github.com/MorvanZhou/pytorch-A3C/blob/master/discrete_A3C.py'
 
@@ -59,23 +61,24 @@ class Player(mp.Process):
                 self.global_actor_ema.value = self.global_actor_ema.value * .995 + actor_loss * .005 if self.global_actor_ema.value != 0 else actor_loss
             with self.global_critic_ema.get_lock():
                 self.global_critic_ema.value = self.global_critic_ema.value * .995 + critic_loss * .005 if self.global_critic_ema.value != 0 else critic_loss
-            if self.episode_idx.value % 100 == 0:
+            if self.episode_idx.value % 1 == 0:
                 print(f'episode: {self.episode_idx.value}, loss: {self.global_loss_ema.value * 100 // 1 / 100}, actor loss: {self.global_actor_ema.value * 100 // 1 / 100}, critic_loss: {self.global_critic_ema.value * 100 // 1}')
                 print(f'total time: {time_dict["total"]}, model: {time_dict["model_inference"]/time_dict["total"]}')
 
 
 if __name__ == '__main__':
+    warnings.filterwarnings("ignore")
     torch.manual_seed(0)
     N_GAMES = 100
-    actor_count = 1
+    actor_count = 3
     # actor parameters
     max_sequence = 200
     n_players = 2
     gamma = 1
     n_actions = 6
     # model parameters
-    model_dim = 64
-    mlp_dim = 128
+    model_dim = 32
+    mlp_dim = 64
     attn_heads = 8
     sequence_length = 50
     enc_layers = 4

@@ -44,7 +44,7 @@ class Agent(nn.Module):
         assert hand_tensor != None
         self.hand_dict[player] = hand_tensor
 
-    def forward(self, player, obs_flat, new_hand):
+    def forward(self, player, obs_flat, games_per_run, new_hand):
         # takes flattened inputs in list form, not tokenized
         enc_input = []
         dec_input = []
@@ -56,7 +56,7 @@ class Agent(nn.Module):
                 enc_input_temp.append(self.hand_dict[player[index]])
             dec_input.append(torch.stack(dec_input_temp).squeeze())
             enc_input.append(torch.stack(enc_input_temp).squeeze())
-        policy_logits, value = self.model(enc_input, dec_input, player, new_hand)  # expects a list of tensors for dec_input
+        policy_logits, value = self.model(enc_input, dec_input, player, new_hand, games_per_run)  # expects a list of tensors for dec_input
         return policy_logits, value
 
 
@@ -74,10 +74,11 @@ class actor_critic():
                  n_players: int = 2,
                  gamma: float = .8,
                  n_actions: int = 10,  # random placeholder value
+                 games_per_run: int=128,
                  ) -> None:
 
         self.gamma = gamma
-        self.env = poker_env(n_players=n_players, batch_size=128)
+        self.env = poker_env(n_players=n_players, batch_size=games_per_run)
         self.agent = Agent(
             model_dim=model_dim,
             mlp_dim=mlp_dim,
@@ -90,19 +91,19 @@ class actor_critic():
             action_dim=n_actions,
         )
         self.n_players = n_players
-
+        self.games_per_run = games_per_run
         self.observations = [[] for _ in
-                             range(128)]  # this will be a list of lists, each is the list of observations in a hand
-        self.obs_flat = [[] for _ in range(128)]
+                             range(games_per_run)]  # this will be a list of lists, each is the list of observations in a hand
+        self.obs_flat = [[] for _ in range(self.games_per_run)]
 
-        self.rewards = [[] for _ in range(128)]
-        self.rewards_flat = [[] for _ in range(128)]
+        self.rewards = [[] for _ in range(self.games_per_run)]
+        self.rewards_flat = [[] for _ in range(self.games_per_run)]
 
-        self.values = [[] for _ in range(128)]
-        self.val_flat = [[] for _ in range(128)]
+        self.values = [[] for _ in range(self.games_per_run)]
+        self.val_flat = [[] for _ in range(self.games_per_run)]
 
-        self.action_log_probabilies = [[] for _ in range(128)]
-        self.alp_flat = [[] for _ in range(128)]
+        self.action_log_probabilies = [[] for _ in range(self.games_per_run)]
+        self.alp_flat = [[] for _ in range(self.games_per_run)]
 
         self.max_sequence = max_sequence
 
@@ -184,16 +185,13 @@ class actor_critic():
     def chop_seq(self):
         # if length of observations is above a certain size, chop it back down to under sequence length by removing oldest hand
         # return flattened version to give to model on next run
-        self.obs_flat = [[] for i in range(128)]
+        self.obs_flat = [[] for i in range(self.games_per_run)]
         for index, observation in enumerate(self.observations):
             self.obs_flat[index].append(list(chain(*observation)))
         for i in range(len(self.observations)):
-            if len(self.obs_flat[i]) > self.max_sequence:
-                before = len(self.obs_flat[i])
+            while len(self.obs_flat[i][0]) > self.max_sequence:
                 self.observations[i] = self.observations[i][1:]
-                self.obs_flat[i] = list(chain(*self.observations[i]))
-                after = len(self.obs_flat[i])
-                assert len(self.obs_flat[i]) <= self.max_sequence, f'prechop: {before}, postchop: {after}'
+                self.obs_flat[i][0] = list(chain(*self.observations[i]))
 
                 self.rewards[i] = self.rewards[i][1:]
                 self.rewards_flat[i] = list(chain(*self.rewards[i]))
@@ -213,7 +211,7 @@ class actor_critic():
         assert len(self.obs_flat[i]) <= self.max_sequence
 
     def play_hand(self):
-        hand_over = [False for i in range(128)]
+        hand_over = [False for i in range(self.games_per_run)]
         self.time_dict = {'total': 0, 'env': 0, 'model_inference': 0, 'loss': 0}
         clock1 = time.time_ns()
         # makes agent play one hand
@@ -228,7 +226,7 @@ class actor_critic():
             self.values[x].append([])
             self.action_log_probabilies[x].append([])
         self.chop_seq()  # prepare for input to model
-        for x in range(128):
+        for x in range(self.games_per_run):
             for y in range(len(rewards[x])):
                 new_values = [-5783 for i in range(self.n_players)]  # -5783 filler value
                 self.values[x][-1].append(torch.Tensor(new_values))
@@ -241,7 +239,7 @@ class actor_critic():
             player = self.env.in_turn
 
             clock = time.time_ns()
-            policy_logits, values = self.agent(player, self.obs_flat, new_hand=True)
+            policy_logits, values = self.agent(player, self.obs_flat, self.games_per_run, new_hand=True)
             vals = []
             alps = []
             actions = []
@@ -293,7 +291,7 @@ class actor_critic():
         # _, V_T = self.agent(player, self.obs_flat, new_hand=False)
         # Vals_T = [0 for i in range(self.n_players)]
         # Vals_T[player] = V_T.squeeze()[-1]
-        Vals_T = torch.zeros([128, 2])
+        Vals_T = torch.zeros([self.games_per_run, 2])
         self.time_dict['model_inference'] += time.time_ns() - clock
         # process gradients and return loss:
         out = self.get_loss(Vals_T)
@@ -305,7 +303,7 @@ class actor_critic():
         Q_t = Vals_T # 128 2 zeros
         actor_loss_total = 0
         critic_loss_total = 0
-        for i in range(128):
+        for i in range(self.games_per_run):
             Qs = [[] for i in range(len(self.rewards[i][-1]))]
             for t in reversed(range(len(self.rewards[i][-1]))):
                 Q_t[i] = torch.tensor(self.rewards[i][-1][t]) + self.gamma * Q_t[i] # adds rewards up going backwards to get vals
@@ -324,8 +322,8 @@ class actor_critic():
             actor_loss_total += actor_loss
             critic_loss = (advantages).pow(2).mean() / 200  # autogressive critic loss - MSE
             critic_loss_total += critic_loss
-        actor_loss_total = actor_loss_total / 128
-        critic_loss_total = critic_loss_total / 128
+        actor_loss_total = actor_loss_total / self.games_per_run
+        critic_loss_total = critic_loss_total / self.games_per_run
         loss = actor_loss_total + critic_loss_total
         self.time_dict['loss'] = time.time_ns() - clock
         return loss, actor_loss, critic_loss, self.time_dict
