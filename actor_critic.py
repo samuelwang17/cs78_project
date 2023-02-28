@@ -119,10 +119,10 @@ class actor_critic():
 
         self.time_dict = {'total': 0, 'env': 0, 'model_inference': 0, 'loss': 0}
 
-    def sample_action(self, curr_logits):
+    def sample_action(self, curr_logits, batch_num):
         # MASK, SAMPLE, DETOKENIZE
         # get the player about to act
-        player = self.env.in_turn
+        player = self.env.in_turn[batch_num]
         player_stack = self.env.stacks[player]
         pot = self.env.pot
         linspace_dim = self.n_actions - 4
@@ -224,6 +224,7 @@ class actor_critic():
         self.chop_seq()  # prepare for input to model
         self.values.append([])
         self.action_log_probabilies.append([])
+        hand_over = []
         for x in range(len(self.values[0])):
             new_values = [-5783] * self.n_players  # -5783 filler value
             for x in range(len(self.values)):
@@ -231,31 +232,35 @@ class actor_critic():
             new_alps = [0] * self.n_players
             for x in range(len(self.action_log_probabilies)):
                 self.action_log_probabilies[x][-1].append(torch.Tensor(new_alps))
+            hand_over.append(False)
 
-        hand_over = False
-        while not hand_over:
+        all_over = False
+        while not all_over:
             # get values and policy -- should be in list form over sequence length
             player = self.env.in_turn
 
             clock = time.time_ns()
             policy_logits, values = self.agent(player, self.obs_flat, new_hand=True)
-            assert False, player
-            value = values.squeeze()[-1]  # get last value estimate
-            assert value.requires_grad
-            curr_logits = policy_logits[-1]  # get last policy distribution
-
-            alp, action = self.sample_action(curr_logits)  # handles mask, softmax, sample, detokenization
-
-            rewards, obs, hand_over = self.env.take_action(
-                action)  # need to change environment to return hand_over boolean
-
-            # add new information from this step
-            self.rewards[-1] += rewards  # add tensor
-            self.observations[-1] += obs
+            print(values)
+            vals = []
+            alp = []
+            all_over = True
+            for x in range(len(values)):
+                print(hand_over)
+                if not hand_over[x]:
+                    vals.append(values[x].squeeze()[-1])
+                    this_alp, action = self.sample_action(policy_logits[x][-1], x)
+                    alp.append(this_alp)
+                    r, o, h = self.env.take_action(action)
+                    hand_over[x] = h
+                    all_over = all_over and h
+                    if not h:
+                        self.rewards[x][-1] += r  # add tensor
+                        self.observations[x][-1] += o
 
             # value needs to be on a per player basis
 
-            new_values = self.padding(value.unsqueeze(-1))[
+            new_values = self.padding(values.unsqueeze(-1))[
                          (self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
             self.values[-1].append(new_values)
             for x in range(len(rewards) - 1):

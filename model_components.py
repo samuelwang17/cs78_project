@@ -175,7 +175,7 @@ class critic_head(nn.Module):
         values = self.value_outs(x)
         gate = self.gating(x)
         weighted_values = values * gate
-        return weighted_values.sum()
+        return weighted_values.sum(dim=1)
         
         
 
