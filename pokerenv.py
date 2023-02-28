@@ -60,6 +60,7 @@ class poker_env():
         self.pot = [0] * self.batch_size
         self.stage = [0] * self.batch_size  # 0: pre-flop, 1: flop, 2: turn, 3: river
         self.deck_position = [0] * self.batch_size
+        self.hand_overs = [False] * self.batch_size
 
         # deal cards, pass to agents
         random.shuffle(self.deck)
@@ -100,10 +101,17 @@ class poker_env():
         '''
         rewards_batch = []
         observations_batch = []
-        hand_over = False
+        hand_over_batch = []
         for i in range(self.batch_size):
-            rewards = [[0] * self.n_players]
 
+            rewards = [[0] * self.n_players]
+            if self.hand_overs[i]:
+                rewards_batch.append(rewards)
+                observations_batch.append([])
+                hand_over_batch.append(True)
+                continue
+
+            hand_over = False
             player = actions[i]['player']
             type = actions[i]['type']  # action type is one of {bet, call, fold}
             value = actions[i]['value']
@@ -186,10 +194,11 @@ class poker_env():
                 # advance to next player
                 self.in_turn[i] = (self.in_turn[i] + 1) % self.n_players[i]
 
+            self.hand_overs[i] = hand_over
             rewards_batch.append(rewards)
             observations_batch.append(observations)
-
-        return rewards_batch, observations_batch, hand_over
+            hand_over_batch.append(False)
+        return rewards_batch, observations_batch, hand_over_batch
 
     def advance_stage(self, index):
         # this is called anytime that there is no player who is: 1. in the hand, 2. behind the bet, and 3. has not taken action
