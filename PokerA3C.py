@@ -78,8 +78,8 @@ if __name__ == '__main__':
     gamma = 1
     n_actions = 6
     # model parameters
-    model_dim = 16
-    mlp_dim = 32
+    model_dim = 32
+    mlp_dim = 64
     attn_heads = 4
     sequence_length = 50
     enc_layers = 3
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     mem_length = 25
     dec_layers = 4
     action_dim = 6
-    learning_rate = .001
+    learning_rate = .0001
     weight_decay = .0001
     player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, memory_layers, mem_length, dec_layers, action_dim]

@@ -7,7 +7,7 @@ from tokenizer import Tokenizer
 from pokerenv import poker_env
 from itertools import chain
 import numpy as np
-from model_components import grad_skip_softmax, grad_skip_logsoftmax
+from model_components import grad_skip_softmax, grad_skip_logsoftmax, symlog
 import time
 class Agent(nn.Module):
     def __init__(self,
@@ -107,7 +107,7 @@ class actor_critic():
 
         self.lsm = grad_skip_logsoftmax()
 
-        self.silu = nn.SiLU()
+        self.symlog = symlog()
 
         self.time_dict = {'total': 0, 'env': 0, 'model_inference': 0, 'loss': 0}
 
@@ -296,13 +296,14 @@ class actor_critic():
         alps = torch.stack(self.action_log_probabilies[-1])[:-1]
         advantages = Qs - values 
         advantages = advantages.masked_fill(values == -1e5, 0) # using arbitrary filler from earlier to mask out the blinds
+        advantages = self.symlog(advantages)
         actor_loss_mat = (-alps * advantages)
         critic_loss_mat = (advantages).pow(2)
         # print(alps)
         # print(actor_loss_mat)
         # print(critic_loss_mat)
         actor_loss = actor_loss_mat.sum() # loss function for policy going into softmax on backpass
-        critic_loss = critic_loss_mat.sum() # autogressive critic loss - MSE
+        critic_loss = (critic_loss_mat.sum()) # autogressive critic loss - MSE
         # print(actor_loss , critic_loss)
         loss = actor_loss + critic_loss
         self.time_dict['loss'] = time.time_ns() - clock

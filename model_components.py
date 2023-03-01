@@ -174,3 +174,11 @@ class critic_head(nn.Module):
         weighted_values = values * gate
         return weighted_values.sum(dim=-1)
 
+class symlog(nn.Module):
+
+    def __init__(self) -> None:
+        super().__init__()
+    
+    def forward(self, x):
+        return torch.sign(x) * torch.log(torch.abs(x) + 1)
+
