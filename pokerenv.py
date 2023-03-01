@@ -32,7 +32,13 @@ class poker_env():
 
         self.filename = "hand_replays.txt"
         self.hand_count = 0
-        self.hand_until_log = 5
+        self.hand_until_log = 100
+
+    def give_losses(self, out):
+        loss, actor_loss, critic_loss, _ = out
+        self.loss = loss
+        self.actor_loss = actor_loss
+        self.critic_loss = critic_loss
 
     def new_hand(self):
         self.hand_count += 1
@@ -200,10 +206,11 @@ class poker_env():
                     self.stacks[p] += self.pot
                     advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot}]
                     if self.hand_count % self.hand_until_log == 0:
-                        self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot))
+                        self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot)+ "\n")
 
             if self.hand_count % self.hand_until_log == 0:
                 with open(self.filename, 'a') as file:
+                    self.history.append(f'Loss: {self.loss}, Actor Loss: {self.actor_loss}, Critic Loss: {self.critic_loss}')
                     self.history.append("\n\nHand End\n")
                     self.history.append("--------------------------------------------------------------------------------\n")
                     file.writelines(self.history)
@@ -235,6 +242,7 @@ class poker_env():
                     self.history.append("\n\nHand End\n")
                     self.history.append(
                         "--------------------------------------------------------------------------------\n")
+                    self.history.append(f'Loss: {self.loss}, Actor Loss: {self.actor_loss}, Critic Loss: {self.critic_loss}')
                     file.writelines(self.history)
 
             hand_over = True

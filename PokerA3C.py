@@ -31,7 +31,7 @@ class Player(mp.Process):
         self.global_actor_critic = global_actor_critic
         self.episode_idx = global_ep_idx
         self.optimizer = optimizer
-        self.N_GAMES = 5000
+        self.N_GAMES = 5000000
         self.global_actor_ema = global_actor_ema
         self.global_critic_ema = global_critic_ema
         self.global_loss_ema = global_loss_ema
@@ -41,6 +41,7 @@ class Player(mp.Process):
     def run(self):
         while self.episode_idx.value < self.N_GAMES:
             loss, actor_loss, critic_loss, time_dict = self.local_actor_critic.play_hand()
+            assert loss == actor_loss + critic_loss
             self.optimizer.zero_grad() # zero gradient on the master copy
             with torch.autograd.set_detect_anomaly(True):
                 loss.backward(retain_graph=True)
@@ -48,22 +49,24 @@ class Player(mp.Process):
                     self.local_actor_critic.agent.model.parameters(),
                     self.global_actor_critic.parameters()):
                 global_param._grad = local_param.grad
-            self.optimizer.step()
-            self.local_actor_critic.agent.model.parameters = self.global_actor_critic.parameters
-            self.local_actor_critic.clear_memory()
+            if self.episode_idx.value % 100 == 0:
+                self.optimizer.step()
+                self.local_actor_critic.agent.model.parameters = self.global_actor_critic.parameters
+                self.local_actor_critic.clear_memory()
             with self.episode_idx.get_lock():
                 self.episode_idx.value += 1
             with self.global_loss_ema.get_lock():
-                self.global_loss_ema.value = self.global_loss_ema.value * .99 + loss * .01 if self.global_loss_ema.value != 0. else loss
+                self.global_loss_ema.value = self.global_loss_ema.value * .969 + loss * .004 if self.global_loss_ema.value != 0. else loss
             with self.global_actor_ema.get_lock():
-                self.global_actor_ema.value = self.global_actor_ema.value * .99 + actor_loss * .01 if self.global_actor_ema.value != 0. else actor_loss
+                self.global_actor_ema.value = self.global_actor_ema.value * .996 + actor_loss * .004 if self.global_actor_ema.value != 0. else actor_loss
             with self.global_critic_ema.get_lock():
-                self.global_critic_ema.value = self.global_critic_ema.value * .99 + critic_loss * .01 if self.global_critic_ema.value != 0. else critic_loss
+                self.global_critic_ema.value = self.global_critic_ema.value * .996 + critic_loss * .004 if self.global_critic_ema.value != 0. else critic_loss
             with self.global_inference_ema.get_lock():
-                self.global_inference_ema.value = self.global_inference_ema.value * .99 + time_dict['total'] * .01 if self.global_inference_ema.value != 0. else time_dict['total']
+                self.global_inference_ema.value = self.global_inference_ema.value * .996 + time_dict['total'] * .004 if self.global_inference_ema.value != 0. else time_dict['total']
             if self.episode_idx.value % 100 == 0:
-                print(f'episode: {self.episode_idx.value}, loss: {self.global_loss_ema.value * 100 // 1 / 100}, actor loss: {self.global_actor_ema.value * 100 // 1 / 100}, critic loss: {self.global_critic_ema.value * 100 // 1}, inference time: {self.global_inference_ema.value / 1e6 // 1 / 1e3}')
-
+                print(f'episode: {self.episode_idx.value}, loss: {self.global_loss_ema.value}, actor loss: {self.global_actor_ema.value}, critic loss: {self.global_critic_ema.value}, inference time: {self.global_inference_ema.value}')
+            if self.episode_idx.value % 20000 == 0:
+                torch.save(global_model, 'PokerA3CModel_new')
 
 if __name__ == '__main__':
     torch.manual_seed(0)
@@ -75,17 +78,17 @@ if __name__ == '__main__':
     gamma = 1
     n_actions = 6
     # model parameters
-    model_dim = 32
-    mlp_dim = 64
-    attn_heads = 8
+    model_dim = 8
+    mlp_dim = 16
+    attn_heads = 2
     sequence_length = 50
-    enc_layers = 4
+    enc_layers = 1
     memory_layers = 0 # pre_mem, mem layered
     mem_length = 25
-    dec_layers = 8
-    action_dim = 8
-    learning_rate = .001
-    weight_decay = .001
+    dec_layers = 1
+    action_dim = 6
+    learning_rate = .000005
+    weight_decay = .0001
     player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, memory_layers, mem_length, dec_layers, action_dim]
     # create poker environment

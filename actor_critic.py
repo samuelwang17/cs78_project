@@ -271,6 +271,7 @@ class actor_critic():
         # process gradients and return loss:
         out = self.get_loss(torch.stack(Vals_T))
         self.time_dict['total'] = time.time_ns() - clock1
+        self.env.give_losses(out)
         return out
 
     def get_loss(self, Vals_T):
