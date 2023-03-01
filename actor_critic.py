@@ -217,7 +217,7 @@ class actor_critic():
         self.values.append([])
         self.action_log_probabilies.append([])
         for x in range(len(rewards)):
-                new_values = [-5783] * self.n_players # -5783 fed here so that 
+                new_values = [-1e5] * self.n_players # -5783 fed here so that 
                 self.values[-1].append(torch.Tensor(new_values))
                 new_alps = [0] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
@@ -249,14 +249,14 @@ class actor_critic():
             new_values = self.padding(value.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
             self.values[-1].append(new_values)
             for x in range(len(rewards) - 1):
-                new_values = [-100000] * self.n_players #-10000 is filler value
+                new_values = [-1e5] * self.n_players #-10000 is filler value
                 # fill_tensor = torch.Tensor(new_values)
                 self.values[-1].append(torch.Tensor(new_values))
             
             new_alp = self.padding(alp.unsqueeze(-1))[(self.n_players - player - 1):(2 * self.n_players - player - 1)].squeeze()
             self.action_log_probabilies[-1].append(new_alp)
             for x in range(len(rewards) - 1):
-                new_alps = [-100000] * self.n_players
+                new_alps = [-1e5] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
            
             # prepare for next action
@@ -278,8 +278,12 @@ class actor_critic():
         clock = time.time_ns()
         Qs = [0] * len(self.rewards[-1])
         Q_t = Vals_T
-        for t in reversed(range(len(self.rewards[-1]))):
-            Q_t = self.rewards[-1][t] + self.gamma * Q_t #adds rewards up going backwards to get vals
+        #print(sum(self.rewards[-1]))
+        # first column back
+        Q_t = sum(self.rewards[-1]) + self.gamma * Q_t #adds rewards up going backwards to get vals
+        Qs[-1] = Q_t
+        for t in reversed(range(len(self.rewards[-1]) - 1)):
+            Q_t = self.gamma * Q_t #adds rewards up going backwards to get vals
             Qs[t] = Q_t
         
 
@@ -288,14 +292,18 @@ class actor_critic():
         values = torch.stack(self.values[-1])[:-1]
 
         # set Qs to filler value where value is filler value
-        Qs = Qs.masked_fill(values == -100000, -100000)
+        #Qs = Qs.masked_fill(values == -100000, -100000)
         alps = torch.stack(self.action_log_probabilies[-1])[:-1]
         advantages = Qs - values 
-        advantages = advantages.masked_fill(values == -5783, 0) # using arbitrary filler from earlier to mask out the blinds
-        
-        actor_loss = (-alps * advantages).mean() # loss function for policy going into softmax on backpass
-        critic_loss = (advantages).pow(2).mean() / 200 # autogressive critic loss - MSE
-        
+        advantages = advantages.masked_fill(values == -1e5, 0) # using arbitrary filler from earlier to mask out the blinds
+        actor_loss_mat = (-alps * advantages)
+        critic_loss_mat = (advantages).pow(2)
+        # print(alps)
+        # print(actor_loss_mat)
+        # print(critic_loss_mat)
+        actor_loss = actor_loss_mat.sum() # loss function for policy going into softmax on backpass
+        critic_loss = critic_loss_mat.sum() # autogressive critic loss - MSE
+        # print(actor_loss , critic_loss)
         loss = actor_loss + critic_loss
         self.time_dict['loss'] = time.time_ns() - clock
         return loss, actor_loss, critic_loss, self.time_dict
