@@ -299,11 +299,11 @@ class actor_critic():
         advantages = self.symlog(advantages)
         actor_loss_mat = (-alps * advantages)
         critic_loss_mat = (advantages).pow(2)
-        # print(alps)
-        # print(actor_loss_mat)
-        # print(critic_loss_mat)
-        actor_loss = actor_loss_mat.sum() # loss function for policy going into softmax on backpass
-        critic_loss = (critic_loss_mat.sum()) # autogressive critic loss - MSE
+        # print(advantages[:, :1])
+        # print(actor_loss_mat[:, :1])
+        # print(critic_loss_mat[:, :1])
+        actor_loss = actor_loss_mat[:, :1].sum() # loss function for policy going into softmax on backpass
+        critic_loss = (critic_loss_mat[:, :1].sum()) # autogressive critic loss - MSE
         # print(actor_loss , critic_loss)
         loss = actor_loss + critic_loss
         self.time_dict['loss'] = time.time_ns() - clock
