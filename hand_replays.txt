@@ -6,41 +6,34 @@ Hand 100 Start
 
 
 Player's Cards: 
-3s, 8h, 
+3h, 2d, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-Ah, 4h, 
+2c, 5c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-3s, 8h, 
+3h, 2d, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
 
 Player's Cards: 
-Ah, 4h, 
+2c, 5c, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-3s, 8h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 0 wins 202
-Loss: 17.689727783203125, Actor Loss: -10.43592357635498, Critic Loss: 28.12565040588379
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 9.0}
+Folds around, player 1 wins 9.0
+Loss: 1.1984649896621704, Actor Loss: -0.005862662568688393, Critic Loss: 1.2043277025222778
 
 Hand End
 --------------------------------------------------------------------------------
@@ -51,113 +44,27 @@ Hand 100 Start
 
 
 Player's Cards: 
-9c, 8c, 
+Qd, Jh, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-Kd, 6h, 
+Jd, 10s, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-9c, 8c, 
+Qd, Jh, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-Kd, 6h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-9c, 8c, 
-Community Cards: 
-Qh, Qs, 10c, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Kd, 6h, 
-Community Cards: 
-Qh, Qs, 10c, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-9c, 8c, 
-Community Cards: 
-Qh, Qs, 10c, 7s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Kd, 6h, 
-Community Cards: 
-Qh, Qs, 10c, 7s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-9c, 8c, 
-Community Cards: 
-Qh, Qs, 10c, 7s, 9s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Kd, 6h, 
-Community Cards: 
-Qh, Qs, 10c, 7s, 9s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.7014760971069336, Actor Loss: -1.1828994750976562, Critic Loss: 0.48142340779304504
-
---------------------------------------------------------------------------------
-Hand 100 Start
-
-
-Player's Cards: 
-6h, Ac, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-2d, 8h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-6h, Ac, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-2d, 8h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 1 wins 202
-Loss: -0.9115848541259766, Actor Loss: -2.1201725006103516, Critic Loss: 1.208587646484375
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: -0.7980260848999023, Actor Loss: -1.2814826965332031, Critic Loss: 0.4834565818309784
 
 Hand End
 --------------------------------------------------------------------------------
@@ -168,151 +75,113 @@ Hand 100 Start
 
 
 Player's Cards: 
-10h, 7c, 
+10s, 8d, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-7h, Jc, 
+3c, Ac, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-10h, 7c, 
+10s, 8d, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
 
 Player's Cards: 
-7h, Jc, 
+3c, Ac, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
+{'player': 0, 'type': 'call', 'value': 5.0, 'pot': 14.0}
 
 Player's Cards: 
-10h, 7c, 
+10s, 8d, 
 Community Cards: 
-Ad, Qd, 2s, 
+Jc, Jd, 3d, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 28.0, 'pot': 42.0}
 
 Player's Cards: 
-7h, Jc, 
+3c, Ac, 
 Community Cards: 
-Ad, Qd, 2s, 
+Jc, Jd, 3d, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 0, 'type': 'bet', 'value': 84.0, 'pot': 126.0}
 
 Player's Cards: 
-10h, 7c, 
+10s, 8d, 
 Community Cards: 
-Ad, Qd, 2s, 4s, 
+Jc, Jd, 3d, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'call', 'value': 56.0, 'pot': 182.0}
 
 Player's Cards: 
-7h, Jc, 
+10s, 8d, 
 Community Cards: 
-Ad, Qd, 2s, 4s, 
+Jc, Jd, 3d, 9c, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 182.0}
 
 Player's Cards: 
-10h, 7c, 
+3c, Ac, 
 Community Cards: 
-Ad, Qd, 2s, 4s, Jh, 
+Jc, Jd, 3d, 9c, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 182.0}
 
 Player's Cards: 
-7h, Jc, 
+10s, 8d, 
 Community Cards: 
-Ad, Qd, 2s, 4s, Jh, 
+Jc, Jd, 3d, 9c, 4s, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 109.0, 'pot': 291.0}
+
+Player's Cards: 
+3c, Ac, 
+Community Cards: 
+Jc, Jd, 3d, 9c, 4s, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 109.0, 'pot': 400.0}
 Showdown win, 0 wins 400.0
 
 Hand End
 --------------------------------------------------------------------------------
-Loss: -0.5278778076171875, Actor Loss: -1.7369656562805176, Critic Loss: 1.20908784866333
+Loss: 17.038244247436523, Actor Loss: 0.005133741535246372, Critic Loss: 17.033109664916992
 
 --------------------------------------------------------------------------------
 Hand 100 Start
 
 
 Player's Cards: 
-10h, 5h, 
+10h, 6c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-9s, Jc, 
+Ac, 10d, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-10h, 5h, 
+10h, 6c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
 Folds around, player 0 wins 3
-Loss: -0.78652024269104, Actor Loss: -1.2680370807647705, Critic Loss: 0.4815168082714081
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 100 Start
-
-
-Player's Cards: 
-Qh, Qs, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-6c, Kh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Qh, Qs, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-6c, Kh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-Qh, Qs, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 0 wins 202
-Loss: 1.5684618949890137, Actor Loss: -4.183230400085449, Critic Loss: 5.751692295074463
+Loss: 4.3156304359436035, Actor Loss: -0.007153363898396492, Critic Loss: 4.322783946990967
 
 Hand End
 --------------------------------------------------------------------------------
@@ -323,506 +192,100 @@ Hand 100 Start
 
 
 Player's Cards: 
-Ah, 6h, 
+9c, 9h, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-Qh, 2h, 
+10c, As, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-Ah, 6h, 
+9c, 9h, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.742392897605896, Actor Loss: -1.2271506786346436, Critic Loss: 0.48475778102874756
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+10c, As, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'call', 'value': 5.0, 'pot': 14.0}
+
+Player's Cards: 
+9c, 9h, 
+Community Cards: 
+Kc, 6c, 2h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 7.0, 'pot': 21.0}
+
+Player's Cards: 
+10c, As, 
+Community Cards: 
+Kc, 6c, 2h, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 7.0, 'pot': 28.0}
+
+Player's Cards: 
+9c, 9h, 
+Community Cards: 
+Kc, 6c, 2h, Qd, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 14.0, 'pot': 42.0}
+
+Player's Cards: 
+10c, As, 
+Community Cards: 
+Kc, 6c, 2h, Qd, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 14.0, 'pot': 56.0}
+
+Player's Cards: 
+9c, 9h, 
+Community Cards: 
+Kc, 6c, 2h, Qd, 3h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 28.0, 'pot': 84.0}
+
+Player's Cards: 
+10c, As, 
+Community Cards: 
+Kc, 6c, 2h, Qd, 3h, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 168.0, 'pot': 252.0}
+
+Player's Cards: 
+9c, 9h, 
+Community Cards: 
+Kc, 6c, 2h, Qd, 3h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 144.0, 'pot': 396.0}
+
+Player's Cards: 
+10c, As, 
+Community Cards: 
+Kc, 6c, 2h, Qd, 3h, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 4.0, 'pot': 400.0}
+Showdown win, 1 wins 400.0
 
 Hand End
 --------------------------------------------------------------------------------
-
+Loss: 2.5676932334899902, Actor Loss: -0.020206261426210403, Critic Loss: 2.5878994464874268
 
 --------------------------------------------------------------------------------
 Hand 100 Start
 
 
 Player's Cards: 
-Kh, 5h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-3s, 7c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Kh, 5h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-3s, 7c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-Kh, 5h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 0 wins 202
-Loss: -0.7573196887969971, Actor Loss: -1.2400110960006714, Critic Loss: 0.4826914072036743
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-Jh, 8c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-7c, Kh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Jh, 8c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-7c, Kh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-Jh, 8c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-Jh, 8c, 
-Community Cards: 
-2s, 4d, 5c, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7c, Kh, 
-Community Cards: 
-2s, 4d, 5c, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Jh, 8c, 
-Community Cards: 
-2s, 4d, 5c, Ac, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7c, Kh, 
-Community Cards: 
-2s, 4d, 5c, Ac, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Jh, 8c, 
-Community Cards: 
-2s, 4d, 5c, Ac, 8s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7c, Kh, 
-Community Cards: 
-2s, 4d, 5c, Ac, 8s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.8485876321792603, Actor Loss: -1.3306411504745483, Critic Loss: 0.4820534884929657
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-3d, Ks, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-As, Qc, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-3d, Ks, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.6990257501602173, Actor Loss: -1.1802409887313843, Critic Loss: 0.481215238571167
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-7d, Qd, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-10c, 3d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-7d, Qd, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-10c, 3d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-7d, Qd, 
-Community Cards: 
-9h, Qh, 8d, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-10c, 3d, 
-Community Cards: 
-9h, Qh, 8d, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7d, Qd, 
-Community Cards: 
-9h, Qh, 8d, 6s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-10c, 3d, 
-Community Cards: 
-9h, Qh, 8d, 6s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7d, Qd, 
-Community Cards: 
-9h, Qh, 8d, 6s, Kd, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-10c, 3d, 
-Community Cards: 
-9h, Qh, 8d, 6s, Kd, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.8366172313690186, Actor Loss: -2.0469698905944824, Critic Loss: 1.2103526592254639
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-10c, 8c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-2h, 2d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-10c, 8c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.552497148513794, Actor Loss: -1.7619600296020508, Critic Loss: 1.2094628810882568
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-8c, Ac, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-9h, 10h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-8c, Ac, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-9h, 10h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 1 wins 202
-Loss: 19.10870361328125, Actor Loss: -9.016768455505371, Critic Loss: 28.125473022460938
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-Ac, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-10s, 2h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Ac, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-10s, 2h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-Ac, 4h, 
-Community Cards: 
-6s, Jd, 9c, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-10s, 2h, 
-Community Cards: 
-6s, Jd, 9c, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ac, 4h, 
-Community Cards: 
-6s, Jd, 9c, 3d, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-10s, 2h, 
-Community Cards: 
-6s, Jd, 9c, 3d, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ac, 4h, 
-Community Cards: 
-6s, Jd, 9c, 3d, Kd, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-10s, 2h, 
-Community Cards: 
-6s, Jd, 9c, 3d, Kd, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: 37.94212341308594, Actor Loss: 9.816637992858887, Critic Loss: 28.125486373901367
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-2c, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-3d, 7d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-2c, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-3d, 7d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-2c, 4h, 
-Community Cards: 
-Qc, 2s, Qs, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3d, 7d, 
-Community Cards: 
-Qc, 2s, Qs, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-2c, 4h, 
-Community Cards: 
-Qc, 2s, Qs, 5h, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3d, 7d, 
-Community Cards: 
-Qc, 2s, Qs, 5h, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-2c, 4h, 
-Community Cards: 
-Qc, 2s, Qs, 5h, 9d, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3d, 7d, 
-Community Cards: 
-Qc, 2s, Qs, 5h, 9d, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: 17.54834747314453, Actor Loss: -10.577226638793945, Critic Loss: 28.125574111938477
-
---------------------------------------------------------------------------------
-Hand 200 Start
-
-
-Player's Cards: 
-5s, 10c, 
+6h, 5s, 
 Community Cards: 
 Preflop
 Action: 
@@ -836,178 +299,625 @@ Action:
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-5s, 10c, 
+6h, 5s, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
 
 Player's Cards: 
 6s, 9h, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
 
 Player's Cards: 
-5s, 10c, 
+6h, 5s, 
 Community Cards: 
-7d, Qh, Js, 
+Preflop
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 12.0}
+Folds around, player 0 wins 12.0
+Loss: -0.7892495393753052, Actor Loss: -1.2706347703933716, Critic Loss: 0.481385201215744
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 100 Start
+
 
 Player's Cards: 
-6s, 9h, 
+4h, Ks, 
 Community Cards: 
-7d, Qh, Js, 
+Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-5s, 10c, 
+Jd, 4c, 
 Community Cards: 
-7d, Qh, Js, Kc, 
+Preflop
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-6s, 9h, 
+4h, Ks, 
 Community Cards: 
-7d, Qh, Js, Kc, 
+Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
 
 Player's Cards: 
-5s, 10c, 
+Jd, 4c, 
 Community Cards: 
-7d, Qh, Js, Kc, 9s, 
+Preflop
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 0, 'type': 'call', 'value': 5.0, 'pot': 14.0}
 
 Player's Cards: 
-6s, 9h, 
+4h, Ks, 
 Community Cards: 
-7d, Qh, Js, Kc, 9s, 
+9s, 5s, 10c, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 14.0}
+
+Player's Cards: 
+Jd, 4c, 
+Community Cards: 
+9s, 5s, 10c, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 28.0, 'pot': 42.0}
+
+Player's Cards: 
+4h, Ks, 
+Community Cards: 
+9s, 5s, 10c, 
+Action: 
+{'player': 1, 'type': 'call', 'value': 28.0, 'pot': 70.0}
+
+Player's Cards: 
+4h, Ks, 
+Community Cards: 
+9s, 5s, 10c, Kh, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 35.0, 'pot': 105.0}
+
+Player's Cards: 
+Jd, 4c, 
+Community Cards: 
+9s, 5s, 10c, Kh, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 35.0, 'pot': 140.0}
+
+Player's Cards: 
+4h, Ks, 
+Community Cards: 
+9s, 5s, 10c, Kh, Kd, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 70.0, 'pot': 210.0}
+
+Player's Cards: 
+Jd, 4c, 
+Community Cards: 
+9s, 5s, 10c, Kh, Kd, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 130.0, 'pot': 340.0}
+
+Player's Cards: 
+4h, Ks, 
+Community Cards: 
+9s, 5s, 10c, Kh, Kd, 
+Action: 
+{'player': 1, 'type': 'call', 'value': 60.0, 'pot': 400.0}
 Showdown win, 1 wins 400.0
 
 Hand End
 --------------------------------------------------------------------------------
-Loss: 1.4831433296203613, Actor Loss: -4.2692413330078125, Critic Loss: 5.752384662628174
+Loss: -0.7419038414955139, Actor Loss: -1.226622462272644, Critic Loss: 0.4847186207771301
+
+--------------------------------------------------------------------------------
+Hand 100 Start
+
+
+Player's Cards: 
+Qh, 6s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+2h, 5h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Qh, 6s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+2h, 5h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
+
+Player's Cards: 
+Qh, 6s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 12.0}
+Folds around, player 0 wins 12.0
+Loss: -0.7614116668701172, Actor Loss: -1.2442444562911987, Critic Loss: 0.48283278942108154
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+5h, Ah, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Kh, Jc, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+5h, Ah, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+Kh, Jc, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
+
+Player's Cards: 
+5h, Ah, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 8.0, 'pot': 20.0}
+
+Player's Cards: 
+5h, Ah, 
+Community Cards: 
+Qh, Qc, 8s, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 10.0, 'pot': 30.0}
+
+Player's Cards: 
+Kh, Jc, 
+Community Cards: 
+Qh, Qc, 8s, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 10.0, 'pot': 40.0}
+
+Player's Cards: 
+5h, Ah, 
+Community Cards: 
+Qh, Qc, 8s, As, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 40.0}
+
+Player's Cards: 
+Kh, Jc, 
+Community Cards: 
+Qh, Qc, 8s, As, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 40.0}
+
+Player's Cards: 
+5h, Ah, 
+Community Cards: 
+Qh, Qc, 8s, As, 10h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 40.0}
+
+Player's Cards: 
+Kh, Jc, 
+Community Cards: 
+Qh, Qc, 8s, As, 10h, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 40.0}
+Showdown win, 0 wins 40.0
+
+Hand End
+--------------------------------------------------------------------------------
+Loss: -0.6172366142272949, Actor Loss: -1.1000282764434814, Critic Loss: 0.48279163241386414
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+Ad, 9h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+3s, 9c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Ad, 9h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+3s, 9c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 18.0, 'pot': 27.0}
+
+Player's Cards: 
+Ad, 9h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 54.0, 'pot': 81.0}
+
+Player's Cards: 
+3s, 9c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 162.0, 'pot': 243.0}
+
+Player's Cards: 
+Ad, 9h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 243.0}
+Folds around, player 0 wins 243.0
+Loss: -0.8010959625244141, Actor Loss: -1.284623622894287, Critic Loss: 0.48352769017219543
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+4s, 4h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+7s, 5d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+4s, 4h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+7s, 5d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 18.0, 'pot': 27.0}
+
+Player's Cards: 
+4s, 4h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 13.0, 'pot': 40.0}
+
+Player's Cards: 
+4s, 4h, 
+Community Cards: 
+6s, 10c, Ac, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 20.0, 'pot': 60.0}
+
+Player's Cards: 
+7s, 5d, 
+Community Cards: 
+6s, 10c, Ac, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 120.0, 'pot': 180.0}
+
+Player's Cards: 
+4s, 4h, 
+Community Cards: 
+6s, 10c, Ac, 
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 180.0}
+Folds around, player 0 wins 180.0
+Loss: 0.7904038429260254, Actor Loss: -3.5343408584594727, Critic Loss: 4.324744701385498
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+Jh, 2c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Jd, 5c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Jh, 2c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+Jd, 5c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 18.0, 'pot': 27.0}
+
+Player's Cards: 
+Jh, 2c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 54.0, 'pot': 81.0}
+
+Player's Cards: 
+Jd, 5c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 81.0}
+Folds around, player 1 wins 81.0
+Loss: -0.7439060211181641, Actor Loss: -1.2283588647842407, Critic Loss: 0.4844528138637543
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+8h, 8d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+9c, 5d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+8h, 8d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+9c, 5d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 9.0}
+Folds around, player 1 wins 9.0
+Loss: -0.8507461547851562, Actor Loss: -1.332870364189148, Critic Loss: 0.4821242392063141
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+Kh, 8h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+2h, 4s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Kh, 8h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+2h, 4s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 9.0}
+Folds around, player 1 wins 9.0
+Loss: 5.730733871459961, Actor Loss: -0.01747928187251091, Critic Loss: 5.748213291168213
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+2s, 6h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+5h, 7d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+2s, 6h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: 5.742236614227295, Actor Loss: -0.007077337708324194, Critic Loss: 5.749313831329346
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 200 Start
+
+
+Player's Cards: 
+3d, 4s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+2s, Qd, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+3d, 4s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: 20.44216537475586, Actor Loss: -0.004131576512008905, Critic Loss: 20.44629669189453
+
+Hand End
+--------------------------------------------------------------------------------
+
 
 --------------------------------------------------------------------------------
 Hand 300 Start
 
 
 Player's Cards: 
-9s, 2c, 
+4h, 2c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-Jh, 4c, 
+7s, 2d, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-9s, 2c, 
+4h, 2c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
 
 Player's Cards: 
-Jh, 4c, 
+7s, 2d, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
 
 Player's Cards: 
-9s, 2c, 
+4h, 2c, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'call', 'value': 198, 'pot': 400}
+{'player': 1, 'type': 'call', 'value': 8.0, 'pot': 20.0}
 
 Player's Cards: 
-9s, 2c, 
+4h, 2c, 
 Community Cards: 
-2s, 8h, 7h, 
+5s, 5h, Jc, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 10.0, 'pot': 30.0}
 
 Player's Cards: 
-Jh, 4c, 
+7s, 2d, 
 Community Cards: 
-2s, 8h, 7h, 
+5s, 5h, Jc, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-9s, 2c, 
-Community Cards: 
-2s, 8h, 7h, Kd, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Jh, 4c, 
-Community Cards: 
-2s, 8h, 7h, Kd, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-9s, 2c, 
-Community Cards: 
-2s, 8h, 7h, Kd, Jd, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Jh, 4c, 
-Community Cards: 
-2s, 8h, 7h, Kd, Jd, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 0 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.6187066435813904, Actor Loss: -1.1015464067459106, Critic Loss: 0.48283976316452026
-
---------------------------------------------------------------------------------
-Hand 300 Start
-
-
-Player's Cards: 
-6s, 5h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-3d, Jd, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-6s, 5h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.6711721420288086, Actor Loss: -1.8788831233978271, Critic Loss: 1.2077109813690186
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 30.0}
+Folds around, player 1 wins 30.0
+Loss: -0.6173888444900513, Actor Loss: -1.100118637084961, Critic Loss: 0.4827297627925873
 
 Hand End
 --------------------------------------------------------------------------------
@@ -1018,27 +928,48 @@ Hand 300 Start
 
 
 Player's Cards: 
-Qh, Kc, 
+10h, 8c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-2d, 5s, 
+8h, 4c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-Qh, Kc, 
+10h, 8c, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.8480889797210693, Actor Loss: -1.330041527748108, Critic Loss: 0.48195257782936096
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+8h, 4c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'call', 'value': 5.0, 'pot': 14.0}
+
+Player's Cards: 
+10h, 8c, 
+Community Cards: 
+Qd, 3c, 2h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 28.0, 'pot': 42.0}
+
+Player's Cards: 
+8h, 4c, 
+Community Cards: 
+Qd, 3c, 2h, 
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 42.0}
+Folds around, player 1 wins 42.0
+Loss: 1.1962095499038696, Actor Loss: -0.007355384062975645, Critic Loss: 1.2035648822784424
 
 Hand End
 --------------------------------------------------------------------------------
@@ -1049,34 +980,27 @@ Hand 300 Start
 
 
 Player's Cards: 
-7s, 9c, 
+Qc, 9c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-As, 2s, 
+2c, Ks, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-7s, 9c, 
+Qc, 9c, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-As, 2s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 1 wins 202
-Loss: -0.7914179563522339, Actor Loss: -1.2746151685714722, Critic Loss: 0.4831971824169159
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: -0.6988689303398132, Actor Loss: -1.1803009510040283, Critic Loss: 0.4814320206642151
 
 Hand End
 --------------------------------------------------------------------------------
@@ -1087,27 +1011,27 @@ Hand 300 Start
 
 
 Player's Cards: 
-8h, 6c, 
+4c, 5c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-2h, Kc, 
+Js, Kd, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-8h, 6c, 
+4c, 5c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
 Folds around, player 0 wins 3
-Loss: -0.7893868684768677, Actor Loss: -1.2708067893981934, Critic Loss: 0.48141995072364807
+Loss: -0.7400119304656982, Actor Loss: -1.9510709047317505, Critic Loss: 1.2110589742660522
 
 Hand End
 --------------------------------------------------------------------------------
@@ -1118,120 +1042,27 @@ Hand 300 Start
 
 
 Player's Cards: 
-8d, Ad, 
+9d, 10c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-5d, 2d, 
+6h, Ah, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-8d, Ad, 
+9d, 10c, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-5d, 2d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-8d, Ad, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-8d, Ad, 
-Community Cards: 
-5s, 8c, Qh, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-5d, 2d, 
-Community Cards: 
-5s, 8c, Qh, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-8d, Ad, 
-Community Cards: 
-5s, 8c, Qh, 9s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-5d, 2d, 
-Community Cards: 
-5s, 8c, Qh, 9s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-8d, Ad, 
-Community Cards: 
-5s, 8c, Qh, 9s, 6h, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-5d, 2d, 
-Community Cards: 
-5s, 8c, Qh, 9s, 6h, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.7480990886688232, Actor Loss: -1.9593476057052612, Critic Loss: 1.211248517036438
-
---------------------------------------------------------------------------------
-Hand 300 Start
-
-
-Player's Cards: 
-3d, Ah, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Jh, 8h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-3d, Ah, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-Jh, 8h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 1 wins 202
-Loss: -0.7188698053359985, Actor Loss: -1.2019191980361938, Critic Loss: 0.4830493628978729
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: -0.8464982509613037, Actor Loss: -1.3286703824996948, Critic Loss: 0.4821721613407135
 
 Hand End
 --------------------------------------------------------------------------------
@@ -1242,1182 +1073,992 @@ Hand 300 Start
 
 
 Player's Cards: 
-3s, 8s, 
+Ad, 5c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-3c, 2h, 
+2c, 9h, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-3s, 8s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-3c, 2h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-3s, 8s, 
-Community Cards: 
-Jc, Kc, Ac, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3c, 2h, 
-Community Cards: 
-Jc, Kc, Ac, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3s, 8s, 
-Community Cards: 
-Jc, Kc, Ac, 7s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3c, 2h, 
-Community Cards: 
-Jc, Kc, Ac, 7s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3s, 8s, 
-Community Cards: 
-Jc, Kc, Ac, 7s, 5c, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-3c, 2h, 
-Community Cards: 
-Jc, Kc, Ac, 7s, 5c, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 0 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: 38.651092529296875, Actor Loss: 10.525605201721191, Critic Loss: 28.125486373901367
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-Jc, 3s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Jh, 6s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Jc, 3s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: 17.943017959594727, Actor Loss: -10.182527542114258, Critic Loss: 28.125545501708984
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-6h, 4c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Ac, 2s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-6h, 4c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.6963950395584106, Actor Loss: -1.1778744459152222, Critic Loss: 0.4814794063568115
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-3d, 4d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-5h, 2d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-3d, 4d, 
+Ad, 5c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
 
 Player's Cards: 
-5h, 2d, 
+2c, 9h, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
 
 Player's Cards: 
-3d, 4d, 
+Ad, 5c, 
 Community Cards: 
-3h, 9c, 6d, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
-
-Player's Cards: 
-5h, 2d, 
-Community Cards: 
-3h, 9c, 6d, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 210.0}
-
-Player's Cards: 
-3d, 4d, 
-Community Cards: 
-3h, 9c, 6d, 
-Action: 
-{'player': 1, 'type': 'call', 'value': 190.0, 'pot': 400.0}
-
-Player's Cards: 
-3d, 4d, 
-Community Cards: 
-3h, 9c, 6d, 6c, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400.0}
-
-Player's Cards: 
-5h, 2d, 
-Community Cards: 
-3h, 9c, 6d, 6c, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400.0}
-
-Player's Cards: 
-3d, 4d, 
-Community Cards: 
-3h, 9c, 6d, 6c, Qc, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400.0}
-
-Player's Cards: 
-5h, 2d, 
-Community Cards: 
-3h, 9c, 6d, 6c, Qc, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400.0}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: 38.402496337890625, Actor Loss: 10.277007102966309, Critic Loss: 28.125490188598633
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-Ks, 4d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-6s, 2d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Ks, 4d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.0383797325193882, Actor Loss: -0.03842846304178238, Critic Loss: 4.872905628872104e-05
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-10c, 6c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-4s, 3d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-10c, 6c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-4s, 3d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-10c, 6c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 0 wins 202
-Loss: 19.13681411743164, Actor Loss: -8.988651275634766, Critic Loss: 28.125465393066406
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-9d, Ah, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-4c, 2h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-9d, Ah, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.7395137548446655, Actor Loss: -1.9508761167526245, Critic Loss: 1.211362361907959
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-6s, 3h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Ks, 5s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-6s, 3h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-Ks, 5s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-6s, 3h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-6s, 3h, 
-Community Cards: 
-3s, 9d, Kd, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ks, 5s, 
-Community Cards: 
-3s, 9d, Kd, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-6s, 3h, 
-Community Cards: 
-3s, 9d, Kd, 2s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ks, 5s, 
-Community Cards: 
-3s, 9d, Kd, 2s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-6s, 3h, 
-Community Cards: 
-3s, 9d, Kd, 2s, Kh, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ks, 5s, 
-Community Cards: 
-3s, 9d, Kd, 2s, Kh, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 0 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: 37.911739349365234, Actor Loss: 9.786232948303223, Critic Loss: 28.125507354736328
-
---------------------------------------------------------------------------------
-Hand 400 Start
-
-
-Player's Cards: 
-As, 9h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Kc, Ks, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-As, 9h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.7537987232208252, Actor Loss: -1.236430287361145, Critic Loss: 0.48263153433799744
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-9h, 6s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-2h, Ah, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-9h, 6s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-2h, Ah, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-9h, 6s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 0 wins 202
-Loss: -0.6210432648658752, Actor Loss: -1.1038898229599, Critic Loss: 0.48284655809402466
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-As, 4s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Ac, 2d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-As, 4s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-Ac, 2d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-As, 4s, 
-Community Cards: 
-2s, 10d, 5s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ac, 2d, 
-Community Cards: 
-2s, 10d, 5s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-As, 4s, 
-Community Cards: 
-2s, 10d, 5s, 3c, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ac, 2d, 
-Community Cards: 
-2s, 10d, 5s, 3c, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-As, 4s, 
-Community Cards: 
-2s, 10d, 5s, 3c, 7d, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ac, 2d, 
-Community Cards: 
-2s, 10d, 5s, 3c, 7d, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.6991233825683594, Actor Loss: -1.180463194847107, Critic Loss: 0.48133978247642517
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-9c, Qh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Js, 7d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-9c, Qh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.9110039472579956, Actor Loss: -2.1196274757385254, Critic Loss: 1.2086235284805298
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-10c, 5h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-6d, As, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-10c, 5h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.07504065334796906, Actor Loss: -0.07521387934684753, Critic Loss: 0.00017322649364359677
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-Ah, 10d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-9c, 6s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Ah, 10d, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.7899730801582336, Actor Loss: -1.2714380025863647, Critic Loss: 0.4814649224281311
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-6c, Qs, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-7d, 8s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-6c, Qs, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-7d, 8s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-6c, Qs, 
-Community Cards: 
-4c, 8h, 3s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7d, 8s, 
-Community Cards: 
-4c, 8h, 3s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-6c, Qs, 
-Community Cards: 
-4c, 8h, 3s, Jc, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7d, 8s, 
-Community Cards: 
-4c, 8h, 3s, Jc, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-6c, Qs, 
-Community Cards: 
-4c, 8h, 3s, Jc, Kd, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7d, 8s, 
-Community Cards: 
-4c, 8h, 3s, Jc, Kd, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 0 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: 37.912349700927734, Actor Loss: 9.786709785461426, Critic Loss: 28.125638961791992
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-5c, 8h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-10s, Qs, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-5c, 8h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-10s, Qs, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 1 wins 202
-Loss: 37.92858123779297, Actor Loss: 9.803083419799805, Critic Loss: 28.125497817993164
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 500 Start
-
-
-Player's Cards: 
-5c, 10h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-5d, 2s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-5c, 10h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-5d, 2s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-5c, 10h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 0 wins 202
-Loss: -0.7576602697372437, Actor Loss: -1.9669592380523682, Critic Loss: 1.2092989683151245
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 600 Start
-
-
-Player's Cards: 
-Qd, 2c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-Ah, Jh, 
-Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+{'player': 1, 'type': 'call', 'value': 8.0, 'pot': 20.0}
 
 Player's Cards: 
-Qd, 2c, 
+Ad, 5c, 
 Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-Ah, Jh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
-
-Player's Cards: 
-Qd, 2c, 
-Community Cards: 
-Jd, 6h, 9s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-Ah, Jh, 
-Community Cards: 
-Jd, 6h, 9s, 
-Action: 
-{'player': 0, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-Qd, 2c, 
-Community Cards: 
-Jd, 6h, 9s, Js, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ah, Jh, 
-Community Cards: 
-Jd, 6h, 9s, Js, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Qd, 2c, 
-Community Cards: 
-Jd, 6h, 9s, Js, 8h, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Ah, Jh, 
-Community Cards: 
-Jd, 6h, 9s, Js, 8h, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 0 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.617339015007019, Actor Loss: -1.0998953580856323, Critic Loss: 0.4825563430786133
-
---------------------------------------------------------------------------------
-Hand 600 Start
-
-
-Player's Cards: 
-Qc, Jh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-7c, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Qc, Jh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-7c, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-Qc, Jh, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 198, 'pot': 400}
-
-Player's Cards: 
-Qc, Jh, 
-Community Cards: 
-2s, Qd, Js, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7c, 4h, 
-Community Cards: 
-2s, Qd, Js, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Qc, Jh, 
-Community Cards: 
-2s, Qd, Js, Ks, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7c, 4h, 
-Community Cards: 
-2s, Qd, Js, Ks, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-Qc, Jh, 
-Community Cards: 
-2s, Qd, Js, Ks, 6s, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7c, 4h, 
-Community Cards: 
-2s, Qd, Js, Ks, 6s, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 1 wins 400.0
-
-Hand End
---------------------------------------------------------------------------------
-Loss: -0.7051689624786377, Actor Loss: -1.1863871812820435, Critic Loss: 0.48121821880340576
-
---------------------------------------------------------------------------------
-Hand 600 Start
-
-
-Player's Cards: 
-Ks, 4s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-6h, Jd, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Ks, 4s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
-Folds around, player 0 wins 3
-Loss: -0.8350441455841064, Actor Loss: -2.045602560043335, Critic Loss: 1.2105584144592285
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 600 Start
-
-
-Player's Cards: 
-Kc, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-9h, Ks, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-Kc, 4h, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
-
-Player's Cards: 
-9h, Ks, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
-
-Player's Cards: 
-Kc, 4h, 
-Community Cards: 
-Preflop
+Ac, 4h, 3c, 
 Action: 
-{'player': 1, 'type': 'call', 'value': 198, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 20.0}
 
 Player's Cards: 
-Kc, 4h, 
+2c, 9h, 
 Community Cards: 
-Jc, 5c, Ad, 
+Ac, 4h, 3c, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 0, 'type': 'bet', 'value': 40.0, 'pot': 60.0}
 
 Player's Cards: 
-9h, Ks, 
+Ad, 5c, 
 Community Cards: 
-Jc, 5c, Ad, 
+Ac, 4h, 3c, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'call', 'value': 40.0, 'pot': 100.0}
 
 Player's Cards: 
-Kc, 4h, 
+Ad, 5c, 
 Community Cards: 
-Jc, 5c, Ad, Qc, 
+Ac, 4h, 3c, Kh, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 50.0, 'pot': 150.0}
 
 Player's Cards: 
-9h, Ks, 
+2c, 9h, 
 Community Cards: 
-Jc, 5c, Ad, Qc, 
+Ac, 4h, 3c, Kh, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 0, 'type': 'call', 'value': 50.0, 'pot': 200.0}
 
 Player's Cards: 
-Kc, 4h, 
+Ad, 5c, 
 Community Cards: 
-Jc, 5c, Ad, Qc, Js, 
+Ac, 4h, 3c, Kh, 9d, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 200.0}
 
 Player's Cards: 
-9h, Ks, 
+2c, 9h, 
 Community Cards: 
-Jc, 5c, Ad, Qc, Js, 
+Ac, 4h, 3c, Kh, 9d, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 0 wins 200.0
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 200.0}
 Showdown win, 1 wins 200.0
 
 Hand End
 --------------------------------------------------------------------------------
-Loss: -0.9081395864486694, Actor Loss: -2.116544246673584, Critic Loss: 1.2084046602249146
+Loss: -0.7190043926239014, Actor Loss: -1.2020416259765625, Critic Loss: 0.4830372631549835
 
 --------------------------------------------------------------------------------
-Hand 600 Start
+Hand 300 Start
 
 
 Player's Cards: 
-9h, 3h, 
+8h, 7s, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-Jc, Ad, 
+Ad, 2d, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-9h, 3h, 
+8h, 7s, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
 
 Player's Cards: 
-Jc, Ad, 
+Ad, 2d, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
+{'player': 0, 'type': 'call', 'value': 5.0, 'pot': 14.0}
 
 Player's Cards: 
-9h, 3h, 
+8h, 7s, 
 Community Cards: 
-Ac, 4h, 5d, 
+6s, 9s, Jh, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 2.0, 'pot': 6.0}
+{'player': 1, 'type': 'bet', 'value': 28.0, 'pot': 42.0}
 
 Player's Cards: 
-Jc, Ad, 
+Ad, 2d, 
 Community Cards: 
-Ac, 4h, 5d, 
+6s, 9s, Jh, 
 Action: 
-{'player': 0, 'type': 'fold', 'value': 0, 'pot': 6.0}
-Folds around, player 1 wins 6.0
-Loss: -0.7858740091323853, Actor Loss: -1.2672700881958008, Critic Loss: 0.4813961088657379
+{'player': 0, 'type': 'bet', 'value': 84.0, 'pot': 126.0}
+
+Player's Cards: 
+8h, 7s, 
+Community Cards: 
+6s, 9s, Jh, 
+Action: 
+{'player': 1, 'type': 'call', 'value': 56.0, 'pot': 182.0}
+
+Player's Cards: 
+8h, 7s, 
+Community Cards: 
+6s, 9s, Jh, As, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 109.0, 'pot': 291.0}
+
+Player's Cards: 
+Ad, 2d, 
+Community Cards: 
+6s, 9s, Jh, As, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 109.0, 'pot': 400.0}
+
+Player's Cards: 
+8h, 7s, 
+Community Cards: 
+6s, 9s, Jh, As, Qs, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400.0}
+
+Player's Cards: 
+Ad, 2d, 
+Community Cards: 
+6s, 9s, Jh, As, Qs, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400.0}
+Showdown win, 1 wins 400.0
+
+Hand End
+--------------------------------------------------------------------------------
+Loss: 8.126974105834961, Actor Loss: -7.1771745681762695, Critic Loss: 15.30414867401123
+
+--------------------------------------------------------------------------------
+Hand 300 Start
+
+
+Player's Cards: 
+10h, Jh, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Jd, 9s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+10h, Jh, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: 7.131791591644287, Actor Loss: -6.6594929695129395, Critic Loss: 13.791284561157227
 
 Hand End
 --------------------------------------------------------------------------------
 
 
 --------------------------------------------------------------------------------
-Hand 600 Start
+Hand 400 Start
 
 
 Player's Cards: 
-4d, Qh, 
+Qs, 7d, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Kh, 7s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Qs, 7d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: 7.314781665802002, Actor Loss: -0.017504077404737473, Critic Loss: 7.3322858810424805
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 400 Start
+
+
+Player's Cards: 
+3c, 2c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+2d, 7s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+3c, 2c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: -0.7989479303359985, Actor Loss: -1.2825855016708374, Critic Loss: 0.4836375415325165
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 400 Start
+
+
+Player's Cards: 
+3d, 4c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+2c, Jc, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+3d, 4c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: -0.7043136358261108, Actor Loss: -1.185706615447998, Critic Loss: 0.4813929796218872
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 400 Start
+
+
+Player's Cards: 
+As, 8h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Qc, Qs, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+As, 8h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+Qc, Qs, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
+
+Player's Cards: 
+As, 8h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 8.0, 'pot': 20.0}
+
+Player's Cards: 
+As, 8h, 
+Community Cards: 
+Kc, 9s, 6h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 20.0}
+
+Player's Cards: 
+Qc, Qs, 
+Community Cards: 
+Kc, 9s, 6h, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 40.0, 'pot': 60.0}
+
+Player's Cards: 
+As, 8h, 
+Community Cards: 
+Kc, 9s, 6h, 
+Action: 
+{'player': 1, 'type': 'call', 'value': 40.0, 'pot': 100.0}
+
+Player's Cards: 
+As, 8h, 
+Community Cards: 
+Kc, 9s, 6h, 7s, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 50.0, 'pot': 150.0}
+
+Player's Cards: 
+Qc, Qs, 
+Community Cards: 
+Kc, 9s, 6h, 7s, 
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 150.0}
+Folds around, player 1 wins 150.0
+Loss: 1.1914992332458496, Actor Loss: -0.011243435554206371, Critic Loss: 1.2027426958084106
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 400 Start
+
 
 Player's Cards: 
 3s, Qc, 
 Community Cards: 
 Preflop
 Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Qd, 6c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+3s, Qc, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+Qd, 6c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
+
+Player's Cards: 
+3s, Qc, 
+Community Cards: 
+9d, 4s, 10h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
+
+Player's Cards: 
+Qd, 6c, 
+Community Cards: 
+9d, 4s, 10h, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 8.0, 'pot': 20.0}
+
+Player's Cards: 
+3s, Qc, 
+Community Cards: 
+9d, 4s, 10h, 2s, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 10.0, 'pot': 30.0}
+
+Player's Cards: 
+Qd, 6c, 
+Community Cards: 
+9d, 4s, 10h, 2s, 
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 30.0}
+Folds around, player 1 wins 30.0
+Loss: 1.1977736949920654, Actor Loss: -0.007391052320599556, Critic Loss: 1.2051647901535034
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 400 Start
+
+
+Player's Cards: 
+3h, 5d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+10d, Ah, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+3h, 5d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: -0.6939045190811157, Actor Loss: -1.9036991596221924, Critic Loss: 1.2097946405410767
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 400 Start
+
+
+Player's Cards: 
+8d, 3c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+3d, 10c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+8d, 3c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: 1.1982135772705078, Actor Loss: -0.006233551073819399, Critic Loss: 1.2044471502304077
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 400 Start
+
+
+Player's Cards: 
+6d, 9d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+3d, 8s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+6d, 9d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+3d, 8s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'call', 'value': 5.0, 'pot': 14.0}
+
+Player's Cards: 
+6d, 9d, 
+Community Cards: 
+Ad, 8h, Kh, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 28.0, 'pot': 42.0}
+
+Player's Cards: 
+3d, 8s, 
+Community Cards: 
+Ad, 8h, Kh, 
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 42.0}
+Folds around, player 1 wins 42.0
+Loss: -0.7882534265518188, Actor Loss: -1.269657850265503, Critic Loss: 0.4814043939113617
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 500 Start
+
+
+Player's Cards: 
+3c, Kd, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+8h, 5s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+3c, Kd, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: 1.1990212202072144, Actor Loss: -0.005600880365818739, Critic Loss: 1.2046221494674683
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 500 Start
+
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+6c, 3s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+6c, 3s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 8.0, 'pot': 20.0}
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+2s, Ks, 2d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 20.0}
+
+Player's Cards: 
+6c, 3s, 
+Community Cards: 
+2s, Ks, 2d, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 40.0, 'pot': 60.0}
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+2s, Ks, 2d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 120.0, 'pot': 180.0}
+
+Player's Cards: 
+6c, 3s, 
+Community Cards: 
+2s, Ks, 2d, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 150.0, 'pot': 330.0}
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+2s, Ks, 2d, 
+Action: 
+{'player': 1, 'type': 'call', 'value': 70.0, 'pot': 400.0}
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+2s, Ks, 2d, Kc, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400.0}
+
+Player's Cards: 
+6c, 3s, 
+Community Cards: 
+2s, Ks, 2d, Kc, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400.0}
+
+Player's Cards: 
+Jc, 5h, 
+Community Cards: 
+2s, Ks, 2d, Kc, 4d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400.0}
+
+Player's Cards: 
+6c, 3s, 
+Community Cards: 
+2s, Ks, 2d, Kc, 4d, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400.0}
+Showdown win, 1 wins 400.0
+
+Hand End
+--------------------------------------------------------------------------------
+Loss: -0.7007642388343811, Actor Loss: -1.1820569038391113, Critic Loss: 0.4812926650047302
+
+--------------------------------------------------------------------------------
+Hand 500 Start
+
+
+Player's Cards: 
+8s, Ac, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+7s, 6c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+8s, Ac, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+7s, 6c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 9.0}
+Folds around, player 1 wins 9.0
+Loss: -0.7963067889213562, Actor Loss: -1.2798850536346436, Critic Loss: 0.48357826471328735
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 500 Start
+
+
+Player's Cards: 
+2h, 2s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+9d, 8d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+2h, 2s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: -0.7413289546966553, Actor Loss: -1.2257441282272339, Critic Loss: 0.4844151437282562
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 500 Start
+
+
+Player's Cards: 
+9s, 10h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+9c, 10c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+9s, 10h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+9c, 10c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
+
+Player's Cards: 
+9s, 10h, 
+Community Cards: 
+6h, 3d, 8h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
+
+Player's Cards: 
+9c, 10c, 
+Community Cards: 
+6h, 3d, 8h, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 8.0, 'pot': 20.0}
+
+Player's Cards: 
+9s, 10h, 
+Community Cards: 
+6h, 3d, 8h, 7c, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 10.0, 'pot': 30.0}
+
+Player's Cards: 
+9c, 10c, 
+Community Cards: 
+6h, 3d, 8h, 7c, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 60.0, 'pot': 90.0}
+
+Player's Cards: 
+9s, 10h, 
+Community Cards: 
+6h, 3d, 8h, 7c, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 180.0, 'pot': 270.0}
+
+Player's Cards: 
+9c, 10c, 
+Community Cards: 
+6h, 3d, 8h, 7c, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 130.0, 'pot': 400.0}
+
+Player's Cards: 
+9s, 10h, 
+Community Cards: 
+6h, 3d, 8h, 7c, Jh, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400.0}
+
+Player's Cards: 
+9c, 10c, 
+Community Cards: 
+6h, 3d, 8h, 7c, Jh, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400.0}
+Showdown win, 0 wins 200.0
+Showdown win, 1 wins 200.0
+
+Hand End
+--------------------------------------------------------------------------------
+Loss: -0.9067578315734863, Actor Loss: -2.115386962890625, Critic Loss: 1.2086291313171387
+
+--------------------------------------------------------------------------------
+Hand 500 Start
+
+
+Player's Cards: 
+Qd, 6c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+2s, 3d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+Qd, 6c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+2s, 3d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 18.0, 'pot': 27.0}
+
+Player's Cards: 
+Qd, 6c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 27.0}
+Folds around, player 0 wins 27.0
+Loss: 28.12738609313965, Actor Loss: 0.0022293468937277794, Critic Loss: 28.12515640258789
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 600 Start
+
+
+Player's Cards: 
+8h, 4h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Ac, 2d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+8h, 4h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+Ac, 2d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'call', 'value': 5.0, 'pot': 14.0}
+
+Player's Cards: 
+8h, 4h, 
+Community Cards: 
+10c, 2c, 5d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 14.0}
+
+Player's Cards: 
+Ac, 2d, 
+Community Cards: 
+10c, 2c, 5d, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 28.0, 'pot': 42.0}
+
+Player's Cards: 
+8h, 4h, 
+Community Cards: 
+10c, 2c, 5d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 84.0, 'pot': 126.0}
+
+Player's Cards: 
+Ac, 2d, 
+Community Cards: 
+10c, 2c, 5d, 
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 126.0}
+Folds around, player 1 wins 126.0
+Loss: 1.1982382535934448, Actor Loss: -0.0060118711553514, Critic Loss: 1.2042500972747803
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 500 Start
+
+
+Player's Cards: 
+4d, Qh, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Jc, 10d, 
+Community Cards: 
+Preflop
+Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
@@ -2427,52 +2068,173 @@ Preflop
 Action: 
 {'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
 Folds around, player 0 wins 3
-Loss: -0.7710738182067871, Actor Loss: -1.9823826551437378, Critic Loss: 1.2113088369369507
+Loss: 5.731342315673828, Actor Loss: -0.017118534073233604, Critic Loss: 5.74846076965332
 
 Hand End
 --------------------------------------------------------------------------------
 
 
 --------------------------------------------------------------------------------
-Hand 600 Start
+Hand 500 Start
 
 
 Player's Cards: 
-Kc, Qh, 
+6h, 2s, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-5s, 9s, 
+Js, 4c, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-Kc, Qh, 
+6h, 2s, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
 
 Player's Cards: 
-5s, 9s, 
+Js, 4c, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
 
 Player's Cards: 
-Kc, Qh, 
+6h, 2s, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 1, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 0 wins 202
-Loss: 37.9707145690918, Actor Loss: 9.845213890075684, Critic Loss: 28.12550163269043
+{'player': 1, 'type': 'bet', 'value': 24.0, 'pot': 36.0}
+
+Player's Cards: 
+Js, 4c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'call', 'value': 16.0, 'pot': 52.0}
+
+Player's Cards: 
+6h, 2s, 
+Community Cards: 
+3s, 5s, Ah, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 104.0, 'pot': 156.0}
+
+Player's Cards: 
+Js, 4c, 
+Community Cards: 
+3s, 5s, Ah, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 104.0, 'pot': 260.0}
+
+Player's Cards: 
+6h, 2s, 
+Community Cards: 
+3s, 5s, Ah, Jd, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 70.0, 'pot': 330.0}
+
+Player's Cards: 
+Js, 4c, 
+Community Cards: 
+3s, 5s, Ah, Jd, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 70.0, 'pot': 400.0}
+
+Player's Cards: 
+6h, 2s, 
+Community Cards: 
+3s, 5s, Ah, Jd, Qc, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400.0}
+
+Player's Cards: 
+Js, 4c, 
+Community Cards: 
+3s, 5s, Ah, Jd, Qc, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400.0}
+Showdown win, 0 wins 400.0
+
+Hand End
+--------------------------------------------------------------------------------
+Loss: -0.803601861000061, Actor Loss: -2.0115365982055664, Critic Loss: 1.2079347372055054
+
+--------------------------------------------------------------------------------
+Hand 600 Start
+
+
+Player's Cards: 
+3d, Ad, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Kd, 3s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+3d, Ad, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+Kd, 3s, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 18.0, 'pot': 27.0}
+
+Player's Cards: 
+3d, Ad, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 13.0, 'pot': 40.0}
+
+Player's Cards: 
+3d, Ad, 
+Community Cards: 
+4s, 8h, 10h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 40.0}
+
+Player's Cards: 
+Kd, 3s, 
+Community Cards: 
+4s, 8h, 10h, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 20.0, 'pot': 60.0}
+
+Player's Cards: 
+3d, Ad, 
+Community Cards: 
+4s, 8h, 10h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 120.0, 'pot': 180.0}
+
+Player's Cards: 
+Kd, 3s, 
+Community Cards: 
+4s, 8h, 10h, 
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 180.0}
+Folds around, player 1 wins 180.0
+Loss: -0.6917282342910767, Actor Loss: -1.1731276512145996, Critic Loss: 0.48139941692352295
 
 Hand End
 --------------------------------------------------------------------------------
@@ -2483,27 +2245,359 @@ Hand 600 Start
 
 
 Player's Cards: 
-6c, 3s, 
+8c, 6h, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-5c, 6s, 
+10c, Qd, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-6c, 3s, 
+8c, 6h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+10c, Qd, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
+
+Player's Cards: 
+8c, 6h, 
+Community Cards: 
+5c, 3c, 9h, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 2.0, 'pot': 6.0}
+
+Player's Cards: 
+10c, Qd, 
+Community Cards: 
+5c, 3c, 9h, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 12.0, 'pot': 18.0}
+
+Player's Cards: 
+8c, 6h, 
+Community Cards: 
+5c, 3c, 9h, 
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 18.0}
+Folds around, player 0 wins 18.0
+Loss: 1.1892483234405518, Actor Loss: -0.014294462278485298, Critic Loss: 1.2035428285598755
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 600 Start
+
+
+Player's Cards: 
+9d, Kc, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+7h, Ac, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+9d, Kc, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+7h, Ac, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
+
+Player's Cards: 
+9d, Kc, 
+Community Cards: 
+7d, 2s, 5d, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 4}
+
+Player's Cards: 
+7h, Ac, 
+Community Cards: 
+7d, 2s, 5d, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
+
+Player's Cards: 
+9d, Kc, 
+Community Cards: 
+7d, 2s, 5d, 5s, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 2.0, 'pot': 6.0}
+
+Player's Cards: 
+7h, Ac, 
+Community Cards: 
+7d, 2s, 5d, 5s, 
+Action: 
+{'player': 0, 'type': 'call', 'value': 2.0, 'pot': 8.0}
+
+Player's Cards: 
+9d, Kc, 
+Community Cards: 
+7d, 2s, 5d, 5s, Qh, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 8.0}
+
+Player's Cards: 
+7h, Ac, 
+Community Cards: 
+7d, 2s, 5d, 5s, Qh, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 4.0, 'pot': 12.0}
+
+Player's Cards: 
+9d, Kc, 
+Community Cards: 
+7d, 2s, 5d, 5s, Qh, 
+Action: 
+{'player': 1, 'type': 'call', 'value': 4.0, 'pot': 16.0}
+Showdown win, 0 wins 16.0
+
+Hand End
+--------------------------------------------------------------------------------
+Loss: -0.7444404363632202, Actor Loss: -1.2292063236236572, Critic Loss: 0.4847659170627594
+
+--------------------------------------------------------------------------------
+Hand 600 Start
+
+
+Player's Cards: 
+5c, Ah, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+8c, Jh, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+5c, Ah, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
+
+Player's Cards: 
+8c, Jh, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 8.0, 'pot': 12.0}
+
+Player's Cards: 
+5c, Ah, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'call', 'value': 8.0, 'pot': 20.0}
+
+Player's Cards: 
+5c, Ah, 
+Community Cards: 
+Kh, 9d, 2c, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 10.0, 'pot': 30.0}
+
+Player's Cards: 
+8c, Jh, 
+Community Cards: 
+Kh, 9d, 2c, 
+Action: 
+{'player': 0, 'type': 'bet', 'value': 60.0, 'pot': 90.0}
+
+Player's Cards: 
+5c, Ah, 
+Community Cards: 
+Kh, 9d, 2c, 
+Action: 
+{'player': 1, 'type': 'call', 'value': 50.0, 'pot': 140.0}
+
+Player's Cards: 
+5c, Ah, 
+Community Cards: 
+Kh, 9d, 2c, Qs, 
+Action: 
+{'player': 1, 'type': 'bet', 'value': 70.0, 'pot': 210.0}
+
+Player's Cards: 
+8c, Jh, 
+Community Cards: 
+Kh, 9d, 2c, Qs, 
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 210.0}
+Folds around, player 1 wins 210.0
+Loss: -0.8539706468582153, Actor Loss: -1.3362754583358765, Critic Loss: 0.48230478167533875
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 700 Start
+
+
+Player's Cards: 
+As, Ac, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+5d, Ks, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+As, Ac, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+5d, Ks, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 9.0}
+Folds around, player 1 wins 9.0
+Loss: -0.6140674352645874, Actor Loss: -1.096909999847412, Critic Loss: 0.4828425645828247
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 600 Start
+
+
+Player's Cards: 
+7s, 3d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+8h, 4h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+7s, 3d, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
 Folds around, player 0 wins 3
-Loss: -0.7820833921432495, Actor Loss: -1.991994023323059, Critic Loss: 1.2099106311798096
+Loss: 1.197756052017212, Actor Loss: -0.0064405882731080055, Critic Loss: 1.2041966915130615
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 600 Start
+
+
+Player's Cards: 
+8s, 9h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+Kc, 10d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+8s, 9h, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 6.0, 'pot': 9.0}
+
+Player's Cards: 
+Kc, 10d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 9.0}
+Folds around, player 1 wins 9.0
+Loss: -0.7494257688522339, Actor Loss: -1.232236623764038, Critic Loss: 0.4828108549118042
+
+Hand End
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Hand 600 Start
+
+
+Player's Cards: 
+9c, 2d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
+
+Player's Cards: 
+5h, 3c, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
+
+Player's Cards: 
+9c, 2d, 
+Community Cards: 
+Preflop
+Action: 
+{'player': 1, 'type': 'fold', 'value': 0, 'pot': 3}
+Folds around, player 0 wins 3
+Loss: 1.203636884689331, Actor Loss: -0.002312923315912485, Critic Loss: 1.2059497833251953
 
 Hand End
 --------------------------------------------------------------------------------
@@ -2514,122 +2608,62 @@ Hand 700 Start
 
 
 Player's Cards: 
-7s, 4c, 
+10c, 4h, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
 
 Player's Cards: 
-7d, 8s, 
+3d, 7s, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
 
 Player's Cards: 
-7s, 4c, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 199, 'pot': 202}
-
-Player's Cards: 
-7d, 8s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'fold', 'value': 0, 'pot': 202}
-Folds around, player 1 wins 202
-Loss: -0.5323936939239502, Actor Loss: -1.7416698932647705, Critic Loss: 1.2092761993408203
-
-Hand End
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-Hand 700 Start
-
-
-Player's Cards: 
-7s, Js, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 1, 'type': 'bet', 'value': 1, 'pot': 1}
-
-Player's Cards: 
-2s, 4s, 
-Community Cards: 
-Preflop
-Action: 
-{'player': 0, 'type': 'bet', 'value': 2, 'pot': 3}
-
-Player's Cards: 
-7s, Js, 
+10c, 4h, 
 Community Cards: 
 Preflop
 Action: 
 {'player': 1, 'type': 'call', 'value': 1, 'pot': 4}
 
 Player's Cards: 
-2s, 4s, 
+3d, 7s, 
 Community Cards: 
 Preflop
 Action: 
-{'player': 0, 'type': 'bet', 'value': 198, 'pot': 202}
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
 
 Player's Cards: 
-7s, Js, 
+10c, 4h, 
 Community Cards: 
-Preflop
+8h, 6c, Jc, 
 Action: 
-{'player': 1, 'type': 'call', 'value': 198, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 0, 'pot': 4}
 
 Player's Cards: 
-7s, Js, 
+3d, 7s, 
 Community Cards: 
-As, 9s, 3c, 
+8h, 6c, Jc, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 0, 'type': 'bet', 'value': 0, 'pot': 4}
 
 Player's Cards: 
-2s, 4s, 
+10c, 4h, 
 Community Cards: 
-As, 9s, 3c, 
+8h, 6c, Jc, 10s, 
 Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
+{'player': 1, 'type': 'bet', 'value': 2.0, 'pot': 6.0}
 
 Player's Cards: 
-7s, Js, 
+3d, 7s, 
 Community Cards: 
-As, 9s, 3c, Ks, 
+8h, 6c, Jc, 10s, 
 Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-2s, 4s, 
-Community Cards: 
-As, 9s, 3c, Ks, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-7s, Js, 
-Community Cards: 
-As, 9s, 3c, Ks, 6c, 
-Action: 
-{'player': 1, 'type': 'bet', 'value': 0, 'pot': 400}
-
-Player's Cards: 
-2s, 4s, 
-Community Cards: 
-As, 9s, 3c, Ks, 6c, 
-Action: 
-{'player': 0, 'type': 'bet', 'value': 0, 'pot': 400}
-Showdown win, 0 wins 200.0
-Showdown win, 1 wins 200.0
+{'player': 0, 'type': 'fold', 'value': 0, 'pot': 6.0}
+Folds around, player 1 wins 6.0
+Loss: 28.152992248535156, Actor Loss: 0.027673721313476562, Critic Loss: 28.12531852722168
 
 Hand End
 --------------------------------------------------------------------------------
-Loss: -0.7062696218490601, Actor Loss: -1.1875108480453491, Critic Loss: 0.48124122619628906
