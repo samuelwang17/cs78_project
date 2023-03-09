@@ -289,7 +289,7 @@ class actor_critic():
     def get_loss(self, Vals_T):
         clock = time.time_ns()
         Qs = [0] * len(self.rewards[-1])
-        Q_t = Vals_T
+        Q_t = torch.Tensor([0] * self.n_players) # expected sum of future rewards is zero at gto, or self play in general
         # first column back
         Q_t = sum(self.rewards[-1]) + self.gamma * Q_t #adds rewards up going backwards to get vals
         Qs[-1] = Q_t
