@@ -49,12 +49,6 @@ class mod_transformer(nn.Module):
             model_dim=model_dim,
             critic_dim=model_dim*2
         )
-        
-        # nn.Sequential(
-        #     nn.Linear(model_dim, mlp_dim),
-        #     nn.ReLU(),
-        #     nn.Linear(mlp_dim, 1)
-        # )
 
         self.hands = {}
         self.seen = {0: False, 1: False}

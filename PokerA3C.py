@@ -13,7 +13,7 @@ from transformer import *
 
 
 class Player(mp.Process):
-    def __init__(self, global_actor_critic, global_ep_idx, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema, global_inference_ema):
+    def __init__(self, global_actor_critic, global_ep_idx, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema, global_inference_ema, token_args):
         super(Player, self).__init__()
         self.local_actor_critic = actor_critic(
             model_dim=player_params[0],
@@ -26,7 +26,8 @@ class Player(mp.Process):
             max_sequence=player_params[7],
             n_players=player_params[8],
             gamma=player_params[9],
-            n_actions=player_params[10]
+            n_actions=player_params[10],
+            token_args=token_args
         )
         self.global_actor_critic = global_actor_critic
         self.episode_idx = global_ep_idx
@@ -71,7 +72,7 @@ class Player(mp.Process):
 if __name__ == '__main__':
     torch.manual_seed(0)
     N_GAMES = 100
-    actor_count = 8
+    actor_count = 1
     # actor parameters
     max_sequence = 200
     n_players = 2
@@ -89,6 +90,7 @@ if __name__ == '__main__':
     action_dim = 6
     learning_rate = .0001
     weight_decay = .0001
+    token_args = {'pot_edim': 8, 'pos_edim': 4, 'action_edim': 16, 'stack_edim': 4 , 'card_edim': model_dim, 'n_players': 2}
     player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, memory_layers, mem_length, dec_layers, action_dim]
     # create poker environment
@@ -97,7 +99,7 @@ if __name__ == '__main__':
     with open("hand_replays.txt", 'w') as file:
         file.writelines("Hand History \n")
 
-    global_model = RLformer(* model_params)
+    global_model = mod_transformer(* model_params)
     global_model.share_memory()
     print('Parameter_count: ', sum(p.numel() for p in global_model.parameters() if p.requires_grad))
     optimizer = SharedAdam(global_model.parameters(), lr=learning_rate, weight_decay=weight_decay)
@@ -109,7 +111,7 @@ if __name__ == '__main__':
     # initialize players
     players = []
     for i in range(actor_count):
-        player = Player(global_model, global_ep, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema, global_inference_ema)
+        player = Player(global_model, global_ep, optimizer, player_params, global_actor_ema, global_critic_ema, global_loss_ema, global_inference_ema, token_args)
         players.append(player)
     [player.start() for player in players]
     [player.join() for player in players]

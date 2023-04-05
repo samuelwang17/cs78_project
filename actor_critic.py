@@ -20,6 +20,7 @@ class Agent(nn.Module):
         mem_length,
         dec_layers,
         action_dim,
+        token_args
     ) -> None:
         super().__init__()
         self.model = RLformer(
@@ -33,7 +34,7 @@ class Agent(nn.Module):
             dec_layers = dec_layers,
             action_dim = action_dim,
         )
-        self.tokenizer =  Tokenizer(model_dim=model_dim)
+        self.tokenizer =  Tokenizer(token_dim_dict = token_args)
         self.hand_dict = {}
 
     def init_player(self, player, hand):
@@ -59,6 +60,7 @@ class actor_critic():
     memory_layers,
     mem_length,
     dec_layers,
+    token_args,
     max_sequence: int = 200, 
     n_players: int = 2,
     gamma: float = .8,
@@ -77,6 +79,7 @@ class actor_critic():
             mem_length=mem_length,
             dec_layers = dec_layers,
             action_dim = n_actions,
+            token_args= token_args
         )
         self.n_players = n_players
 

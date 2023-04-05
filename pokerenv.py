@@ -150,6 +150,7 @@ class poker_env():
 
 
         action['pot'] = self.pot
+        action['stack'] = self.stacks[player]
         observations = [action]
 
         if self.hand_count % self.hand_until_log == 0:
@@ -204,7 +205,7 @@ class poker_env():
                     # payout!
                     advance_stage_rewards[0][p] += self.pot
                     self.stacks[p] += self.pot
-                    advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot}]
+                    advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot, 'pot': self.pot, 'stack': self.stacks[p]}]
                     if self.hand_count % self.hand_until_log == 0:
                         self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot)+ "\n")
 
@@ -233,7 +234,7 @@ class poker_env():
                 advance_stage_rewards[0][p] += self.pot / len(winners)
                 self.stacks[p] += self.pot / len(winners)
                 advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot / len(winners),
-                                               'pot': self.pot}]
+                                               'pot': self.pot, 'stack': self.stacks[p]}]
                 if self.hand_count % self.hand_until_log == 0:
                     self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)))
 
