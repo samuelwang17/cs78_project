@@ -36,7 +36,6 @@ class Tokenizer(nn.Module):
 
 
         '''
-        
         if observation['type'] == 'card':
             # complete
             suit = observation['suit']

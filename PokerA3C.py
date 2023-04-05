@@ -19,14 +19,11 @@ class Player(mp.Process):
             model_dim=player_params[0],
             mlp_dim=player_params[1],
             heads=player_params[2],
-            enc_layers=player_params[3],
-            memory_layers = player_params[4],
-            mem_length = player_params[5],
-            dec_layers=player_params[6],
-            max_sequence=player_params[7],
-            n_players=player_params[8],
-            gamma=player_params[9],
-            n_actions=player_params[10],
+            dec_layers=player_params[3],
+            max_sequence=player_params[4],
+            n_players=player_params[5],
+            gamma=player_params[6],
+            n_actions=player_params[7],
             token_args=token_args
         )
         self.global_actor_critic = global_actor_critic
@@ -83,16 +80,13 @@ if __name__ == '__main__':
     mlp_dim = 64
     attn_heads = 4
     sequence_length = 50
-    enc_layers = 3
-    memory_layers = 0 # pre_mem, mem layered
-    mem_length = 25
     dec_layers = 4
     action_dim = 6
     learning_rate = .0001
     weight_decay = .0001
     token_args = {'pot_edim': 8, 'pos_edim': 4, 'action_edim': 16, 'stack_edim': 4 , 'card_edim': model_dim, 'n_players': 2}
-    player_params = [model_dim, mlp_dim, attn_heads, enc_layers, memory_layers, mem_length, dec_layers, sequence_length, n_players, learning_rate, action_dim]
-    model_params = [model_dim, mlp_dim, attn_heads, sequence_length, enc_layers, memory_layers, mem_length, dec_layers, action_dim]
+    player_params = [model_dim, mlp_dim, attn_heads, dec_layers, sequence_length, n_players, learning_rate, action_dim]
+    model_params = [model_dim, mlp_dim, attn_heads, sequence_length, dec_layers, action_dim]
     # create poker environment
     # initialize global model
 
@@ -120,3 +114,4 @@ if __name__ == '__main__':
 
 
 
+ 

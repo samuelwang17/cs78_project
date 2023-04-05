@@ -15,9 +15,6 @@ class Agent(nn.Module):
         mlp_dim,
         attn_heads,
         sequence_length,
-        enc_layers,
-        memory_layers,
-        mem_length,
         dec_layers,
         action_dim,
         token_args
@@ -28,26 +25,16 @@ class Agent(nn.Module):
             mlp_dim = mlp_dim,
             attn_heads = attn_heads,
             sequence_length = sequence_length,
-            enc_layers = enc_layers,
-            memory_layers=memory_layers,
-            mem_length = mem_length,
             dec_layers = dec_layers,
             action_dim = action_dim,
         )
         self.tokenizer =  Tokenizer(token_dim_dict = token_args)
         self.hand_dict = {}
 
-    def init_player(self, player, hand):
-        # initialize this players hand and tokenize it, store it in buffer
-        hand_tensor = self.tokenizer(hand) #hand needs to be card observations -- list of length two of tensors
-        assert hand_tensor != None
-        self.hand_dict[player] = hand_tensor
-
-    def forward(self, player, obs_flat, new_hand):
+    def forward(self, player, obs_flat):
         #takes flattened inputs in list form, not tokenized
-        enc_input = self.hand_dict[player]
-        dec_input = self.tokenizer(obs_flat)
-        policy_logits, value = self.model(enc_input, dec_input, player, new_hand)
+        seq = self.tokenizer(obs_flat[player])
+        policy_logits, value = self.model(seq)
         return policy_logits, value
 
 class actor_critic():
@@ -56,9 +43,6 @@ class actor_critic():
     model_dim,
     mlp_dim,
     heads,
-    enc_layers,
-    memory_layers,
-    mem_length,
     dec_layers,
     token_args,
     max_sequence: int = 200, 
@@ -74,17 +58,16 @@ class actor_critic():
             mlp_dim = mlp_dim,
             attn_heads = heads,
             sequence_length = max_sequence,
-            enc_layers = enc_layers,
-            memory_layers= memory_layers,
-            mem_length=mem_length,
             dec_layers = dec_layers,
             action_dim = n_actions,
             token_args= token_args
         )
         self.n_players = n_players
-
-        self.observations = [] #this will be a list of lists, each is the list of observations in a hand
-        self.obs_flat = list(chain(*self.observations))
+        self.observations = {}
+        self.obs_flat = {}
+        for x in range(n_players):
+            self.observations[x] = [] #this will be a list of lists, each is the list of observations in a hand
+            self.obs_flat[x] = list(chain(*self.observations[x]))
         
         self.rewards = []
         self.rewards_flat = list(chain(*self.rewards))
@@ -180,21 +163,23 @@ class actor_critic():
     
     def init_hands(self):
         # get all hands
-        # run encoder for each of players
         for player in range(self.n_players):
             hand = self.env.get_hand(player)
-            self.agent.init_player(player, hand)
+            self.observations[player].append(hand)
     
     def chop_seq(self):
         #if length of observations is above a certain size, chop it back down to under sequence length by removing oldest hand
         #return flattened version to give to model on next run
-        self.obs_flat = list(chain(*self.observations))
-        if len(self.obs_flat) > self.max_sequence:
-            before = len(self.obs_flat)
-            self.observations = self.observations[1:]
-            self.obs_flat = list(chain(*self.observations))
-            after = len(self.obs_flat)
-            assert len(self.obs_flat) <= self.max_sequence, f'prechop: {before}, postchop: {after}'
+        for x in range(self.n_players):
+            self.obs_flat[x] = list(chain(*self.observations[x]))
+        if len(self.obs_flat[0]) > self.max_sequence:
+            
+            for x in range(self.n_players):
+                before = len(self.obs_flat[x])
+                self.observations[x] = self.observations[x][1:]
+                self.obs_flat[x] = list(chain(*self.observations[x]))
+                after = len(self.obs_flat[x])
+                assert len(self.obs_flat[x]) <= self.max_sequence, f'prechop: {before}, postchop: {after}'
 
             self.rewards = self.rewards[1:]
             self.rewards_flat = list(chain(*self.rewards))
@@ -208,8 +193,8 @@ class actor_critic():
             
 
         else:
-
-            self.obs_flat = list(chain(*self.observations))
+            for x in range(self.n_players):
+                self.obs_flat[x] = list(chain(*self.observations[x]))
             self.rewards_flat = list(chain(*self.rewards))
             self.val_flat = list(chain(*self.values))
             self.alp_flat = list(chain(*self.action_log_probabilies))
@@ -225,7 +210,8 @@ class actor_critic():
         rewards, observations = self.env.new_hand() # start a new hand
         self.init_hands() # pre load all of the hands
         # init lists for this hand
-        self.observations.append(observations)
+        for x in range(self.n_players):
+            self.observations[x][-1] += observations
         self.rewards.append(rewards)
         self.chop_seq() # prepare for input to model
         self.values.append([])
@@ -240,23 +226,23 @@ class actor_critic():
         while not hand_over:
             # get values and policy -- should be in list form over sequence length
             player = self.env.in_turn
-            
             clock = time.time_ns()
-            policy_logits, values = self.agent(player, self.obs_flat, new_hand = True)
+            policy_logits, values = self.agent(player, self.obs_flat)
             self.time_dict['model_inference'] += time.time_ns() - clock
             
             value = values.squeeze()[-1] # get last value estimate
             assert value.requires_grad
             curr_logits = policy_logits[-1] # get last policy distribution
-
             
+
             alp, action = self.sample_action(curr_logits) # handles mask, softmax, sample, detokenization
             
             rewards, obs, hand_over = self.env.take_action(action) # need to change environment to return hand_over boolean
             
             # add new information from this step
             self.rewards[-1] += rewards #add tensor
-            self.observations[-1] += obs
+            for x in range(self.n_players):
+                self.observations[x][-1] += obs
 
             # value needs to be on a per player basis
 
@@ -280,7 +266,7 @@ class actor_critic():
         clock = time.time_ns()
         Vals_T = [0] * self.n_players
         for player in range(self.n_players):
-            _, V_T = self.agent(player, self.obs_flat, new_hand = False)
+            _, V_T = self.agent(player, self.obs_flat)
             Vals_T[player] = V_T.squeeze()[-1]
         self.time_dict['model_inference'] += time.time_ns() - clock
         # process gradients and return loss:

@@ -1,7 +1,7 @@
 # Main model
 
 import torch.nn as nn
-from encoder import encoder
+import torch
 from decoder import decoder
 from model_components import critic_head
 
@@ -13,29 +13,16 @@ class mod_transformer(nn.Module):
     mlp_dim,
     attn_heads,
     sequence_length,
-    enc_layers,
-    memory_layers,
-    mem_length,
     dec_layers,
-    action_dim,
+    action_dim
     ) -> None:
         super().__init__()
-
-        self.encoder = encoder(
-            layers=enc_layers,
-            model_dim=model_dim,
-            mlp_dim=mlp_dim,
-            heads=attn_heads,
-        )
-
         self.decoder = decoder(
             layers=dec_layers,
             model_dim= model_dim,
             mlp_dim=mlp_dim,
             heads=attn_heads,
-            sequence_length=sequence_length,
-            memory_layers=memory_layers,
-            mem_length=mem_length
+            sequence_length=sequence_length
         )
 
         self.actor = nn.Sequential(
@@ -53,16 +40,8 @@ class mod_transformer(nn.Module):
         self.hands = {}
         self.seen = {0: False, 1: False}
 
-    def forward(self, enc_input, dec_input, player, new_hand):
-        if new_hand:
-            self.seen = {0: False, 1: False}
-        if self.seen[player]: 
-            enc = self.hands[player]   
-        else:
-            self.seen[player] = True
-            enc = self.encoder(enc_input)
-            self.hands[player] = enc
-        dec = self.decoder(dec_input, enc)
+    def forward(self, input):
+        dec = self.decoder(input)
         policy_logits = self.actor(dec)
         value = self.critic(dec)
         return policy_logits, value
