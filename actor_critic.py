@@ -33,7 +33,7 @@ class Agent(nn.Module):
 
     def forward(self, player, obs_flat):
         #takes flattened inputs in list form, not tokenized
-        seq = self.tokenizer(obs_flat[player])
+        seq = self.tokenizer.get_tokens(obs_flat[player])
         policy_logits, value = self.model(seq)
         return policy_logits, value
 
@@ -135,15 +135,14 @@ class actor_critic():
         tensor_mask = torch.Tensor(mask)
 
         # grad skip softmax -- neural replicator dynamics, with mask
-        policy = self.softmax(curr_logits.masked_fill(tensor_mask == 1, float('-inf')))
+        policy = self.softmax(curr_logits.masked_fill_(tensor_mask == 1, float('-inf'))) # in place mask so that logits are correct later for alps
 
         np_dist = np.squeeze(policy[-1].detach().numpy())
         
 
         # SAMPLE
         action_index = np.random.choice(self.n_actions, p=np_dist)
-        # calculate action log prob for use in advantage later
-        # y_logit = curr_logits[-1][action_index] #.0001 used to avoid log(0) causing grad issues
+        # calculate action log prob for use in actor loss later
         alps = self.lsm(curr_logits)[-1]
         alp = alps[action_index]
 
@@ -217,7 +216,7 @@ class actor_critic():
         self.values.append([])
         self.action_log_probabilies.append([])
         for x in range(len(rewards)):
-                new_values = [-1e5] * self.n_players # -5783 fed here so that 
+                new_values = [-1e5] * self.n_players
                 self.values[-1].append(torch.Tensor(new_values))
                 new_alps = [0] * self.n_players
                 self.action_log_probabilies[-1].append(torch.Tensor(new_alps))
@@ -272,40 +271,45 @@ class actor_critic():
         # process gradients and return loss:
         out = self.get_loss(torch.stack(Vals_T))
         self.time_dict['total'] = time.time_ns() - clock1
-        self.env.give_losses(out)
+        self.env.end_hand(out, (self.adv_current, self.nalps_current))
         return out
 
     def get_loss(self, Vals_T):
         clock = time.time_ns()
         Qs = [0] * len(self.rewards[-1])
         Q_t = torch.Tensor([0] * self.n_players) # expected sum of future rewards is zero at gto, or self play in general
+        Qs[-1] = Q_t
         # first column back
         Q_t = sum(self.rewards[-1]) + self.gamma * Q_t #adds rewards up going backwards to get vals
-        Qs[-1] = Q_t
         for t in reversed(range(len(self.rewards[-1]) - 1)):
-            Q_t = self.gamma * Q_t #adds rewards up going backwards to get vals
             Qs[t] = Q_t
+            Q_t = self.gamma * Q_t #adds rewards up going backwards to get vals
         
+        self.q_curr = torch.stack(Qs)
+        self.v_curr = torch.stack(self.values[-1])
+        self.v_curr[-1] = Vals_T
+        Qs = torch.stack(Qs)#[1:] #2d tensor sequence, players
 
-        Qs = torch.stack(Qs)[1:] #2d tensor sequence, players
-
-        values = torch.stack(self.values[-1])[:-1]
+        values = torch.stack(self.values[-1])#[:-1]
         values[-1] = Vals_T
 
         # set Qs to filler value where value is filler value
         #Qs = Qs.masked_fill(values == -100000, -100000)
-        alps = torch.stack(self.action_log_probabilies[-1])[:-1]
+        alps = torch.stack(self.action_log_probabilies[-1])#[:-1]
         advantages = Qs - values 
         advantages = advantages.masked_fill(values == -1e5, 0) # using arbitrary filler from earlier to mask out the blinds
-        advantages = self.symlog(advantages)
-        actor_loss_mat = (-alps * advantages)
+        actor_loss_mat = (-alps * advantages.detach())
         critic_loss_mat = (advantages).pow(2)
 
-        actor_loss = actor_loss_mat[:, :1].sum() # loss function for policy going into softmax on backpass
-        critic_loss = (critic_loss_mat[:, :1].sum()) # autogressive critic loss - MSE
+        a = np.random.randint(2)
+        actor_loss = actor_loss_mat[:, a].sum() # loss function for policy going into softmax on backpass
+        critic_loss = (critic_loss_mat[:, a].sum()) # autogressive critic loss - MSE
 
-        loss = actor_loss + critic_loss
+        loss =  actor_loss # + critic_loss/40
         self.time_dict['loss'] = time.time_ns() - clock
+        
+        self.adv_current = advantages
+        self.nalps_current = -alps
         return loss, actor_loss, critic_loss, self.time_dict
     
 

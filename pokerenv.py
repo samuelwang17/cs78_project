@@ -32,13 +32,17 @@ class poker_env():
 
         self.filename = "hand_replays.txt"
         self.hand_count = 0
-        self.hand_until_log = 100
+        self.hand_until_log = 50
 
-    def give_losses(self, out):
+    def end_hand(self, out, adv):
         loss, actor_loss, critic_loss, _ = out
-        self.loss = loss
-        self.actor_loss = actor_loss
-        self.critic_loss = critic_loss
+        if self.hand_count % self.hand_until_log == 0:
+            with open(self.filename, 'a') as file:
+                self.history.append(f'Loss: {loss}, Actor Loss: {actor_loss}, Critic Loss: {critic_loss}')
+                self.history.append(f"\n {adv} \n")
+                self.history.append("\n\nHand End\n")
+                self.history.append("--------------------------------------------------------------------------------\n")
+                file.writelines(self.history)
 
     def new_hand(self):
         self.hand_count += 1
@@ -65,7 +69,7 @@ class poker_env():
         self.deck_position = 0
 
         # deal cards, pass to agents
-        random.shuffle(self.deck)
+        #random.shuffle(self.deck)
         for i in range(self.n_players):
             self.hands += [self.get_next_cards(2)]
 
@@ -209,13 +213,6 @@ class poker_env():
                     if self.hand_count % self.hand_until_log == 0:
                         self.history.append("\nFolds around, player " + str(p) + " wins " + str(self.pot)+ "\n")
 
-            if self.hand_count % self.hand_until_log == 0:
-                with open(self.filename, 'a') as file:
-                    self.history.append(f'Loss: {self.loss}, Actor Loss: {self.actor_loss}, Critic Loss: {self.critic_loss}')
-                    self.history.append("\n\nHand End\n")
-                    self.history.append("--------------------------------------------------------------------------------\n")
-                    file.writelines(self.history)
-
             hand_over = True
 
         # advance stage if not river
@@ -236,15 +233,7 @@ class poker_env():
                 advance_stage_observations += [{'player': p, 'type': 'win', 'value': self.pot / len(winners),
                                                'pot': self.pot, 'stack': self.stacks[p]}]
                 if self.hand_count % self.hand_until_log == 0:
-                    self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)))
-
-            if self.hand_count % self.hand_until_log == 0:
-                with open(self.filename, 'a') as file:
-                    self.history.append("\n\nHand End\n")
-                    self.history.append(
-                        "--------------------------------------------------------------------------------\n")
-                    self.history.append(f'Loss: {self.loss}, Actor Loss: {self.actor_loss}, Critic Loss: {self.critic_loss}')
-                    file.writelines(self.history)
+                    self.history.append("\nShowdown win, " + str(p) + " wins " + str(self.pot / len(winners)) + '\n')
 
             hand_over = True
 
@@ -286,6 +275,56 @@ class poker_env():
             self.deck_position += 3
             return cards
         return None
+    
+    def get_score(self, p):
+        
+        rank_hand_dict = {
+            11: 'high_card',
+            21: 'pair',
+            22: 'two_pair',
+            31: 'trips',
+            32: 'boat',
+            41: 'quods'
+        }
+
+        cards = cards = self.community_cards + self.hands[p]
+        cards = cards.copy()
+        rank_count = {'2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0, '13': 0}
+        suit_count = {"h": 0, "d": 0, "s": 0, "c": 0}
+
+        # convert to counts
+        for card in cards:
+            suit_count[card[0]] += 1
+            rank_count[card[1]] += 1
+            
+
+        # find ranks with highest count, second highest counts
+        first_count = 0
+        second_count = 0
+        first_rank = 0
+        second_rank = 0
+
+        for rank in rank_count.keys():
+            if rank_count[rank] > first_count:
+                first_count = rank_count[rank]
+                first_rank = rank
+
+        for rank in rank_count.keys():
+            if rank_count[rank] > first_count and rank != first_rank:
+                second_count = rank_count[rank]
+                second_rank = rank
+
+        hand_identity = first_count * 10 + second_count #number is now two digits of form {first count}{second count}
+        rank_hand = rank_hand_dict[hand_identity]
+        
+        # check flushes
+        suit_hand = 'none'
+        for suit in suit_count.keys():
+            if suit_count[suit] >= 5:
+                suit_hand = 'flush'
+        
+        
+
 
     def determine_showdown_winners(self):
         scores = [0] * self.n_players
@@ -383,7 +422,6 @@ class poker_env():
                 if sf_high != 0:
                     scores[p] = 27 + (0.2 * sf_high)
                     continue
-
             # quads
             if first_count == 4:
                 scores[p] = 24 + (0.2 * first_rank)
@@ -473,5 +511,5 @@ class poker_env():
                 max_score = scores[p]
             elif scores[p] == max_score:
                 winners += [p]
-
+        print(scores)
         return winners

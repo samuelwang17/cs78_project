@@ -1,10 +1,9 @@
 import torch
 import torch.nn as nn
 
-class Tokenizer(nn.Module):
+class Tokenizer():
 
     def __init__(self, token_dim_dict) -> None:
-        super().__init__()
         # pos, action, pot, stack
         # card
         assert token_dim_dict['pot_edim'] + token_dim_dict['action_edim'] + token_dim_dict['pos_edim'] + token_dim_dict['stack_edim'] == token_dim_dict['card_edim']
@@ -88,7 +87,7 @@ class Tokenizer(nn.Module):
         obs_tensor = torch.stack(seq) #sequence, model_dim
         return obs_tensor
     
-    def forward(self, observations):
+    def get_tokens(self, observations):
         obs_tensor = self.tokenize_list(observations)
         return obs_tensor
     

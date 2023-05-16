@@ -120,8 +120,14 @@ class decoder_mha(nn.Module):
         self.sequence_length = sequence_length
         self.heads = heads
         self.key_dim = model_dim // heads
-        self.W_q = nn.Linear(model_dim, model_dim, bias=False)
-        self.W_k = nn.Linear(model_dim, model_dim, bias=False)
+        self.W_q = nn.Sequential(
+            nn.Linear(model_dim, model_dim, bias=False),
+            nn.LayerNorm(model_dim)
+        )
+        self.W_k = nn.Sequential(
+            nn.Linear(model_dim, model_dim, bias=False),
+            nn.LayerNorm(model_dim)
+        )
         self.W_v = nn.Linear(model_dim, model_dim, bias=False)
         self.output = nn.Linear(model_dim, model_dim, bias=True)
         self.ln = nn.LayerNorm(model_dim)
