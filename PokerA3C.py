@@ -3,7 +3,6 @@ import math
 import torch
 import torch.optim as optim
 import os
-from pokerenv import poker_env
 from actor_critic import *
 import torch.multiprocessing as mp
 from shared_adam import SharedAdam
@@ -39,17 +38,22 @@ class Player(mp.Process):
     def run(self):
         while self.episode_idx.value < self.N_GAMES:
             loss, actor_loss, critic_loss, time_dict = self.local_actor_critic.play_hand()
-            self.optimizer.zero_grad() # zero gradient on the master copy
+            
             with torch.autograd.set_detect_anomaly(True):
-                loss.backward(retain_graph=True)
-            for local_param, global_param in zip(
+                loss.backward()
+            
+            if self.episode_idx.value % 10 == 0:
+                for local_param, global_param in zip(
                     self.local_actor_critic.agent.model.parameters(),
                     self.global_actor_critic.parameters()):
-                global_param._grad = local_param.grad
-            if self.episode_idx.value % 1 == 0:
+                    global_param._grad = local_param.grad
+                    #print(local_param.grad)
                 self.optimizer.step()
-                self.local_actor_critic.agent.model.parameters = self.global_actor_critic.parameters
+                self.optimizer.zero_grad() # zero gradient on the master copy
+                self.local_actor_critic.agent.model.load_state_dict(self.global_actor_critic.state_dict())
+                #self.local_actor_critic.agent.model.parameters = self.global_actor_critic.parameters
                 self.local_actor_critic.clear_memory()
+                
             with self.episode_idx.get_lock():
                 self.episode_idx.value += 1
             with self.global_loss_ema.get_lock():
@@ -72,18 +76,18 @@ if __name__ == '__main__':
     # actor parameters
     max_sequence = 200
     n_players = 2
-    gamma = .99
+    gamma = .95
     n_actions = 6
     # model parameters
-    model_dim = 32
-    mlp_dim = 62
-    attn_heads = 4
+    model_dim = 128
+    mlp_dim = 256
+    attn_heads = 8
     sequence_length = 50
-    dec_layers = 2
+    dec_layers = 4
     action_dim = 6
-    learning_rate = 1e-6
-    weight_decay = 0
-    token_args = {'pot_edim': 8, 'pos_edim': 4, 'action_edim': 16, 'stack_edim': 4 , 'card_edim': model_dim, 'n_players': 2}
+    learning_rate = 5e-4
+    weight_decay = 1e-5
+    token_args = {'pot_edim': 32, 'pos_edim': 16, 'action_edim': 64, 'stack_edim': 16 , 'card_edim': model_dim, 'n_players': 2}
     player_params = [model_dim, mlp_dim, attn_heads, dec_layers, sequence_length, n_players, gamma, action_dim]
     model_params = [model_dim, mlp_dim, attn_heads, sequence_length, dec_layers, action_dim]
     # create poker environment

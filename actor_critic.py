@@ -271,17 +271,15 @@ class actor_critic():
         # process gradients and return loss:
         out = self.get_loss(torch.stack(Vals_T))
         self.time_dict['total'] = time.time_ns() - clock1
-        self.env.end_hand(out, (self.adv_current, self.nalps_current))
+        self.env.end_hand(out, (self.vals_current, self.adv_current, self.nalps_current))
         return out
 
     def get_loss(self, Vals_T):
         clock = time.time_ns()
         Qs = [0] * len(self.rewards[-1])
-        Q_t = torch.Tensor([0] * self.n_players) # expected sum of future rewards is zero at gto, or self play in general
-        Qs[-1] = Q_t
         # first column back
-        Q_t = sum(self.rewards[-1]) + self.gamma * Q_t #adds rewards up going backwards to get vals
-        for t in reversed(range(len(self.rewards[-1]) - 1)):
+        Q_t = sum(self.rewards[-1])
+        for t in reversed(range(len(self.rewards[-1]))):
             Qs[t] = Q_t
             Q_t = self.gamma * Q_t #adds rewards up going backwards to get vals
         
@@ -297,19 +295,22 @@ class actor_critic():
         #Qs = Qs.masked_fill(values == -100000, -100000)
         alps = torch.stack(self.action_log_probabilies[-1])#[:-1]
         advantages = Qs - values 
-        advantages = advantages.masked_fill(values == -1e5, 0) # using arbitrary filler from earlier to mask out the blinds
+        
+        advantages.masked_fill_(values == -1e5, 0) # using arbitrary filler from earlier to mask out the blinds
         actor_loss_mat = (-alps * advantages.detach())
         critic_loss_mat = (advantages).pow(2)
 
-        a = np.random.randint(2)
-        actor_loss = actor_loss_mat[:, a].sum() # loss function for policy going into softmax on backpass
-        critic_loss = (critic_loss_mat[:, a].sum()) # autogressive critic loss - MSE
-
-        loss =  actor_loss # + critic_loss/40
+        # a = np.random.randint(2)
+        # actor_loss = actor_loss_mat[:, a].sum() # loss function for policy going into softmax on backpass
+        # critic_loss = (critic_loss_mat[:, a].sum()) # autogressive critic loss - MSE
+        actor_loss = actor_loss_mat.sum() # loss function for policy going into softmax on backpass
+        critic_loss = (critic_loss_mat.sum()) # autogressive critic loss - MSE
+        loss =  critic_loss + actor_loss
         self.time_dict['loss'] = time.time_ns() - clock
         
         self.adv_current = advantages
         self.nalps_current = -alps
+        self.vals_current = values.masked_fill(values == -1e5, 0)
         return loss, actor_loss, critic_loss, self.time_dict
     
 

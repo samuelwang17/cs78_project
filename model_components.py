@@ -29,7 +29,7 @@ class grad_skip_logsoftmax(nn.Module):
         
 class gru(nn.Module):
     # 'gated-recurrent-unit type gating' as seen in GTrXL paper
-    def __init__(self, dim, b_g = 1) -> None:
+    def __init__(self, dim, b_g = .0001) -> None:
         super().__init__()
 
         self.w_r = nn.Linear(dim, dim, bias = False)
@@ -162,8 +162,7 @@ class critic_head(nn.Module):
         self.value_outs = nn.Sequential(
             nn.Linear(model_dim,critic_dim),
             nn.ReLU(),
-            nn.Linear(critic_dim, value_points),
-            nn.ReLU()
+            nn.Linear(critic_dim, value_points)
         )
 
         self.gating = nn.Sequential(
@@ -171,7 +170,7 @@ class critic_head(nn.Module):
             nn.ReLU(),
             nn.Linear(critic_dim, value_points),
             nn.LayerNorm(value_points),
-            grad_skip_softmax()
+            nn.Softmax(dim=2)
         )
 
     def forward(self, x):
